@@ -13,9 +13,13 @@
  * details.
  */
 %>
+<%@include file="/init.jsp" %>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
-
-<portlet:defineObjects />
-
-This is the <b>My Courses</b> portlet.
+<div id="mycourses">
+	<h2 id="headline_main">My Courses</h2>
+	<span id="tip">Click course name to go to class</span>
+	
+	<h2 class="headline_entity"></h2>
+	<% /** Use a loop or List object here to list all of the courses the user is enrolled in */ %>
+	
+</div>
