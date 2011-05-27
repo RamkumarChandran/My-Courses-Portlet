@@ -40,7 +40,18 @@
 		<column name="emailDomains" type="String"/>
 		<column name="dbName" type="String" />
 		
+		<order by="asc">
+			<order-column name="entityName"/>
+		</order>
 		
+		<finder name="EmailDomain" return-type="Collection">
+			<finder-column name="emailDomains" />
+		</finder>
+		
+		<finder name="URL" return-type="Collection">
+			<finder-column name="url" />
+		</finder>
+	
 	
 	</entity>
 	
