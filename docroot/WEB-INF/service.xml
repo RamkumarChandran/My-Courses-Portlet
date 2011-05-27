@@ -30,6 +30,7 @@
 	</entity>
 	
 	
+	
 	<entity name="Entity" local-service="true" remote-service="false">
 	
 		<column name="entityId" type="long" primary ="true" />
@@ -55,18 +56,47 @@
 	
 	</entity>
 	
+
+	
 	<entity name="User" local-service="true" remote-service="false" >
 	
-		<column name="Id" type="long" primary ="true"/>
+		<column name="Id" type="long" primary="true"/>
 		<column name="userId" type = "long"/>
 		<column name="courseId" type="long"/>
 		
 		<column name="lastRefresh" type="Date" />
 	
-	<order by="asc">
-		<order-column name="userId" case-sensitive="false" />
-	</order>
+		<order by="asc">
+			<order-column name="userId" case-sensitive="false" />
+		</order>
+		
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId"/>
+		</finder>
+		
+		<finder name="LastRefresh" return-type="Collection">
+			<finder-column name="lastRefresh"/>
+		</finder>
+		
 	
+	</entity>
+	
+	
+	<entity name="Host" local-service="true" remote-service="false">
+		
+		<column name="hostId" type="long" primary="true"/>
+		<column name="localEntityId" type="long"/>
+		<column name="remoteEntityId" type="long"/>
+		<column name="peerId" type="long"/>
+		
+		<order by="asc">
+			<order-column name="hostId" case-sensitive="false"/>
+		</order>
+		
+		<finder name="LRentity" return-type="Collection">
+			<finder-column name="localEntityId"/>
+			<finder-column name="remoteEntityId"/>
+		</finder>
 		
 	
 	</entity>
