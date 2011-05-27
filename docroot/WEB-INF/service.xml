@@ -26,6 +26,22 @@
 			<finder-column name="entityId" />
 		</finder>
 		
+		
+	</entity>
+	
+	
+	<entity name="Entity" local-service="true" remote-service="false">
+	
+		<column name="entityId" type="long" primary ="true" />
+		
+		<column name="entityName" type="String" />
+		<column name="url" type="String" />
+		
+		<column name="emailDomains" type="String"/>
+		<column name="dbName" type="String" />
+		
+		
+	
 	</entity>
 	
 </service-builder>
