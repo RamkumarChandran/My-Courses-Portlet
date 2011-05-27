@@ -26,10 +26,7 @@
 			<finder-column name="entityId" />
 		</finder>
 		
-		
 	</entity>
-	
-	
 	
 	<entity name="Entity" local-service="true" remote-service="false">
 	
@@ -53,16 +50,14 @@
 			<finder-column name="url" />
 		</finder>
 	
-	
 	</entity>
-	
-
 	
 	<entity name="User" local-service="true" remote-service="false" >
 	
 		<column name="Id" type="long" primary="true"/>
 		<column name="userId" type = "long"/>
-		<column name="courseId" type="long" entity="Course" mapping-key="courseId"/>
+		
+		<column name="courseId" type="Collection" entity="Course" mapping-key="courseId"/>
 		
 		<column name="lastRefresh" type="Date" />
 	
@@ -78,15 +73,15 @@
 			<finder-column name="lastRefresh"/>
 		</finder>
 		
-	
 	</entity>
-	
 	
 	<entity name="Host" local-service="true" remote-service="false">
 		
 		<column name="hostId" type="long" primary="true"/>
-		<column name="localEntityId" type="long" entity="Entity" mapping-key="entityId"/>
-		<column name="remoteEntityId" type="long" entity="Entity" mapping-key="entityId"/>
+		
+		<column name="localEntityId" type="Collection" entity="Entity" mapping-key="entityId"/>
+		<column name="remoteEntityId" type="Collection" entity="Entity" mapping-key="entityId"/>
+		
 		<column name="peerId" type="long"/>
 		
 		<order by="asc">
@@ -98,8 +93,6 @@
 			<finder-column name="remoteEntityId"/>
 		</finder>
 		
-	
 	</entity>
-	
 	
 </service-builder>
