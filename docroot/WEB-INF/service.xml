@@ -41,18 +41,35 @@
 		<column name="dbName" type="String" />
 		
 		<order by="asc">
-			<order-column name="entityName"/>
+			<order-column name="entityName" case-sensitive="false" />
 		</order>
 		
 		<finder name="EmailDomain" return-type="Collection">
 			<finder-column name="emailDomains" />
 		</finder>
 		
-		<finder name="URL" return-type="Collection">
+		<finder name="Url" return-type="Collection">
 			<finder-column name="url" />
 		</finder>
 	
 	
 	</entity>
+	
+	<entity name="User" local-service="true" remote-service="false" >
+	
+		<column name="Id" type="long" primary ="true"/>
+		<column name="userId" type = "long"/>
+		<column name="courseId" type="long"/>
+		
+		<column name="lastRefresh" type="Date" />
+	
+	<order by="asc">
+		<order-column name="userId" case-sensitive="false" />
+	</order>
+	
+		
+	
+	</entity>
+	
 	
 </service-builder>
