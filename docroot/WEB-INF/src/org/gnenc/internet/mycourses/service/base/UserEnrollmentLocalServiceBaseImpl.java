@@ -79,23 +79,23 @@ public abstract class UserEnrollmentLocalServiceBaseImpl
 	/**
 	 * Creates a new user enrollment with the primary key. Does not add the user enrollment to the database.
 	 *
-	 * @param Id the primary key for the new user enrollment
+	 * @param id the primary key for the new user enrollment
 	 * @return the new user enrollment
 	 */
-	public UserEnrollment createUserEnrollment(long Id) {
-		return userEnrollmentPersistence.create(Id);
+	public UserEnrollment createUserEnrollment(long id) {
+		return userEnrollmentPersistence.create(id);
 	}
 
 	/**
 	 * Deletes the user enrollment with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param Id the primary key of the user enrollment to delete
+	 * @param id the primary key of the user enrollment to delete
 	 * @throws PortalException if a user enrollment with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteUserEnrollment(long Id)
+	public void deleteUserEnrollment(long id)
 		throws PortalException, SystemException {
-		userEnrollmentPersistence.remove(Id);
+		userEnrollmentPersistence.remove(id);
 	}
 
 	/**
@@ -178,14 +178,14 @@ public abstract class UserEnrollmentLocalServiceBaseImpl
 	/**
 	 * Gets the user enrollment with the primary key.
 	 *
-	 * @param Id the primary key of the user enrollment to get
+	 * @param id the primary key of the user enrollment to get
 	 * @return the user enrollment
 	 * @throws PortalException if a user enrollment with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public UserEnrollment getUserEnrollment(long Id)
+	public UserEnrollment getUserEnrollment(long id)
 		throws PortalException, SystemException {
-		return userEnrollmentPersistence.findByPrimaryKey(Id);
+		return userEnrollmentPersistence.findByPrimaryKey(id);
 	}
 
 	/**

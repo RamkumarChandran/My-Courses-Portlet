@@ -40,8 +40,8 @@ public class UserEnrollmentWrapper implements UserEnrollment {
 		return _userEnrollment.getId();
 	}
 
-	public void setId(long Id) {
-		_userEnrollment.setId(Id);
+	public void setId(long id) {
+		_userEnrollment.setId(id);
 	}
 
 	public long getUserId() {
@@ -59,6 +59,14 @@ public class UserEnrollmentWrapper implements UserEnrollment {
 
 	public void setUserUuid(java.lang.String userUuid) {
 		_userEnrollment.setUserUuid(userUuid);
+	}
+
+	public long getCourseId() {
+		return _userEnrollment.getCourseId();
+	}
+
+	public void setCourseId(long courseId) {
+		_userEnrollment.setCourseId(courseId);
 	}
 
 	public java.util.Date getLastRefresh() {

@@ -54,20 +54,20 @@ public interface UserEnrollmentLocalService {
 	/**
 	* Creates a new user enrollment with the primary key. Does not add the user enrollment to the database.
 	*
-	* @param Id the primary key for the new user enrollment
+	* @param id the primary key for the new user enrollment
 	* @return the new user enrollment
 	*/
 	public org.gnenc.internet.mycourses.model.UserEnrollment createUserEnrollment(
-		long Id);
+		long id);
 
 	/**
 	* Deletes the user enrollment with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param Id the primary key of the user enrollment to delete
+	* @param id the primary key of the user enrollment to delete
 	* @throws PortalException if a user enrollment with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteUserEnrollment(long Id)
+	public void deleteUserEnrollment(long id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -146,14 +146,14 @@ public interface UserEnrollmentLocalService {
 	/**
 	* Gets the user enrollment with the primary key.
 	*
-	* @param Id the primary key of the user enrollment to get
+	* @param id the primary key of the user enrollment to get
 	* @return the user enrollment
 	* @throws PortalException if a user enrollment with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.gnenc.internet.mycourses.model.UserEnrollment getUserEnrollment(
-		long Id)
+		long id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -207,4 +207,8 @@ public interface UserEnrollmentLocalService {
 		org.gnenc.internet.mycourses.model.UserEnrollment userEnrollment,
 		boolean merge)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gnenc.internet.mycourses.model.UserEnrollment> getUserEnrollmentsByUserId(
+		long userId);
 }

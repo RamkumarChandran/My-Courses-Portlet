@@ -54,11 +54,13 @@ public class CourseModelImpl extends BaseModelImpl<Course>
 	implements CourseModel {
 	public static final String TABLE_NAME = "MC_Course";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "id_", new Integer(Types.BIGINT) },
 			{ "courseId", new Integer(Types.BIGINT) },
 			{ "name", new Integer(Types.VARCHAR) },
+			{ "entityId", new Integer(Types.BIGINT) },
 			{ "lastRefresh", new Integer(Types.BIGINT) }
 		};
-	public static final String TABLE_SQL_CREATE = "create table MC_Course (courseId LONG not null primary key,name VARCHAR(75) null,lastRefresh LONG)";
+	public static final String TABLE_SQL_CREATE = "create table MC_Course (id_ LONG not null primary key,courseId LONG,name VARCHAR(75) null,entityId LONG,lastRefresh LONG)";
 	public static final String TABLE_SQL_DROP = "drop table MC_Course";
 	public static final String ORDER_BY_JPQL = " ORDER BY course.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MC_Course.name ASC";
@@ -78,15 +80,23 @@ public class CourseModelImpl extends BaseModelImpl<Course>
 	}
 
 	public long getPrimaryKey() {
-		return _courseId;
+		return _id;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setCourseId(pk);
+		setId(pk);
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_courseId);
+		return new Long(_id);
+	}
+
+	public long getId() {
+		return _id;
+	}
+
+	public void setId(long id) {
+		_id = id;
 	}
 
 	public long getCourseId() {
@@ -108,6 +118,14 @@ public class CourseModelImpl extends BaseModelImpl<Course>
 
 	public void setName(String name) {
 		_name = name;
+	}
+
+	public long getEntityId() {
+		return _entityId;
+	}
+
+	public void setEntityId(long entityId) {
+		_entityId = entityId;
 	}
 
 	public long getLastRefresh() {
@@ -144,9 +162,13 @@ public class CourseModelImpl extends BaseModelImpl<Course>
 	public Object clone() {
 		CourseImpl courseImpl = new CourseImpl();
 
+		courseImpl.setId(getId());
+
 		courseImpl.setCourseId(getCourseId());
 
 		courseImpl.setName(getName());
+
+		courseImpl.setEntityId(getEntityId());
 
 		courseImpl.setLastRefresh(getLastRefresh());
 
@@ -194,12 +216,16 @@ public class CourseModelImpl extends BaseModelImpl<Course>
 	}
 
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(11);
 
-		sb.append("{courseId=");
+		sb.append("{id=");
+		sb.append(getId());
+		sb.append(", courseId=");
 		sb.append(getCourseId());
 		sb.append(", name=");
 		sb.append(getName());
+		sb.append(", entityId=");
+		sb.append(getEntityId());
 		sb.append(", lastRefresh=");
 		sb.append(getLastRefresh());
 		sb.append("}");
@@ -208,12 +234,16 @@ public class CourseModelImpl extends BaseModelImpl<Course>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gnenc.internet.mycourses.model.Course");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>id</column-name><column-value><![CDATA[");
+		sb.append(getId());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>courseId</column-name><column-value><![CDATA[");
 		sb.append(getCourseId());
@@ -221,6 +251,10 @@ public class CourseModelImpl extends BaseModelImpl<Course>
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>entityId</column-name><column-value><![CDATA[");
+		sb.append(getEntityId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>lastRefresh</column-name><column-value><![CDATA[");
@@ -232,8 +266,10 @@ public class CourseModelImpl extends BaseModelImpl<Course>
 		return sb.toString();
 	}
 
+	private long _id;
 	private long _courseId;
 	private String _name;
+	private long _entityId;
 	private long _lastRefresh;
 	private transient ExpandoBridge _expandoBridge;
 }

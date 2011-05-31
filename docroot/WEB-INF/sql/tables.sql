@@ -1,6 +1,8 @@
 create table MC_Course (
-	courseId LONG not null primary key,
+	id_ LONG not null primary key,
+	courseId LONG,
 	name VARCHAR(75) null,
+	entityId LONG,
 	lastRefresh LONG
 );
 
@@ -14,13 +16,14 @@ create table MC_Entity (
 
 create table MC_Host (
 	hostId LONG not null primary key,
-	localEntityId LONG,
+	entityId LONG,
 	remoteEntityId LONG,
 	peerId LONG
 );
 
 create table MC_UserEnrollment (
-	Id LONG not null primary key,
+	id_ LONG not null primary key,
 	userId LONG,
+	courseId LONG,
 	lastRefresh DATE null
 );

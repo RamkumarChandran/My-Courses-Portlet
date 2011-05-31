@@ -14,7 +14,13 @@
 
 package org.gnenc.internet.mycourses.service.impl;
 
+import java.util.List;
+
+import org.gnenc.internet.mycourses.NoSuchEntityException;
+import org.gnenc.internet.mycourses.model.Entity;
 import org.gnenc.internet.mycourses.service.base.EntityLocalServiceBaseImpl;
+
+import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The implementation of the entity local service.
@@ -36,4 +42,24 @@ import org.gnenc.internet.mycourses.service.base.EntityLocalServiceBaseImpl;
  * @see org.gnenc.internet.mycourses.service.EntityLocalServiceUtil
  */
 public class EntityLocalServiceImpl extends EntityLocalServiceBaseImpl {
+	
+	/**
+	* Returns entity from the database. Also notifies the appropriate model listeners.
+	*
+	* @param emailDomain the email domain to find by
+	* @return the entity that was found
+	* @throws SystemException if a system exception occurred
+	*/
+	public List<Entity> getEntityByDomain(String emailDomain) throws SystemException {
+		List<Entity> entity = entityPersistence.findByEmailDomain(emailDomain);
+		
+		return entity;
+	}
+
+	public String getEntityUrl(long entityId) throws NoSuchEntityException, SystemException {
+		Entity entity = entityPersistence.findByPrimaryKey(entityId);
+		String url = entity.getUrl();
+		
+		return url;
+	}
 }

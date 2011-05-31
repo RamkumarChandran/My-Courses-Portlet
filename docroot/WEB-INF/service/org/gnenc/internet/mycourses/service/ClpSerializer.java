@@ -59,26 +59,40 @@ public class ClpSerializer {
 
 					Object newModel = newModelClass.newInstance();
 
-					Method method0 = newModelClass.getMethod("setCourseId",
+					Method method0 = newModelClass.getMethod("setId",
 							new Class[] { Long.TYPE });
 
-					Long value0 = new Long(oldCplModel.getCourseId());
+					Long value0 = new Long(oldCplModel.getId());
 
 					method0.invoke(newModel, value0);
 
-					Method method1 = newModelClass.getMethod("setName",
-							new Class[] { String.class });
+					Method method1 = newModelClass.getMethod("setCourseId",
+							new Class[] { Long.TYPE });
 
-					String value1 = oldCplModel.getName();
+					Long value1 = new Long(oldCplModel.getCourseId());
 
 					method1.invoke(newModel, value1);
 
-					Method method2 = newModelClass.getMethod("setLastRefresh",
-							new Class[] { Long.TYPE });
+					Method method2 = newModelClass.getMethod("setName",
+							new Class[] { String.class });
 
-					Long value2 = new Long(oldCplModel.getLastRefresh());
+					String value2 = oldCplModel.getName();
 
 					method2.invoke(newModel, value2);
+
+					Method method3 = newModelClass.getMethod("setEntityId",
+							new Class[] { Long.TYPE });
+
+					Long value3 = new Long(oldCplModel.getEntityId());
+
+					method3.invoke(newModel, value3);
+
+					Method method4 = newModelClass.getMethod("setLastRefresh",
+							new Class[] { Long.TYPE });
+
+					Long value4 = new Long(oldCplModel.getLastRefresh());
+
+					method4.invoke(newModel, value4);
 
 					return newModel;
 				}
@@ -181,12 +195,19 @@ public class ClpSerializer {
 
 					method1.invoke(newModel, value1);
 
-					Method method2 = newModelClass.getMethod("setLastRefresh",
-							new Class[] { Date.class });
+					Method method2 = newModelClass.getMethod("setCourseId",
+							new Class[] { Long.TYPE });
 
-					Date value2 = oldCplModel.getLastRefresh();
+					Long value2 = new Long(oldCplModel.getCourseId());
 
 					method2.invoke(newModel, value2);
+
+					Method method3 = newModelClass.getMethod("setLastRefresh",
+							new Class[] { Date.class });
+
+					Date value3 = oldCplModel.getLastRefresh();
+
+					method3.invoke(newModel, value3);
 
 					return newModel;
 				}
@@ -221,10 +242,10 @@ public class ClpSerializer {
 
 					method0.invoke(newModel, value0);
 
-					Method method1 = newModelClass.getMethod("setLocalEntityId",
+					Method method1 = newModelClass.getMethod("setEntityId",
 							new Class[] { Long.TYPE });
 
-					Long value1 = new Long(oldCplModel.getLocalEntityId());
+					Long value1 = new Long(oldCplModel.getEntityId());
 
 					method1.invoke(newModel, value1);
 
@@ -296,24 +317,36 @@ public class ClpSerializer {
 				try {
 					CourseClp newModel = new CourseClp();
 
-					Method method0 = oldModelClass.getMethod("getCourseId");
+					Method method0 = oldModelClass.getMethod("getId");
 
 					Long value0 = (Long)method0.invoke(oldModel, (Object[])null);
 
-					newModel.setCourseId(value0);
+					newModel.setId(value0);
 
-					Method method1 = oldModelClass.getMethod("getName");
+					Method method1 = oldModelClass.getMethod("getCourseId");
 
-					String value1 = (String)method1.invoke(oldModel,
+					Long value1 = (Long)method1.invoke(oldModel, (Object[])null);
+
+					newModel.setCourseId(value1);
+
+					Method method2 = oldModelClass.getMethod("getName");
+
+					String value2 = (String)method2.invoke(oldModel,
 							(Object[])null);
 
-					newModel.setName(value1);
+					newModel.setName(value2);
 
-					Method method2 = oldModelClass.getMethod("getLastRefresh");
+					Method method3 = oldModelClass.getMethod("getEntityId");
 
-					Long value2 = (Long)method2.invoke(oldModel, (Object[])null);
+					Long value3 = (Long)method3.invoke(oldModel, (Object[])null);
 
-					newModel.setLastRefresh(value2);
+					newModel.setEntityId(value3);
+
+					Method method4 = oldModelClass.getMethod("getLastRefresh");
+
+					Long value4 = (Long)method4.invoke(oldModel, (Object[])null);
+
+					newModel.setLastRefresh(value4);
 
 					return newModel;
 				}
@@ -405,11 +438,17 @@ public class ClpSerializer {
 
 					newModel.setUserId(value1);
 
-					Method method2 = oldModelClass.getMethod("getLastRefresh");
+					Method method2 = oldModelClass.getMethod("getCourseId");
 
-					Date value2 = (Date)method2.invoke(oldModel, (Object[])null);
+					Long value2 = (Long)method2.invoke(oldModel, (Object[])null);
 
-					newModel.setLastRefresh(value2);
+					newModel.setCourseId(value2);
+
+					Method method3 = oldModelClass.getMethod("getLastRefresh");
+
+					Date value3 = (Date)method3.invoke(oldModel, (Object[])null);
+
+					newModel.setLastRefresh(value3);
 
 					return newModel;
 				}
@@ -439,11 +478,11 @@ public class ClpSerializer {
 
 					newModel.setHostId(value0);
 
-					Method method1 = oldModelClass.getMethod("getLocalEntityId");
+					Method method1 = oldModelClass.getMethod("getEntityId");
 
 					Long value1 = (Long)method1.invoke(oldModel, (Object[])null);
 
-					newModel.setLocalEntityId(value1);
+					newModel.setEntityId(value1);
 
 					Method method2 = oldModelClass.getMethod(
 							"getRemoteEntityId");

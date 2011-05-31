@@ -203,4 +203,21 @@ public interface EntityLocalService {
 	public org.gnenc.internet.mycourses.model.Entity updateEntity(
 		org.gnenc.internet.mycourses.model.Entity entity, boolean merge)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns entity from the database. Also notifies the appropriate model listeners.
+	*
+	* @param emailDomain the email domain to find by
+	* @return the entity that was found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gnenc.internet.mycourses.model.Entity> getEntityByDomain(
+		java.lang.String emailDomain)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getEntityUrl(long entityId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gnenc.internet.mycourses.NoSuchEntityException;
 }

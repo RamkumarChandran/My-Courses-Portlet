@@ -66,9 +66,9 @@ public interface UserEnrollmentModel extends BaseModel<UserEnrollment> {
 	/**
 	 * Sets the id of this user enrollment.
 	 *
-	 * @param Id the id of this user enrollment
+	 * @param id the id of this user enrollment
 	 */
-	public void setId(long Id);
+	public void setId(long id);
 
 	/**
 	 * Gets the user id of this user enrollment.
@@ -98,6 +98,20 @@ public interface UserEnrollmentModel extends BaseModel<UserEnrollment> {
 	 * @param userUuid the user uuid of this user enrollment
 	 */
 	public void setUserUuid(String userUuid);
+
+	/**
+	 * Gets the course id of this user enrollment.
+	 *
+	 * @return the course id of this user enrollment
+	 */
+	public long getCourseId();
+
+	/**
+	 * Sets the course id of this user enrollment.
+	 *
+	 * @param courseId the course id of this user enrollment
+	 */
+	public void setCourseId(long courseId);
 
 	/**
 	 * Gets the last refresh of this user enrollment.

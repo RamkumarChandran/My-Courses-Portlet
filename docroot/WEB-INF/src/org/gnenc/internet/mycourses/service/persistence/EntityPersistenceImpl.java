@@ -17,12 +17,16 @@ package org.gnenc.internet.mycourses.service.persistence;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.annotation.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
+import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
+import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.jdbc.RowMapper;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -1415,6 +1419,453 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	}
 
 	/**
+	 * Gets all the courses associated with the entity.
+	 *
+	 * @param pk the primary key of the entity to get the associated courses for
+	 * @return the courses associated with the entity
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<org.gnenc.internet.mycourses.model.Course> getCourses(long pk)
+		throws SystemException {
+		return getCourses(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	/**
+	 * Gets a range of all the courses associated with the entity.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param pk the primary key of the entity to get the associated courses for
+	 * @param start the lower bound of the range of entities to return
+	 * @param end the upper bound of the range of entities to return (not inclusive)
+	 * @return the range of courses associated with the entity
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<org.gnenc.internet.mycourses.model.Course> getCourses(long pk,
+		int start, int end) throws SystemException {
+		return getCourses(pk, start, end, null);
+	}
+
+	public static final FinderPath FINDER_PATH_GET_COURSES = new FinderPath(org.gnenc.internet.mycourses.model.impl.CourseModelImpl.ENTITY_CACHE_ENABLED,
+			org.gnenc.internet.mycourses.model.impl.CourseModelImpl.FINDER_CACHE_ENABLED,
+			org.gnenc.internet.mycourses.service.persistence.CoursePersistenceImpl.FINDER_CLASS_NAME_LIST,
+			"getCourses",
+			new String[] {
+				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+
+	/**
+	 * Gets an ordered range of all the courses associated with the entity.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param pk the primary key of the entity to get the associated courses for
+	 * @param start the lower bound of the range of entities to return
+	 * @param end the upper bound of the range of entities to return (not inclusive)
+	 * @param orderByComparator the comparator to order the results by
+	 * @return the ordered range of courses associated with the entity
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<org.gnenc.internet.mycourses.model.Course> getCourses(long pk,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		Object[] finderArgs = new Object[] {
+				pk, String.valueOf(start), String.valueOf(end),
+				String.valueOf(orderByComparator)
+			};
+
+		List<org.gnenc.internet.mycourses.model.Course> list = (List<org.gnenc.internet.mycourses.model.Course>)FinderCacheUtil.getResult(FINDER_PATH_GET_COURSES,
+				finderArgs, this);
+
+		if (list == null) {
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				String sql = null;
+
+				if (orderByComparator != null) {
+					sql = _SQL_GETCOURSES.concat(ORDER_BY_CLAUSE)
+										 .concat(orderByComparator.getOrderBy());
+				}
+				else {
+					sql = _SQL_GETCOURSES.concat(org.gnenc.internet.mycourses.model.impl.CourseModelImpl.ORDER_BY_SQL);
+				}
+
+				SQLQuery q = session.createSQLQuery(sql);
+
+				q.addEntity("MC_Course",
+					org.gnenc.internet.mycourses.model.impl.CourseImpl.class);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(pk);
+
+				list = (List<org.gnenc.internet.mycourses.model.Course>)QueryUtil.list(q,
+						getDialect(), start, end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_GET_COURSES,
+						finderArgs);
+				}
+				else {
+					coursePersistence.cacheResult(list);
+
+					FinderCacheUtil.putResult(FINDER_PATH_GET_COURSES,
+						finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	public static final FinderPath FINDER_PATH_GET_COURSES_SIZE = new FinderPath(org.gnenc.internet.mycourses.model.impl.CourseModelImpl.ENTITY_CACHE_ENABLED,
+			org.gnenc.internet.mycourses.model.impl.CourseModelImpl.FINDER_CACHE_ENABLED,
+			org.gnenc.internet.mycourses.service.persistence.CoursePersistenceImpl.FINDER_CLASS_NAME_LIST,
+			"getCoursesSize", new String[] { Long.class.getName() });
+
+	/**
+	 * Gets the number of courses associated with the entity.
+	 *
+	 * @param pk the primary key of the entity to get the number of associated courses for
+	 * @return the number of courses associated with the entity
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getCoursesSize(long pk) throws SystemException {
+		Object[] finderArgs = new Object[] { pk };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_GET_COURSES_SIZE,
+				finderArgs, this);
+
+		if (count == null) {
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				SQLQuery q = session.createSQLQuery(_SQL_GETCOURSESSIZE);
+
+				q.addScalar(COUNT_COLUMN_NAME,
+					com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(pk);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_GET_COURSES_SIZE,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	public static final FinderPath FINDER_PATH_CONTAINS_COURSE = new FinderPath(org.gnenc.internet.mycourses.model.impl.CourseModelImpl.ENTITY_CACHE_ENABLED,
+			org.gnenc.internet.mycourses.model.impl.CourseModelImpl.FINDER_CACHE_ENABLED,
+			org.gnenc.internet.mycourses.service.persistence.CoursePersistenceImpl.FINDER_CLASS_NAME_LIST,
+			"containsCourse",
+			new String[] { Long.class.getName(), Long.class.getName() });
+
+	/**
+	 * Determines if the course is associated with the entity.
+	 *
+	 * @param pk the primary key of the entity
+	 * @param coursePK the primary key of the course
+	 * @return <code>true</code> if the course is associated with the entity; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean containsCourse(long pk, long coursePK)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { pk, coursePK };
+
+		Boolean value = (Boolean)FinderCacheUtil.getResult(FINDER_PATH_CONTAINS_COURSE,
+				finderArgs, this);
+
+		if (value == null) {
+			try {
+				value = Boolean.valueOf(containsCourse.contains(pk, coursePK));
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (value == null) {
+					value = Boolean.FALSE;
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_CONTAINS_COURSE,
+					finderArgs, value);
+			}
+		}
+
+		return value.booleanValue();
+	}
+
+	/**
+	 * Determines if the entity has any courses associated with it.
+	 *
+	 * @param pk the primary key of the entity to check for associations with courses
+	 * @return <code>true</code> if the entity has any courses associated with it; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean containsCourses(long pk) throws SystemException {
+		if (getCoursesSize(pk) > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Gets all the hosts associated with the entity.
+	 *
+	 * @param pk the primary key of the entity to get the associated hosts for
+	 * @return the hosts associated with the entity
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<org.gnenc.internet.mycourses.model.Host> getHosts(long pk)
+		throws SystemException {
+		return getHosts(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	/**
+	 * Gets a range of all the hosts associated with the entity.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param pk the primary key of the entity to get the associated hosts for
+	 * @param start the lower bound of the range of entities to return
+	 * @param end the upper bound of the range of entities to return (not inclusive)
+	 * @return the range of hosts associated with the entity
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<org.gnenc.internet.mycourses.model.Host> getHosts(long pk,
+		int start, int end) throws SystemException {
+		return getHosts(pk, start, end, null);
+	}
+
+	public static final FinderPath FINDER_PATH_GET_HOSTS = new FinderPath(org.gnenc.internet.mycourses.model.impl.HostModelImpl.ENTITY_CACHE_ENABLED,
+			org.gnenc.internet.mycourses.model.impl.HostModelImpl.FINDER_CACHE_ENABLED,
+			org.gnenc.internet.mycourses.service.persistence.HostPersistenceImpl.FINDER_CLASS_NAME_LIST,
+			"getHosts",
+			new String[] {
+				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+
+	/**
+	 * Gets an ordered range of all the hosts associated with the entity.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param pk the primary key of the entity to get the associated hosts for
+	 * @param start the lower bound of the range of entities to return
+	 * @param end the upper bound of the range of entities to return (not inclusive)
+	 * @param orderByComparator the comparator to order the results by
+	 * @return the ordered range of hosts associated with the entity
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<org.gnenc.internet.mycourses.model.Host> getHosts(long pk,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		Object[] finderArgs = new Object[] {
+				pk, String.valueOf(start), String.valueOf(end),
+				String.valueOf(orderByComparator)
+			};
+
+		List<org.gnenc.internet.mycourses.model.Host> list = (List<org.gnenc.internet.mycourses.model.Host>)FinderCacheUtil.getResult(FINDER_PATH_GET_HOSTS,
+				finderArgs, this);
+
+		if (list == null) {
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				String sql = null;
+
+				if (orderByComparator != null) {
+					sql = _SQL_GETHOSTS.concat(ORDER_BY_CLAUSE)
+									   .concat(orderByComparator.getOrderBy());
+				}
+				else {
+					sql = _SQL_GETHOSTS.concat(org.gnenc.internet.mycourses.model.impl.HostModelImpl.ORDER_BY_SQL);
+				}
+
+				SQLQuery q = session.createSQLQuery(sql);
+
+				q.addEntity("MC_Host",
+					org.gnenc.internet.mycourses.model.impl.HostImpl.class);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(pk);
+
+				list = (List<org.gnenc.internet.mycourses.model.Host>)QueryUtil.list(q,
+						getDialect(), start, end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_GET_HOSTS,
+						finderArgs);
+				}
+				else {
+					hostPersistence.cacheResult(list);
+
+					FinderCacheUtil.putResult(FINDER_PATH_GET_HOSTS,
+						finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	public static final FinderPath FINDER_PATH_GET_HOSTS_SIZE = new FinderPath(org.gnenc.internet.mycourses.model.impl.HostModelImpl.ENTITY_CACHE_ENABLED,
+			org.gnenc.internet.mycourses.model.impl.HostModelImpl.FINDER_CACHE_ENABLED,
+			org.gnenc.internet.mycourses.service.persistence.HostPersistenceImpl.FINDER_CLASS_NAME_LIST,
+			"getHostsSize", new String[] { Long.class.getName() });
+
+	/**
+	 * Gets the number of hosts associated with the entity.
+	 *
+	 * @param pk the primary key of the entity to get the number of associated hosts for
+	 * @return the number of hosts associated with the entity
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getHostsSize(long pk) throws SystemException {
+		Object[] finderArgs = new Object[] { pk };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_GET_HOSTS_SIZE,
+				finderArgs, this);
+
+		if (count == null) {
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				SQLQuery q = session.createSQLQuery(_SQL_GETHOSTSSIZE);
+
+				q.addScalar(COUNT_COLUMN_NAME,
+					com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(pk);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_GET_HOSTS_SIZE,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	public static final FinderPath FINDER_PATH_CONTAINS_HOST = new FinderPath(org.gnenc.internet.mycourses.model.impl.HostModelImpl.ENTITY_CACHE_ENABLED,
+			org.gnenc.internet.mycourses.model.impl.HostModelImpl.FINDER_CACHE_ENABLED,
+			org.gnenc.internet.mycourses.service.persistence.HostPersistenceImpl.FINDER_CLASS_NAME_LIST,
+			"containsHost",
+			new String[] { Long.class.getName(), Long.class.getName() });
+
+	/**
+	 * Determines if the host is associated with the entity.
+	 *
+	 * @param pk the primary key of the entity
+	 * @param hostPK the primary key of the host
+	 * @return <code>true</code> if the host is associated with the entity; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean containsHost(long pk, long hostPK) throws SystemException {
+		Object[] finderArgs = new Object[] { pk, hostPK };
+
+		Boolean value = (Boolean)FinderCacheUtil.getResult(FINDER_PATH_CONTAINS_HOST,
+				finderArgs, this);
+
+		if (value == null) {
+			try {
+				value = Boolean.valueOf(containsHost.contains(pk, hostPK));
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (value == null) {
+					value = Boolean.FALSE;
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_CONTAINS_HOST,
+					finderArgs, value);
+			}
+		}
+
+		return value.booleanValue();
+	}
+
+	/**
+	 * Determines if the entity has any hosts associated with it.
+	 *
+	 * @param pk the primary key of the entity to check for associations with hosts
+	 * @return <code>true</code> if the entity has any hosts associated with it; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean containsHosts(long pk) throws SystemException {
+		if (getHostsSize(pk) > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
 	 * Initializes the entity persistence.
 	 */
 	public void afterPropertiesSet() {
@@ -1437,6 +1888,10 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 				_log.error(e);
 			}
 		}
+
+		containsCourse = new ContainsCourse(this);
+
+		containsHost = new ContainsHost(this);
 	}
 
 	public void destroy() {
@@ -1457,10 +1912,77 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+	protected ContainsCourse containsCourse;
+	protected ContainsHost containsHost;
+
+	protected class ContainsCourse {
+		protected ContainsCourse(EntityPersistenceImpl persistenceImpl) {
+			super();
+
+			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
+					_SQL_CONTAINSCOURSE,
+					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
+					RowMapper.COUNT);
+		}
+
+		protected boolean contains(long entityId, long id) {
+			List<Integer> results = _mappingSqlQuery.execute(new Object[] {
+						new Long(entityId), new Long(id)
+					});
+
+			if (results.size() > 0) {
+				Integer count = results.get(0);
+
+				if (count.intValue() > 0) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		private MappingSqlQuery<Integer> _mappingSqlQuery;
+	}
+
+	protected class ContainsHost {
+		protected ContainsHost(EntityPersistenceImpl persistenceImpl) {
+			super();
+
+			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
+					_SQL_CONTAINSHOST,
+					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
+					RowMapper.COUNT);
+		}
+
+		protected boolean contains(long entityId, long hostId) {
+			List<Integer> results = _mappingSqlQuery.execute(new Object[] {
+						new Long(entityId), new Long(hostId)
+					});
+
+			if (results.size() > 0) {
+				Integer count = results.get(0);
+
+				if (count.intValue() > 0) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		private MappingSqlQuery<Integer> _mappingSqlQuery;
+	}
+
 	private static final String _SQL_SELECT_ENTITY = "SELECT entity FROM Entity entity";
 	private static final String _SQL_SELECT_ENTITY_WHERE = "SELECT entity FROM Entity entity WHERE ";
 	private static final String _SQL_COUNT_ENTITY = "SELECT COUNT(entity) FROM Entity entity";
 	private static final String _SQL_COUNT_ENTITY_WHERE = "SELECT COUNT(entity) FROM Entity entity WHERE ";
+	private static final String _SQL_GETCOURSES = "SELECT {MC_Course.*} FROM MC_Course INNER JOIN MC_Entity ON (MC_Entity.entityId = MC_Course.entityId) WHERE (MC_Entity.entityId = ?)";
+	private static final String _SQL_GETCOURSESSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM MC_Course WHERE entityId = ?";
+	private static final String _SQL_CONTAINSCOURSE = "SELECT COUNT(*) AS COUNT_VALUE FROM MC_Course WHERE entityId = ? AND id_ = ?";
+	private static final String _SQL_GETHOSTS = "SELECT {MC_Host.*} FROM MC_Host INNER JOIN MC_Entity ON (MC_Entity.entityId = MC_Host.entityId) WHERE (MC_Entity.entityId = ?)";
+	private static final String _SQL_GETHOSTSSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM MC_Host WHERE entityId = ?";
+	private static final String _SQL_CONTAINSHOST = "SELECT COUNT(*) AS COUNT_VALUE FROM MC_Host WHERE entityId = ? AND hostId = ?";
 	private static final String _FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAINS_1 = "entity.emailDomains IS NULL";
 	private static final String _FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAINS_2 = "entity.emailDomains = ?";
 	private static final String _FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAINS_3 = "(entity.emailDomains IS NULL OR entity.emailDomains = ?)";

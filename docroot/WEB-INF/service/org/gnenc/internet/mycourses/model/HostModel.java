@@ -68,18 +68,18 @@ public interface HostModel extends BaseModel<Host> {
 	public void setHostId(long hostId);
 
 	/**
-	 * Gets the local entity id of this host.
+	 * Gets the entity id of this host.
 	 *
-	 * @return the local entity id of this host
+	 * @return the entity id of this host
 	 */
-	public long getLocalEntityId();
+	public long getEntityId();
 
 	/**
-	 * Sets the local entity id of this host.
+	 * Sets the entity id of this host.
 	 *
-	 * @param localEntityId the local entity id of this host
+	 * @param entityId the entity id of this host
 	 */
-	public void setLocalEntityId(long localEntityId);
+	public void setEntityId(long entityId);
 
 	/**
 	 * Gets the remote entity id of this host.

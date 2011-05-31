@@ -9,8 +9,12 @@
 	</persistence-unit-metadata>
 	<mapped-superclass class="org.gnenc.internet.mycourses.model.impl.CourseModelImpl">
 		<attributes>
-			<id name="courseId" />
+			<id name="id">
+				<column name="ID_" />
+			</id>
+			<basic name="courseId" />
 			<basic name="name" />
+			<basic name="entityId" />
 			<basic name="lastRefresh" />
 			<transient name="primaryKey" />
 		</attributes>
@@ -27,8 +31,11 @@
 	</mapped-superclass>
 	<mapped-superclass class="org.gnenc.internet.mycourses.model.impl.UserEnrollmentModelImpl">
 		<attributes>
-			<id name="Id" />
+			<id name="id">
+				<column name="ID_" />
+			</id>
 			<basic name="userId" />
+			<basic name="courseId" />
 			<basic name="lastRefresh">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
@@ -39,7 +46,7 @@
 	<mapped-superclass class="org.gnenc.internet.mycourses.model.impl.HostModelImpl">
 		<attributes>
 			<id name="hostId" />
-			<basic name="localEntityId" />
+			<basic name="entityId" />
 			<basic name="remoteEntityId" />
 			<basic name="peerId" />
 			<transient name="primaryKey" />

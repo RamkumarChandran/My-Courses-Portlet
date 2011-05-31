@@ -35,7 +35,7 @@ public class UserEnrollmentClp extends BaseModelImpl<UserEnrollment>
 	}
 
 	public long getPrimaryKey() {
-		return _Id;
+		return _id;
 	}
 
 	public void setPrimaryKey(long pk) {
@@ -43,15 +43,15 @@ public class UserEnrollmentClp extends BaseModelImpl<UserEnrollment>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_Id);
+		return new Long(_id);
 	}
 
 	public long getId() {
-		return _Id;
+		return _id;
 	}
 
-	public void setId(long Id) {
-		_Id = Id;
+	public void setId(long id) {
+		_id = id;
 	}
 
 	public long getUserId() {
@@ -68,6 +68,14 @@ public class UserEnrollmentClp extends BaseModelImpl<UserEnrollment>
 
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getCourseId() {
+		return _courseId;
+	}
+
+	public void setCourseId(long courseId) {
+		_courseId = courseId;
 	}
 
 	public Date getLastRefresh() {
@@ -94,6 +102,7 @@ public class UserEnrollmentClp extends BaseModelImpl<UserEnrollment>
 
 		clone.setId(getId());
 		clone.setUserId(getUserId());
+		clone.setCourseId(getCourseId());
 		clone.setLastRefresh(getLastRefresh());
 
 		return clone;
@@ -148,12 +157,14 @@ public class UserEnrollmentClp extends BaseModelImpl<UserEnrollment>
 	}
 
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
-		sb.append("{Id=");
+		sb.append("{id=");
 		sb.append(getId());
 		sb.append(", userId=");
 		sb.append(getUserId());
+		sb.append(", courseId=");
+		sb.append(getCourseId());
 		sb.append(", lastRefresh=");
 		sb.append(getLastRefresh());
 		sb.append("}");
@@ -162,19 +173,23 @@ public class UserEnrollmentClp extends BaseModelImpl<UserEnrollment>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gnenc.internet.mycourses.model.UserEnrollment");
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>Id</column-name><column-value><![CDATA[");
+			"<column><column-name>id</column-name><column-value><![CDATA[");
 		sb.append(getId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
 		sb.append(getUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>courseId</column-name><column-value><![CDATA[");
+		sb.append(getCourseId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>lastRefresh</column-name><column-value><![CDATA[");
@@ -186,8 +201,9 @@ public class UserEnrollmentClp extends BaseModelImpl<UserEnrollment>
 		return sb.toString();
 	}
 
-	private long _Id;
+	private long _id;
 	private long _userId;
 	private String _userUuid;
+	private long _courseId;
 	private Date _lastRefresh;
 }

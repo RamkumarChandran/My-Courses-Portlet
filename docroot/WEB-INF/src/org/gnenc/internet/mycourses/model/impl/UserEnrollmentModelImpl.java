@@ -57,11 +57,12 @@ public class UserEnrollmentModelImpl extends BaseModelImpl<UserEnrollment>
 	implements UserEnrollmentModel {
 	public static final String TABLE_NAME = "MC_UserEnrollment";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "Id", new Integer(Types.BIGINT) },
+			{ "id_", new Integer(Types.BIGINT) },
 			{ "userId", new Integer(Types.BIGINT) },
+			{ "courseId", new Integer(Types.BIGINT) },
 			{ "lastRefresh", new Integer(Types.TIMESTAMP) }
 		};
-	public static final String TABLE_SQL_CREATE = "create table MC_UserEnrollment (Id LONG not null primary key,userId LONG,lastRefresh DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table MC_UserEnrollment (id_ LONG not null primary key,userId LONG,courseId LONG,lastRefresh DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MC_UserEnrollment";
 	public static final String ORDER_BY_JPQL = " ORDER BY userEnrollment.userId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MC_UserEnrollment.userId ASC";
@@ -81,7 +82,7 @@ public class UserEnrollmentModelImpl extends BaseModelImpl<UserEnrollment>
 	}
 
 	public long getPrimaryKey() {
-		return _Id;
+		return _id;
 	}
 
 	public void setPrimaryKey(long pk) {
@@ -89,15 +90,15 @@ public class UserEnrollmentModelImpl extends BaseModelImpl<UserEnrollment>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_Id);
+		return new Long(_id);
 	}
 
 	public long getId() {
-		return _Id;
+		return _id;
 	}
 
-	public void setId(long Id) {
-		_Id = Id;
+	public void setId(long id) {
+		_id = id;
 	}
 
 	public long getUserId() {
@@ -114,6 +115,14 @@ public class UserEnrollmentModelImpl extends BaseModelImpl<UserEnrollment>
 
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getCourseId() {
+		return _courseId;
+	}
+
+	public void setCourseId(long courseId) {
+		_courseId = courseId;
 	}
 
 	public Date getLastRefresh() {
@@ -154,6 +163,8 @@ public class UserEnrollmentModelImpl extends BaseModelImpl<UserEnrollment>
 		userEnrollmentImpl.setId(getId());
 
 		userEnrollmentImpl.setUserId(getUserId());
+
+		userEnrollmentImpl.setCourseId(getCourseId());
 
 		userEnrollmentImpl.setLastRefresh(getLastRefresh());
 
@@ -209,12 +220,14 @@ public class UserEnrollmentModelImpl extends BaseModelImpl<UserEnrollment>
 	}
 
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
-		sb.append("{Id=");
+		sb.append("{id=");
 		sb.append(getId());
 		sb.append(", userId=");
 		sb.append(getUserId());
+		sb.append(", courseId=");
+		sb.append(getCourseId());
 		sb.append(", lastRefresh=");
 		sb.append(getLastRefresh());
 		sb.append("}");
@@ -223,19 +236,23 @@ public class UserEnrollmentModelImpl extends BaseModelImpl<UserEnrollment>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gnenc.internet.mycourses.model.UserEnrollment");
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>Id</column-name><column-value><![CDATA[");
+			"<column><column-name>id</column-name><column-value><![CDATA[");
 		sb.append(getId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
 		sb.append(getUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>courseId</column-name><column-value><![CDATA[");
+		sb.append(getCourseId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>lastRefresh</column-name><column-value><![CDATA[");
@@ -247,9 +264,10 @@ public class UserEnrollmentModelImpl extends BaseModelImpl<UserEnrollment>
 		return sb.toString();
 	}
 
-	private long _Id;
+	private long _id;
 	private long _userId;
 	private String _userUuid;
+	private long _courseId;
 	private Date _lastRefresh;
 	private transient ExpandoBridge _expandoBridge;
 }

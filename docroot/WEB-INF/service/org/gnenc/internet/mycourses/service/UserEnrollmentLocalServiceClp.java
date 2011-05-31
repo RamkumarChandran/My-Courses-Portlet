@@ -55,11 +55,11 @@ public class UserEnrollmentLocalServiceClp implements UserEnrollmentLocalService
 	}
 
 	public org.gnenc.internet.mycourses.model.UserEnrollment createUserEnrollment(
-		long Id) {
+		long id) {
 		Object returnObj = null;
 
 		MethodHandler methodHandler = new MethodHandler(_createUserEnrollmentMethodKey1,
-				Id);
+				id);
 
 		try {
 			returnObj = _classLoaderProxy.invoke(methodHandler);
@@ -77,11 +77,11 @@ public class UserEnrollmentLocalServiceClp implements UserEnrollmentLocalService
 		return (org.gnenc.internet.mycourses.model.UserEnrollment)ClpSerializer.translateOutput(returnObj);
 	}
 
-	public void deleteUserEnrollment(long Id)
+	public void deleteUserEnrollment(long id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		MethodHandler methodHandler = new MethodHandler(_deleteUserEnrollmentMethodKey2,
-				Id);
+				id);
 
 		try {
 			_classLoaderProxy.invoke(methodHandler);
@@ -247,13 +247,13 @@ public class UserEnrollmentLocalServiceClp implements UserEnrollmentLocalService
 	}
 
 	public org.gnenc.internet.mycourses.model.UserEnrollment getUserEnrollment(
-		long Id)
+		long id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		MethodHandler methodHandler = new MethodHandler(_getUserEnrollmentMethodKey8,
-				Id);
+				id);
 
 		try {
 			returnObj = _classLoaderProxy.invoke(methodHandler);
@@ -390,6 +390,29 @@ public class UserEnrollmentLocalServiceClp implements UserEnrollmentLocalService
 		return (org.gnenc.internet.mycourses.model.UserEnrollment)ClpSerializer.translateOutput(returnObj);
 	}
 
+	public java.util.List<org.gnenc.internet.mycourses.model.UserEnrollment> getUserEnrollmentsByUserId(
+		long userId) {
+		Object returnObj = null;
+
+		MethodHandler methodHandler = new MethodHandler(_getUserEnrollmentsByUserIdMethodKey13,
+				userId);
+
+		try {
+			returnObj = _classLoaderProxy.invoke(methodHandler);
+		}
+		catch (Throwable t) {
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<org.gnenc.internet.mycourses.model.UserEnrollment>)ClpSerializer.translateOutput(returnObj);
+	}
+
 	public ClassLoaderProxy getClassLoaderProxy() {
 		return _classLoaderProxy;
 	}
@@ -431,4 +454,6 @@ public class UserEnrollmentLocalServiceClp implements UserEnrollmentLocalService
 			"updateUserEnrollment",
 			org.gnenc.internet.mycourses.model.UserEnrollment.class,
 			boolean.class);
+	private MethodKey _getUserEnrollmentsByUserIdMethodKey13 = new MethodKey(_classLoaderProxy.getClassName(),
+			"getUserEnrollmentsByUserId", long.class);
 }

@@ -51,25 +51,25 @@ public class UserEnrollmentLocalServiceUtil {
 	/**
 	* Creates a new user enrollment with the primary key. Does not add the user enrollment to the database.
 	*
-	* @param Id the primary key for the new user enrollment
+	* @param id the primary key for the new user enrollment
 	* @return the new user enrollment
 	*/
 	public static org.gnenc.internet.mycourses.model.UserEnrollment createUserEnrollment(
-		long Id) {
-		return getService().createUserEnrollment(Id);
+		long id) {
+		return getService().createUserEnrollment(id);
 	}
 
 	/**
 	* Deletes the user enrollment with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param Id the primary key of the user enrollment to delete
+	* @param id the primary key of the user enrollment to delete
 	* @throws PortalException if a user enrollment with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteUserEnrollment(long Id)
+	public static void deleteUserEnrollment(long id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteUserEnrollment(Id);
+		getService().deleteUserEnrollment(id);
 	}
 
 	/**
@@ -158,16 +158,16 @@ public class UserEnrollmentLocalServiceUtil {
 	/**
 	* Gets the user enrollment with the primary key.
 	*
-	* @param Id the primary key of the user enrollment to get
+	* @param id the primary key of the user enrollment to get
 	* @return the user enrollment
 	* @throws PortalException if a user enrollment with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gnenc.internet.mycourses.model.UserEnrollment getUserEnrollment(
-		long Id)
+		long id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserEnrollment(Id);
+		return getService().getUserEnrollment(id);
 	}
 
 	/**
@@ -225,6 +225,11 @@ public class UserEnrollmentLocalServiceUtil {
 		boolean merge)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().updateUserEnrollment(userEnrollment, merge);
+	}
+
+	public static java.util.List<org.gnenc.internet.mycourses.model.UserEnrollment> getUserEnrollmentsByUserId(
+		long userId) {
+		return getService().getUserEnrollmentsByUserId(userId);
 	}
 
 	public static void clearService() {

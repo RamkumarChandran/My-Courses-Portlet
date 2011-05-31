@@ -54,19 +54,19 @@ public interface CourseLocalService {
 	/**
 	* Creates a new course with the primary key. Does not add the course to the database.
 	*
-	* @param courseId the primary key for the new course
+	* @param id the primary key for the new course
 	* @return the new course
 	*/
-	public org.gnenc.internet.mycourses.model.Course createCourse(long courseId);
+	public org.gnenc.internet.mycourses.model.Course createCourse(long id);
 
 	/**
 	* Deletes the course with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param courseId the primary key of the course to delete
+	* @param id the primary key of the course to delete
 	* @throws PortalException if a course with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteCourse(long courseId)
+	public void deleteCourse(long id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -144,13 +144,13 @@ public interface CourseLocalService {
 	/**
 	* Gets the course with the primary key.
 	*
-	* @param courseId the primary key of the course to get
+	* @param id the primary key of the course to get
 	* @return the course
 	* @throws PortalException if a course with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.gnenc.internet.mycourses.model.Course getCourse(long courseId)
+	public org.gnenc.internet.mycourses.model.Course getCourse(long id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -203,4 +203,10 @@ public interface CourseLocalService {
 	public org.gnenc.internet.mycourses.model.Course updateCourse(
 		org.gnenc.internet.mycourses.model.Course course, boolean merge)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.gnenc.internet.mycourses.model.Course getCourseByEntity(
+		long courseId, long entityId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gnenc.internet.mycourses.NoSuchCourseException;
 }

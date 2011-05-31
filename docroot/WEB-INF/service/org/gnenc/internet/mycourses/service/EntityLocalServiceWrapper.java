@@ -216,6 +216,25 @@ public class EntityLocalServiceWrapper implements EntityLocalService {
 		return _entityLocalService.updateEntity(entity, merge);
 	}
 
+	/**
+	* Returns entity from the database. Also notifies the appropriate model listeners.
+	*
+	* @param emailDomain the email domain to find by
+	* @return the entity that was found
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<org.gnenc.internet.mycourses.model.Entity> getEntityByDomain(
+		java.lang.String emailDomain)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _entityLocalService.getEntityByDomain(emailDomain);
+	}
+
+	public java.lang.String getEntityUrl(long entityId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gnenc.internet.mycourses.NoSuchEntityException {
+		return _entityLocalService.getEntityUrl(entityId);
+	}
+
 	public EntityLocalService getWrappedEntityLocalService() {
 		return _entityLocalService;
 	}

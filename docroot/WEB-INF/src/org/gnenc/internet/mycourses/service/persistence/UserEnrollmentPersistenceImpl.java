@@ -17,16 +17,12 @@ package org.gnenc.internet.mycourses.service.persistence;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.annotation.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
-import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.jdbc.RowMapper;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -89,6 +85,19 @@ public class UserEnrollmentPersistenceImpl extends BasePersistenceImpl<UserEnrol
 	public static final FinderPath FINDER_PATH_COUNT_BY_USERID = new FinderPath(UserEnrollmentModelImpl.ENTITY_CACHE_ENABLED,
 			UserEnrollmentModelImpl.FINDER_CACHE_ENABLED,
 			FINDER_CLASS_NAME_LIST, "countByUserId",
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_COURSEID = new FinderPath(UserEnrollmentModelImpl.ENTITY_CACHE_ENABLED,
+			UserEnrollmentModelImpl.FINDER_CACHE_ENABLED,
+			FINDER_CLASS_NAME_LIST, "findByCourseId",
+			new String[] {
+				Long.class.getName(),
+				
+			"java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+	public static final FinderPath FINDER_PATH_COUNT_BY_COURSEID = new FinderPath(UserEnrollmentModelImpl.ENTITY_CACHE_ENABLED,
+			UserEnrollmentModelImpl.FINDER_CACHE_ENABLED,
+			FINDER_CLASS_NAME_LIST, "countByCourseId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_LASTREFRESH = new FinderPath(UserEnrollmentModelImpl.ENTITY_CACHE_ENABLED,
 			UserEnrollmentModelImpl.FINDER_CACHE_ENABLED,
@@ -166,14 +175,14 @@ public class UserEnrollmentPersistenceImpl extends BasePersistenceImpl<UserEnrol
 	/**
 	 * Creates a new user enrollment with the primary key. Does not add the user enrollment to the database.
 	 *
-	 * @param Id the primary key for the new user enrollment
+	 * @param id the primary key for the new user enrollment
 	 * @return the new user enrollment
 	 */
-	public UserEnrollment create(long Id) {
+	public UserEnrollment create(long id) {
 		UserEnrollment userEnrollment = new UserEnrollmentImpl();
 
 		userEnrollment.setNew(true);
-		userEnrollment.setPrimaryKey(Id);
+		userEnrollment.setPrimaryKey(id);
 
 		return userEnrollment;
 	}
@@ -194,12 +203,12 @@ public class UserEnrollmentPersistenceImpl extends BasePersistenceImpl<UserEnrol
 	/**
 	 * Removes the user enrollment with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param Id the primary key of the user enrollment to remove
+	 * @param id the primary key of the user enrollment to remove
 	 * @return the user enrollment that was removed
 	 * @throws org.gnenc.internet.mycourses.NoSuchUserEnrollmentException if a user enrollment with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public UserEnrollment remove(long Id)
+	public UserEnrollment remove(long id)
 		throws NoSuchUserEnrollmentException, SystemException {
 		Session session = null;
 
@@ -207,15 +216,15 @@ public class UserEnrollmentPersistenceImpl extends BasePersistenceImpl<UserEnrol
 			session = openSession();
 
 			UserEnrollment userEnrollment = (UserEnrollment)session.get(UserEnrollmentImpl.class,
-					new Long(Id));
+					new Long(id));
 
 			if (userEnrollment == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + Id);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + id);
 				}
 
 				throw new NoSuchUserEnrollmentException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					Id);
+					id);
 			}
 
 			return remove(userEnrollment);
@@ -299,6 +308,7 @@ public class UserEnrollmentPersistenceImpl extends BasePersistenceImpl<UserEnrol
 
 		userEnrollmentImpl.setId(userEnrollment.getId());
 		userEnrollmentImpl.setUserId(userEnrollment.getUserId());
+		userEnrollmentImpl.setCourseId(userEnrollment.getCourseId());
 		userEnrollmentImpl.setLastRefresh(userEnrollment.getLastRefresh());
 
 		return userEnrollmentImpl;
@@ -320,22 +330,22 @@ public class UserEnrollmentPersistenceImpl extends BasePersistenceImpl<UserEnrol
 	/**
 	 * Finds the user enrollment with the primary key or throws a {@link org.gnenc.internet.mycourses.NoSuchUserEnrollmentException} if it could not be found.
 	 *
-	 * @param Id the primary key of the user enrollment to find
+	 * @param id the primary key of the user enrollment to find
 	 * @return the user enrollment
 	 * @throws org.gnenc.internet.mycourses.NoSuchUserEnrollmentException if a user enrollment with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public UserEnrollment findByPrimaryKey(long Id)
+	public UserEnrollment findByPrimaryKey(long id)
 		throws NoSuchUserEnrollmentException, SystemException {
-		UserEnrollment userEnrollment = fetchByPrimaryKey(Id);
+		UserEnrollment userEnrollment = fetchByPrimaryKey(id);
 
 		if (userEnrollment == null) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + Id);
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + id);
 			}
 
 			throw new NoSuchUserEnrollmentException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				Id);
+				id);
 		}
 
 		return userEnrollment;
@@ -356,13 +366,13 @@ public class UserEnrollmentPersistenceImpl extends BasePersistenceImpl<UserEnrol
 	/**
 	 * Finds the user enrollment with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param Id the primary key of the user enrollment to find
+	 * @param id the primary key of the user enrollment to find
 	 * @return the user enrollment, or <code>null</code> if a user enrollment with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public UserEnrollment fetchByPrimaryKey(long Id) throws SystemException {
+	public UserEnrollment fetchByPrimaryKey(long id) throws SystemException {
 		UserEnrollment userEnrollment = (UserEnrollment)EntityCacheUtil.getResult(UserEnrollmentModelImpl.ENTITY_CACHE_ENABLED,
-				UserEnrollmentImpl.class, Id, this);
+				UserEnrollmentImpl.class, id, this);
 
 		if (userEnrollment == null) {
 			Session session = null;
@@ -371,7 +381,7 @@ public class UserEnrollmentPersistenceImpl extends BasePersistenceImpl<UserEnrol
 				session = openSession();
 
 				userEnrollment = (UserEnrollment)session.get(UserEnrollmentImpl.class,
-						new Long(Id));
+						new Long(id));
 			}
 			catch (Exception e) {
 				throw processException(e);
@@ -586,17 +596,17 @@ public class UserEnrollmentPersistenceImpl extends BasePersistenceImpl<UserEnrol
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param Id the primary key of the current user enrollment
+	 * @param id the primary key of the current user enrollment
 	 * @param userId the user id to search with
 	 * @param orderByComparator the comparator to order the set by
 	 * @return the previous, current, and next user enrollment
 	 * @throws org.gnenc.internet.mycourses.NoSuchUserEnrollmentException if a user enrollment with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public UserEnrollment[] findByUserId_PrevAndNext(long Id, long userId,
+	public UserEnrollment[] findByUserId_PrevAndNext(long id, long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserEnrollmentException, SystemException {
-		UserEnrollment userEnrollment = findByPrimaryKey(Id);
+		UserEnrollment userEnrollment = findByPrimaryKey(id);
 
 		Session session = null;
 
@@ -708,6 +718,347 @@ public class UserEnrollmentPersistenceImpl extends BasePersistenceImpl<UserEnrol
 		QueryPos qPos = QueryPos.getInstance(q);
 
 		qPos.add(userId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByValues(userEnrollment);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<UserEnrollment> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Finds all the user enrollments where courseId = &#63;.
+	 *
+	 * @param courseId the course id to search with
+	 * @return the matching user enrollments
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<UserEnrollment> findByCourseId(long courseId)
+		throws SystemException {
+		return findByCourseId(courseId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Finds a range of all the user enrollments where courseId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param courseId the course id to search with
+	 * @param start the lower bound of the range of user enrollments to return
+	 * @param end the upper bound of the range of user enrollments to return (not inclusive)
+	 * @return the range of matching user enrollments
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<UserEnrollment> findByCourseId(long courseId, int start, int end)
+		throws SystemException {
+		return findByCourseId(courseId, start, end, null);
+	}
+
+	/**
+	 * Finds an ordered range of all the user enrollments where courseId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param courseId the course id to search with
+	 * @param start the lower bound of the range of user enrollments to return
+	 * @param end the upper bound of the range of user enrollments to return (not inclusive)
+	 * @param orderByComparator the comparator to order the results by
+	 * @return the ordered range of matching user enrollments
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<UserEnrollment> findByCourseId(long courseId, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		Object[] finderArgs = new Object[] {
+				courseId,
+				
+				String.valueOf(start), String.valueOf(end),
+				String.valueOf(orderByComparator)
+			};
+
+		List<UserEnrollment> list = (List<UserEnrollment>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_COURSEID,
+				finderArgs, this);
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_USERENROLLMENT_WHERE);
+
+			query.append(_FINDER_COLUMN_COURSEID_COURSEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			else {
+				query.append(UserEnrollmentModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(courseId);
+
+				list = (List<UserEnrollment>)QueryUtil.list(q, getDialect(),
+						start, end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COURSEID,
+						finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_COURSEID,
+						finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Finds the first user enrollment in the ordered set where courseId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param courseId the course id to search with
+	 * @param orderByComparator the comparator to order the set by
+	 * @return the first matching user enrollment
+	 * @throws org.gnenc.internet.mycourses.NoSuchUserEnrollmentException if a matching user enrollment could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserEnrollment findByCourseId_First(long courseId,
+		OrderByComparator orderByComparator)
+		throws NoSuchUserEnrollmentException, SystemException {
+		List<UserEnrollment> list = findByCourseId(courseId, 0, 1,
+				orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("courseId=");
+			msg.append(courseId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchUserEnrollmentException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Finds the last user enrollment in the ordered set where courseId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param courseId the course id to search with
+	 * @param orderByComparator the comparator to order the set by
+	 * @return the last matching user enrollment
+	 * @throws org.gnenc.internet.mycourses.NoSuchUserEnrollmentException if a matching user enrollment could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserEnrollment findByCourseId_Last(long courseId,
+		OrderByComparator orderByComparator)
+		throws NoSuchUserEnrollmentException, SystemException {
+		int count = countByCourseId(courseId);
+
+		List<UserEnrollment> list = findByCourseId(courseId, count - 1, count,
+				orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("courseId=");
+			msg.append(courseId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchUserEnrollmentException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Finds the user enrollments before and after the current user enrollment in the ordered set where courseId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param id the primary key of the current user enrollment
+	 * @param courseId the course id to search with
+	 * @param orderByComparator the comparator to order the set by
+	 * @return the previous, current, and next user enrollment
+	 * @throws org.gnenc.internet.mycourses.NoSuchUserEnrollmentException if a user enrollment with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserEnrollment[] findByCourseId_PrevAndNext(long id, long courseId,
+		OrderByComparator orderByComparator)
+		throws NoSuchUserEnrollmentException, SystemException {
+		UserEnrollment userEnrollment = findByPrimaryKey(id);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			UserEnrollment[] array = new UserEnrollmentImpl[3];
+
+			array[0] = getByCourseId_PrevAndNext(session, userEnrollment,
+					courseId, orderByComparator, true);
+
+			array[1] = userEnrollment;
+
+			array[2] = getByCourseId_PrevAndNext(session, userEnrollment,
+					courseId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected UserEnrollment getByCourseId_PrevAndNext(Session session,
+		UserEnrollment userEnrollment, long courseId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_USERENROLLMENT_WHERE);
+
+		query.append(_FINDER_COLUMN_COURSEID_COURSEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			if (orderByFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		else {
+			query.append(UserEnrollmentModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(courseId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByValues(userEnrollment);
@@ -934,17 +1285,17 @@ public class UserEnrollmentPersistenceImpl extends BasePersistenceImpl<UserEnrol
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param Id the primary key of the current user enrollment
+	 * @param id the primary key of the current user enrollment
 	 * @param lastRefresh the last refresh to search with
 	 * @param orderByComparator the comparator to order the set by
 	 * @return the previous, current, and next user enrollment
 	 * @throws org.gnenc.internet.mycourses.NoSuchUserEnrollmentException if a user enrollment with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public UserEnrollment[] findByLastRefresh_PrevAndNext(long Id,
+	public UserEnrollment[] findByLastRefresh_PrevAndNext(long id,
 		Date lastRefresh, OrderByComparator orderByComparator)
 		throws NoSuchUserEnrollmentException, SystemException {
-		UserEnrollment userEnrollment = findByPrimaryKey(Id);
+		UserEnrollment userEnrollment = findByPrimaryKey(id);
 
 		Session session = null;
 
@@ -1204,6 +1555,18 @@ public class UserEnrollmentPersistenceImpl extends BasePersistenceImpl<UserEnrol
 	}
 
 	/**
+	 * Removes all the user enrollments where courseId = &#63; from the database.
+	 *
+	 * @param courseId the course id to search with
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByCourseId(long courseId) throws SystemException {
+		for (UserEnrollment userEnrollment : findByCourseId(courseId)) {
+			remove(userEnrollment);
+		}
+	}
+
+	/**
 	 * Removes all the user enrollments where lastRefresh = &#63; from the database.
 	 *
 	 * @param lastRefresh the last refresh to search with
@@ -1270,6 +1633,59 @@ public class UserEnrollmentPersistenceImpl extends BasePersistenceImpl<UserEnrol
 				}
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_USERID,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Counts all the user enrollments where courseId = &#63;.
+	 *
+	 * @param courseId the course id to search with
+	 * @return the number of matching user enrollments
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByCourseId(long courseId) throws SystemException {
+		Object[] finderArgs = new Object[] { courseId };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_COURSEID,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_USERENROLLMENT_WHERE);
+
+			query.append(_FINDER_COLUMN_COURSEID_COURSEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(courseId);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_COURSEID,
 					finderArgs, count);
 
 				closeSession(session);
@@ -1380,230 +1796,6 @@ public class UserEnrollmentPersistenceImpl extends BasePersistenceImpl<UserEnrol
 	}
 
 	/**
-	 * Gets all the courses associated with the user enrollment.
-	 *
-	 * @param pk the primary key of the user enrollment to get the associated courses for
-	 * @return the courses associated with the user enrollment
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<org.gnenc.internet.mycourses.model.Course> getCourses(long pk)
-		throws SystemException {
-		return getCourses(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-	}
-
-	/**
-	 * Gets a range of all the courses associated with the user enrollment.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param pk the primary key of the user enrollment to get the associated courses for
-	 * @param start the lower bound of the range of user enrollments to return
-	 * @param end the upper bound of the range of user enrollments to return (not inclusive)
-	 * @return the range of courses associated with the user enrollment
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<org.gnenc.internet.mycourses.model.Course> getCourses(long pk,
-		int start, int end) throws SystemException {
-		return getCourses(pk, start, end, null);
-	}
-
-	public static final FinderPath FINDER_PATH_GET_COURSES = new FinderPath(org.gnenc.internet.mycourses.model.impl.CourseModelImpl.ENTITY_CACHE_ENABLED,
-			org.gnenc.internet.mycourses.model.impl.CourseModelImpl.FINDER_CACHE_ENABLED,
-			org.gnenc.internet.mycourses.service.persistence.CoursePersistenceImpl.FINDER_CLASS_NAME_LIST,
-			"getCourses",
-			new String[] {
-				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
-				"com.liferay.portal.kernel.util.OrderByComparator"
-			});
-
-	/**
-	 * Gets an ordered range of all the courses associated with the user enrollment.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param pk the primary key of the user enrollment to get the associated courses for
-	 * @param start the lower bound of the range of user enrollments to return
-	 * @param end the upper bound of the range of user enrollments to return (not inclusive)
-	 * @param orderByComparator the comparator to order the results by
-	 * @return the ordered range of courses associated with the user enrollment
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<org.gnenc.internet.mycourses.model.Course> getCourses(long pk,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				pk, String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
-
-		List<org.gnenc.internet.mycourses.model.Course> list = (List<org.gnenc.internet.mycourses.model.Course>)FinderCacheUtil.getResult(FINDER_PATH_GET_COURSES,
-				finderArgs, this);
-
-		if (list == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sql = _SQL_GETCOURSES.concat(ORDER_BY_CLAUSE)
-										 .concat(orderByComparator.getOrderBy());
-				}
-				else {
-					sql = _SQL_GETCOURSES.concat(org.gnenc.internet.mycourses.model.impl.CourseModelImpl.ORDER_BY_SQL);
-				}
-
-				SQLQuery q = session.createSQLQuery(sql);
-
-				q.addEntity("MC_Course",
-					org.gnenc.internet.mycourses.model.impl.CourseImpl.class);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(pk);
-
-				list = (List<org.gnenc.internet.mycourses.model.Course>)QueryUtil.list(q,
-						getDialect(), start, end);
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_GET_COURSES,
-						finderArgs);
-				}
-				else {
-					coursePersistence.cacheResult(list);
-
-					FinderCacheUtil.putResult(FINDER_PATH_GET_COURSES,
-						finderArgs, list);
-				}
-
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	public static final FinderPath FINDER_PATH_GET_COURSES_SIZE = new FinderPath(org.gnenc.internet.mycourses.model.impl.CourseModelImpl.ENTITY_CACHE_ENABLED,
-			org.gnenc.internet.mycourses.model.impl.CourseModelImpl.FINDER_CACHE_ENABLED,
-			org.gnenc.internet.mycourses.service.persistence.CoursePersistenceImpl.FINDER_CLASS_NAME_LIST,
-			"getCoursesSize", new String[] { Long.class.getName() });
-
-	/**
-	 * Gets the number of courses associated with the user enrollment.
-	 *
-	 * @param pk the primary key of the user enrollment to get the number of associated courses for
-	 * @return the number of courses associated with the user enrollment
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int getCoursesSize(long pk) throws SystemException {
-		Object[] finderArgs = new Object[] { pk };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_GET_COURSES_SIZE,
-				finderArgs, this);
-
-		if (count == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				SQLQuery q = session.createSQLQuery(_SQL_GETCOURSESSIZE);
-
-				q.addScalar(COUNT_COLUMN_NAME,
-					com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(pk);
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_GET_COURSES_SIZE,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	public static final FinderPath FINDER_PATH_CONTAINS_COURSE = new FinderPath(org.gnenc.internet.mycourses.model.impl.CourseModelImpl.ENTITY_CACHE_ENABLED,
-			org.gnenc.internet.mycourses.model.impl.CourseModelImpl.FINDER_CACHE_ENABLED,
-			org.gnenc.internet.mycourses.service.persistence.CoursePersistenceImpl.FINDER_CLASS_NAME_LIST,
-			"containsCourse",
-			new String[] { Long.class.getName(), Long.class.getName() });
-
-	/**
-	 * Determines if the course is associated with the user enrollment.
-	 *
-	 * @param pk the primary key of the user enrollment
-	 * @param coursePK the primary key of the course
-	 * @return <code>true</code> if the course is associated with the user enrollment; <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
-	 */
-	public boolean containsCourse(long pk, long coursePK)
-		throws SystemException {
-		Object[] finderArgs = new Object[] { pk, coursePK };
-
-		Boolean value = (Boolean)FinderCacheUtil.getResult(FINDER_PATH_CONTAINS_COURSE,
-				finderArgs, this);
-
-		if (value == null) {
-			try {
-				value = Boolean.valueOf(containsCourse.contains(pk, coursePK));
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (value == null) {
-					value = Boolean.FALSE;
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_CONTAINS_COURSE,
-					finderArgs, value);
-			}
-		}
-
-		return value.booleanValue();
-	}
-
-	/**
-	 * Determines if the user enrollment has any courses associated with it.
-	 *
-	 * @param pk the primary key of the user enrollment to check for associations with courses
-	 * @return <code>true</code> if the user enrollment has any courses associated with it; <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
-	 */
-	public boolean containsCourses(long pk) throws SystemException {
-		if (getCoursesSize(pk) > 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	/**
 	 * Initializes the user enrollment persistence.
 	 */
 	public void afterPropertiesSet() {
@@ -1626,8 +1818,6 @@ public class UserEnrollmentPersistenceImpl extends BasePersistenceImpl<UserEnrol
 				_log.error(e);
 			}
 		}
-
-		containsCourse = new ContainsCourse(this);
 	}
 
 	public void destroy() {
@@ -1648,45 +1838,12 @@ public class UserEnrollmentPersistenceImpl extends BasePersistenceImpl<UserEnrol
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	protected ContainsCourse containsCourse;
-
-	protected class ContainsCourse {
-		protected ContainsCourse(UserEnrollmentPersistenceImpl persistenceImpl) {
-			super();
-
-			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
-					_SQL_CONTAINSCOURSE,
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
-					RowMapper.COUNT);
-		}
-
-		protected boolean contains(long Id, long courseId) {
-			List<Integer> results = _mappingSqlQuery.execute(new Object[] {
-						new Long(Id), new Long(courseId)
-					});
-
-			if (results.size() > 0) {
-				Integer count = results.get(0);
-
-				if (count.intValue() > 0) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		private MappingSqlQuery<Integer> _mappingSqlQuery;
-	}
-
 	private static final String _SQL_SELECT_USERENROLLMENT = "SELECT userEnrollment FROM UserEnrollment userEnrollment";
 	private static final String _SQL_SELECT_USERENROLLMENT_WHERE = "SELECT userEnrollment FROM UserEnrollment userEnrollment WHERE ";
 	private static final String _SQL_COUNT_USERENROLLMENT = "SELECT COUNT(userEnrollment) FROM UserEnrollment userEnrollment";
 	private static final String _SQL_COUNT_USERENROLLMENT_WHERE = "SELECT COUNT(userEnrollment) FROM UserEnrollment userEnrollment WHERE ";
-	private static final String _SQL_GETCOURSES = "SELECT {MC_Course.*} FROM MC_Course INNER JOIN MC_UserEnrollment ON (MC_UserEnrollment.Id = MC_Course.Id) WHERE (MC_UserEnrollment.Id = ?)";
-	private static final String _SQL_GETCOURSESSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM MC_Course WHERE Id = ?";
-	private static final String _SQL_CONTAINSCOURSE = "SELECT COUNT(*) AS COUNT_VALUE FROM MC_Course WHERE Id = ? AND courseId = ?";
 	private static final String _FINDER_COLUMN_USERID_USERID_2 = "userEnrollment.userId = ?";
+	private static final String _FINDER_COLUMN_COURSEID_COURSEID_2 = "userEnrollment.courseId = ?";
 	private static final String _FINDER_COLUMN_LASTREFRESH_LASTREFRESH_1 = "userEnrollment.lastRefresh IS NULL";
 	private static final String _FINDER_COLUMN_LASTREFRESH_LASTREFRESH_2 = "userEnrollment.lastRefresh = ?";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "userEnrollment.";

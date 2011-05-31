@@ -15,11 +15,24 @@
 %>
 <%@include file="/init.jsp" %>
 
+<% 
+/** long entityId = MyCoursePortlet.getUserHomeSchool(renderRequest); */
+long entityId = 1;
+String url = EntityLocalServiceUtil.getEntityUrl(entityId);
+List<Course> courses = MyCoursePortlet.getAllEnrollments(renderRequest);
+%>
+
 <div id="mycourses">
-	<h2 id="headline_main">My Courses</h2>
+	<p id="headline_main">My Courses</p>
 	<span id="tip">Click course name to go to class</span>
 	
 	<h2 class="headline_entity"></h2>
-	<% /** Use a loop or List object here to list all of the courses the user is enrolled in */ %>
-	
+	<%
+	for (Course course : courses) 
+	{
+	%>
+		<a href='<%=url%>/course/view.php?id=<%=course.getCourseId()%>' target='_blank' class='courseName'><%=course.getName().toString()%></a>
+	<% 
+	} 
+	%>
 </div>

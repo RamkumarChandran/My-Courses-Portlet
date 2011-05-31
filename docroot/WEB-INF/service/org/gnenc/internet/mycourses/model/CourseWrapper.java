@@ -36,6 +36,14 @@ public class CourseWrapper implements Course {
 		_course.setPrimaryKey(pk);
 	}
 
+	public long getId() {
+		return _course.getId();
+	}
+
+	public void setId(long id) {
+		_course.setId(id);
+	}
+
 	public long getCourseId() {
 		return _course.getCourseId();
 	}
@@ -50,6 +58,14 @@ public class CourseWrapper implements Course {
 
 	public void setName(java.lang.String name) {
 		_course.setName(name);
+	}
+
+	public long getEntityId() {
+		return _course.getEntityId();
+	}
+
+	public void setEntityId(long entityId) {
+		_course.setEntityId(entityId);
 	}
 
 	public long getLastRefresh() {

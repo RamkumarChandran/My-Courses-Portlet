@@ -226,6 +226,25 @@ public class EntityLocalServiceUtil {
 		return getService().updateEntity(entity, merge);
 	}
 
+	/**
+	* Returns entity from the database. Also notifies the appropriate model listeners.
+	*
+	* @param emailDomain the email domain to find by
+	* @return the entity that was found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<org.gnenc.internet.mycourses.model.Entity> getEntityByDomain(
+		java.lang.String emailDomain)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getEntityByDomain(emailDomain);
+	}
+
+	public static java.lang.String getEntityUrl(long entityId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gnenc.internet.mycourses.NoSuchEntityException {
+		return getService().getEntityUrl(entityId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

@@ -55,6 +55,20 @@ public interface CourseModel extends BaseModel<Course> {
 	public void setPrimaryKey(long pk);
 
 	/**
+	 * Gets the id of this course.
+	 *
+	 * @return the id of this course
+	 */
+	public long getId();
+
+	/**
+	 * Sets the id of this course.
+	 *
+	 * @param id the id of this course
+	 */
+	public void setId(long id);
+
+	/**
 	 * Gets the course id of this course.
 	 *
 	 * @return the course id of this course
@@ -82,6 +96,20 @@ public interface CourseModel extends BaseModel<Course> {
 	 * @param name the name of this course
 	 */
 	public void setName(String name);
+
+	/**
+	 * Gets the entity id of this course.
+	 *
+	 * @return the entity id of this course
+	 */
+	public long getEntityId();
+
+	/**
+	 * Sets the entity id of this course.
+	 *
+	 * @param entityId the entity id of this course
+	 */
+	public void setEntityId(long entityId);
 
 	/**
 	 * Gets the last refresh of this course.

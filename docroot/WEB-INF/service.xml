@@ -8,21 +8,20 @@
 
 	<entity name="Course" local-service="true" remote-service="false">
 	
-		<column name="courseId" type="long" primary="true" />
+		<column name="id" type="long" primary="true" />
+		
+		<column name="courseId" type="long" />
 		
 		<column name="name" type="String" />
 		
-		<column name="entityId" type="Collection" entity="Entity" mapping-key="entityId" />
+		<column name="entityId" type="long" />
 		<column name="lastRefresh" type="long" />
 		
 		<order by="asc">
 			<order-column name="name" case-sensitive="false" />
-			<order-column name="entityId" />
 		</order>
 		
-		<!--Service Builder automatically inserts a finder for the primary key-->
-		
-		<finder name="EntityId" return-type="Collection">
+		<finder name="entityId" return-type="Collection" >
 			<finder-column name="entityId" />
 		</finder>
 		
@@ -34,9 +33,12 @@
 		
 		<column name="entityName" type="String" />
 		<column name="url" type="String" />
-		
 		<column name="emailDomains" type="String"/>
 		<column name="dbName" type="String" />
+		
+		<column name="courses" type="Collection" entity="Course" mapping-key="entityId" />
+		
+		<column name="hosts" type="Collection" entity="Host" mapping-key="entityId" />
 		
 		<order by="asc">
 			<order-column name="entityName" case-sensitive="false" />
@@ -52,12 +54,12 @@
 	
 	</entity>
 	
-	<entity name="User" local-service="true" remote-service="false" >
+	<entity name="UserEnrollment" local-service="true" remote-service="false" >
 	
-		<column name="Id" type="long" primary="true"/>
+		<column name="id" type="long" primary="true"/>
 		<column name="userId" type = "long"/>
 		
-		<column name="courseId" type="Collection" entity="Course" mapping-key="courseId"/>
+		<column name="courseId" type="long" />
 		
 		<column name="lastRefresh" type="Date" />
 	
@@ -67,6 +69,10 @@
 		
 		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId"/>
+		</finder>
+		
+		<finder name="CourseId" return-type="Collection">
+			<finder-column name="courseId" />
 		</finder>
 		
 		<finder name="LastRefresh" return-type="Collection">
@@ -79,8 +85,8 @@
 		
 		<column name="hostId" type="long" primary="true"/>
 		
-		<column name="localEntityId" type="Collection" entity="Entity" mapping-key="entityId"/>
-		<column name="remoteEntityId" type="Collection" entity="Entity" mapping-key="entityId"/>
+		<column name="entityId" type="long"/>
+		<column name="remoteEntityId" type="long"/>
 		
 		<column name="peerId" type="long"/>
 		
@@ -89,7 +95,7 @@
 		</order>
 		
 		<finder name="LRentity" return-type="Collection">
-			<finder-column name="localEntityId"/>
+			<finder-column name="entityId"/>
 			<finder-column name="remoteEntityId"/>
 		</finder>
 		

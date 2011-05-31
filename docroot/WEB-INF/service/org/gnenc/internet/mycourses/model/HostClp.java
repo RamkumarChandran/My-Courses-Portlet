@@ -49,12 +49,12 @@ public class HostClp extends BaseModelImpl<Host> implements Host {
 		_hostId = hostId;
 	}
 
-	public long getLocalEntityId() {
-		return _localEntityId;
+	public long getEntityId() {
+		return _entityId;
 	}
 
-	public void setLocalEntityId(long localEntityId) {
-		_localEntityId = localEntityId;
+	public void setEntityId(long entityId) {
+		_entityId = entityId;
 	}
 
 	public long getRemoteEntityId() {
@@ -87,7 +87,7 @@ public class HostClp extends BaseModelImpl<Host> implements Host {
 		HostClp clone = new HostClp();
 
 		clone.setHostId(getHostId());
-		clone.setLocalEntityId(getLocalEntityId());
+		clone.setEntityId(getEntityId());
 		clone.setRemoteEntityId(getRemoteEntityId());
 		clone.setPeerId(getPeerId());
 
@@ -147,8 +147,8 @@ public class HostClp extends BaseModelImpl<Host> implements Host {
 
 		sb.append("{hostId=");
 		sb.append(getHostId());
-		sb.append(", localEntityId=");
-		sb.append(getLocalEntityId());
+		sb.append(", entityId=");
+		sb.append(getEntityId());
 		sb.append(", remoteEntityId=");
 		sb.append(getRemoteEntityId());
 		sb.append(", peerId=");
@@ -170,8 +170,8 @@ public class HostClp extends BaseModelImpl<Host> implements Host {
 		sb.append(getHostId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>localEntityId</column-name><column-value><![CDATA[");
-		sb.append(getLocalEntityId());
+			"<column><column-name>entityId</column-name><column-value><![CDATA[");
+		sb.append(getEntityId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>remoteEntityId</column-name><column-value><![CDATA[");
@@ -188,7 +188,7 @@ public class HostClp extends BaseModelImpl<Host> implements Host {
 	}
 
 	private long _hostId;
-	private long _localEntityId;
+	private long _entityId;
 	private long _remoteEntityId;
 	private long _peerId;
 }

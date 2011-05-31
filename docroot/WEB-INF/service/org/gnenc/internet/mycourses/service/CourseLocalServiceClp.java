@@ -54,11 +54,11 @@ public class CourseLocalServiceClp implements CourseLocalService {
 		return (org.gnenc.internet.mycourses.model.Course)ClpSerializer.translateOutput(returnObj);
 	}
 
-	public org.gnenc.internet.mycourses.model.Course createCourse(long courseId) {
+	public org.gnenc.internet.mycourses.model.Course createCourse(long id) {
 		Object returnObj = null;
 
 		MethodHandler methodHandler = new MethodHandler(_createCourseMethodKey1,
-				courseId);
+				id);
 
 		try {
 			returnObj = _classLoaderProxy.invoke(methodHandler);
@@ -76,11 +76,11 @@ public class CourseLocalServiceClp implements CourseLocalService {
 		return (org.gnenc.internet.mycourses.model.Course)ClpSerializer.translateOutput(returnObj);
 	}
 
-	public void deleteCourse(long courseId)
+	public void deleteCourse(long id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		MethodHandler methodHandler = new MethodHandler(_deleteCourseMethodKey2,
-				courseId);
+				id);
 
 		try {
 			_classLoaderProxy.invoke(methodHandler);
@@ -244,13 +244,12 @@ public class CourseLocalServiceClp implements CourseLocalService {
 		return ((Long)returnObj).longValue();
 	}
 
-	public org.gnenc.internet.mycourses.model.Course getCourse(long courseId)
+	public org.gnenc.internet.mycourses.model.Course getCourse(long id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
-		MethodHandler methodHandler = new MethodHandler(_getCourseMethodKey8,
-				courseId);
+		MethodHandler methodHandler = new MethodHandler(_getCourseMethodKey8, id);
 
 		try {
 			returnObj = _classLoaderProxy.invoke(methodHandler);
@@ -386,6 +385,39 @@ public class CourseLocalServiceClp implements CourseLocalService {
 		return (org.gnenc.internet.mycourses.model.Course)ClpSerializer.translateOutput(returnObj);
 	}
 
+	public org.gnenc.internet.mycourses.model.Course getCourseByEntity(
+		long courseId, long entityId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gnenc.internet.mycourses.NoSuchCourseException {
+		Object returnObj = null;
+
+		MethodHandler methodHandler = new MethodHandler(_getCourseByEntityMethodKey13,
+				courseId, entityId);
+
+		try {
+			returnObj = _classLoaderProxy.invoke(methodHandler);
+		}
+		catch (Throwable t) {
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof org.gnenc.internet.mycourses.NoSuchCourseException) {
+				throw (org.gnenc.internet.mycourses.NoSuchCourseException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.gnenc.internet.mycourses.model.Course)ClpSerializer.translateOutput(returnObj);
+	}
+
 	public ClassLoaderProxy getClassLoaderProxy() {
 		return _classLoaderProxy;
 	}
@@ -423,4 +455,6 @@ public class CourseLocalServiceClp implements CourseLocalService {
 	private MethodKey _updateCourseMethodKey12 = new MethodKey(_classLoaderProxy.getClassName(),
 			"updateCourse", org.gnenc.internet.mycourses.model.Course.class,
 			boolean.class);
+	private MethodKey _getCourseByEntityMethodKey13 = new MethodKey(_classLoaderProxy.getClassName(),
+			"getCourseByEntity", long.class, long.class);
 }

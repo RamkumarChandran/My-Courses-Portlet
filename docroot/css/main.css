@@ -1,0 +1,11 @@
+#headline_main {
+	font-weight: bold;
+	font-size: 1.8em;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}
+
+.courseName {
+	display: block;
+	font-size: 1.4em;
+}

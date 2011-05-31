@@ -54,20 +54,20 @@ public interface UserEnrollmentPersistence extends BasePersistence<UserEnrollmen
 	/**
 	* Creates a new user enrollment with the primary key. Does not add the user enrollment to the database.
 	*
-	* @param Id the primary key for the new user enrollment
+	* @param id the primary key for the new user enrollment
 	* @return the new user enrollment
 	*/
-	public org.gnenc.internet.mycourses.model.UserEnrollment create(long Id);
+	public org.gnenc.internet.mycourses.model.UserEnrollment create(long id);
 
 	/**
 	* Removes the user enrollment with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param Id the primary key of the user enrollment to remove
+	* @param id the primary key of the user enrollment to remove
 	* @return the user enrollment that was removed
 	* @throws org.gnenc.internet.mycourses.NoSuchUserEnrollmentException if a user enrollment with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gnenc.internet.mycourses.model.UserEnrollment remove(long Id)
+	public org.gnenc.internet.mycourses.model.UserEnrollment remove(long id)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gnenc.internet.mycourses.NoSuchUserEnrollmentException;
 
@@ -79,25 +79,25 @@ public interface UserEnrollmentPersistence extends BasePersistence<UserEnrollmen
 	/**
 	* Finds the user enrollment with the primary key or throws a {@link org.gnenc.internet.mycourses.NoSuchUserEnrollmentException} if it could not be found.
 	*
-	* @param Id the primary key of the user enrollment to find
+	* @param id the primary key of the user enrollment to find
 	* @return the user enrollment
 	* @throws org.gnenc.internet.mycourses.NoSuchUserEnrollmentException if a user enrollment with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gnenc.internet.mycourses.model.UserEnrollment findByPrimaryKey(
-		long Id)
+		long id)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gnenc.internet.mycourses.NoSuchUserEnrollmentException;
 
 	/**
 	* Finds the user enrollment with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param Id the primary key of the user enrollment to find
+	* @param id the primary key of the user enrollment to find
 	* @return the user enrollment, or <code>null</code> if a user enrollment with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gnenc.internet.mycourses.model.UserEnrollment fetchByPrimaryKey(
-		long Id) throws com.liferay.portal.kernel.exception.SystemException;
+		long id) throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Finds all the user enrollments where userId = &#63;.
@@ -190,7 +190,7 @@ public interface UserEnrollmentPersistence extends BasePersistence<UserEnrollmen
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param Id the primary key of the current user enrollment
+	* @param id the primary key of the current user enrollment
 	* @param userId the user id to search with
 	* @param orderByComparator the comparator to order the set by
 	* @return the previous, current, and next user enrollment
@@ -198,7 +198,112 @@ public interface UserEnrollmentPersistence extends BasePersistence<UserEnrollmen
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gnenc.internet.mycourses.model.UserEnrollment[] findByUserId_PrevAndNext(
-		long Id, long userId,
+		long id, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gnenc.internet.mycourses.NoSuchUserEnrollmentException;
+
+	/**
+	* Finds all the user enrollments where courseId = &#63;.
+	*
+	* @param courseId the course id to search with
+	* @return the matching user enrollments
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<org.gnenc.internet.mycourses.model.UserEnrollment> findByCourseId(
+		long courseId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Finds a range of all the user enrollments where courseId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param courseId the course id to search with
+	* @param start the lower bound of the range of user enrollments to return
+	* @param end the upper bound of the range of user enrollments to return (not inclusive)
+	* @return the range of matching user enrollments
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<org.gnenc.internet.mycourses.model.UserEnrollment> findByCourseId(
+		long courseId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Finds an ordered range of all the user enrollments where courseId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param courseId the course id to search with
+	* @param start the lower bound of the range of user enrollments to return
+	* @param end the upper bound of the range of user enrollments to return (not inclusive)
+	* @param orderByComparator the comparator to order the results by
+	* @return the ordered range of matching user enrollments
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<org.gnenc.internet.mycourses.model.UserEnrollment> findByCourseId(
+		long courseId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Finds the first user enrollment in the ordered set where courseId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param courseId the course id to search with
+	* @param orderByComparator the comparator to order the set by
+	* @return the first matching user enrollment
+	* @throws org.gnenc.internet.mycourses.NoSuchUserEnrollmentException if a matching user enrollment could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public org.gnenc.internet.mycourses.model.UserEnrollment findByCourseId_First(
+		long courseId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gnenc.internet.mycourses.NoSuchUserEnrollmentException;
+
+	/**
+	* Finds the last user enrollment in the ordered set where courseId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param courseId the course id to search with
+	* @param orderByComparator the comparator to order the set by
+	* @return the last matching user enrollment
+	* @throws org.gnenc.internet.mycourses.NoSuchUserEnrollmentException if a matching user enrollment could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public org.gnenc.internet.mycourses.model.UserEnrollment findByCourseId_Last(
+		long courseId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gnenc.internet.mycourses.NoSuchUserEnrollmentException;
+
+	/**
+	* Finds the user enrollments before and after the current user enrollment in the ordered set where courseId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param id the primary key of the current user enrollment
+	* @param courseId the course id to search with
+	* @param orderByComparator the comparator to order the set by
+	* @return the previous, current, and next user enrollment
+	* @throws org.gnenc.internet.mycourses.NoSuchUserEnrollmentException if a user enrollment with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public org.gnenc.internet.mycourses.model.UserEnrollment[] findByCourseId_PrevAndNext(
+		long id, long courseId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gnenc.internet.mycourses.NoSuchUserEnrollmentException;
@@ -295,7 +400,7 @@ public interface UserEnrollmentPersistence extends BasePersistence<UserEnrollmen
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param Id the primary key of the current user enrollment
+	* @param id the primary key of the current user enrollment
 	* @param lastRefresh the last refresh to search with
 	* @param orderByComparator the comparator to order the set by
 	* @return the previous, current, and next user enrollment
@@ -303,7 +408,7 @@ public interface UserEnrollmentPersistence extends BasePersistence<UserEnrollmen
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gnenc.internet.mycourses.model.UserEnrollment[] findByLastRefresh_PrevAndNext(
-		long Id, java.util.Date lastRefresh,
+		long id, java.util.Date lastRefresh,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gnenc.internet.mycourses.NoSuchUserEnrollmentException;
@@ -361,6 +466,15 @@ public interface UserEnrollmentPersistence extends BasePersistence<UserEnrollmen
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes all the user enrollments where courseId = &#63; from the database.
+	*
+	* @param courseId the course id to search with
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByCourseId(long courseId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Removes all the user enrollments where lastRefresh = &#63; from the database.
 	*
 	* @param lastRefresh the last refresh to search with
@@ -388,6 +502,16 @@ public interface UserEnrollmentPersistence extends BasePersistence<UserEnrollmen
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Counts all the user enrollments where courseId = &#63;.
+	*
+	* @param courseId the course id to search with
+	* @return the number of matching user enrollments
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByCourseId(long courseId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Counts all the user enrollments where lastRefresh = &#63;.
 	*
 	* @param lastRefresh the last refresh to search with
@@ -404,82 +528,5 @@ public interface UserEnrollmentPersistence extends BasePersistence<UserEnrollmen
 	* @throws SystemException if a system exception occurred
 	*/
 	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Gets all the courses associated with the user enrollment.
-	*
-	* @param pk the primary key of the user enrollment to get the associated courses for
-	* @return the courses associated with the user enrollment
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<org.gnenc.internet.mycourses.model.Course> getCourses(
-		long pk) throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Gets a range of all the courses associated with the user enrollment.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param pk the primary key of the user enrollment to get the associated courses for
-	* @param start the lower bound of the range of user enrollments to return
-	* @param end the upper bound of the range of user enrollments to return (not inclusive)
-	* @return the range of courses associated with the user enrollment
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<org.gnenc.internet.mycourses.model.Course> getCourses(
-		long pk, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Gets an ordered range of all the courses associated with the user enrollment.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param pk the primary key of the user enrollment to get the associated courses for
-	* @param start the lower bound of the range of user enrollments to return
-	* @param end the upper bound of the range of user enrollments to return (not inclusive)
-	* @param orderByComparator the comparator to order the results by
-	* @return the ordered range of courses associated with the user enrollment
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<org.gnenc.internet.mycourses.model.Course> getCourses(
-		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Gets the number of courses associated with the user enrollment.
-	*
-	* @param pk the primary key of the user enrollment to get the number of associated courses for
-	* @return the number of courses associated with the user enrollment
-	* @throws SystemException if a system exception occurred
-	*/
-	public int getCoursesSize(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Determines if the course is associated with the user enrollment.
-	*
-	* @param pk the primary key of the user enrollment
-	* @param coursePK the primary key of the course
-	* @return <code>true</code> if the course is associated with the user enrollment; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
-	*/
-	public boolean containsCourse(long pk, long coursePK)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Determines if the user enrollment has any courses associated with it.
-	*
-	* @param pk the primary key of the user enrollment to check for associations with courses
-	* @return <code>true</code> if the user enrollment has any courses associated with it; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
-	*/
-	public boolean containsCourses(long pk)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

@@ -30,15 +30,23 @@ public class CourseClp extends BaseModelImpl<Course> implements Course {
 	}
 
 	public long getPrimaryKey() {
-		return _courseId;
+		return _id;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setCourseId(pk);
+		setId(pk);
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_courseId);
+		return new Long(_id);
+	}
+
+	public long getId() {
+		return _id;
+	}
+
+	public void setId(long id) {
+		_id = id;
 	}
 
 	public long getCourseId() {
@@ -55,6 +63,14 @@ public class CourseClp extends BaseModelImpl<Course> implements Course {
 
 	public void setName(String name) {
 		_name = name;
+	}
+
+	public long getEntityId() {
+		return _entityId;
+	}
+
+	public void setEntityId(long entityId) {
+		_entityId = entityId;
 	}
 
 	public long getLastRefresh() {
@@ -78,8 +94,10 @@ public class CourseClp extends BaseModelImpl<Course> implements Course {
 	public Object clone() {
 		CourseClp clone = new CourseClp();
 
+		clone.setId(getId());
 		clone.setCourseId(getCourseId());
 		clone.setName(getName());
+		clone.setEntityId(getEntityId());
 		clone.setLastRefresh(getLastRefresh());
 
 		return clone;
@@ -126,12 +144,16 @@ public class CourseClp extends BaseModelImpl<Course> implements Course {
 	}
 
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(11);
 
-		sb.append("{courseId=");
+		sb.append("{id=");
+		sb.append(getId());
+		sb.append(", courseId=");
 		sb.append(getCourseId());
 		sb.append(", name=");
 		sb.append(getName());
+		sb.append(", entityId=");
+		sb.append(getEntityId());
 		sb.append(", lastRefresh=");
 		sb.append(getLastRefresh());
 		sb.append("}");
@@ -140,12 +162,16 @@ public class CourseClp extends BaseModelImpl<Course> implements Course {
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gnenc.internet.mycourses.model.Course");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>id</column-name><column-value><![CDATA[");
+		sb.append(getId());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>courseId</column-name><column-value><![CDATA[");
 		sb.append(getCourseId());
@@ -153,6 +179,10 @@ public class CourseClp extends BaseModelImpl<Course> implements Course {
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>entityId</column-name><column-value><![CDATA[");
+		sb.append(getEntityId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>lastRefresh</column-name><column-value><![CDATA[");
@@ -164,7 +194,9 @@ public class CourseClp extends BaseModelImpl<Course> implements Course {
 		return sb.toString();
 	}
 
+	private long _id;
 	private long _courseId;
 	private String _name;
+	private long _entityId;
 	private long _lastRefresh;
 }

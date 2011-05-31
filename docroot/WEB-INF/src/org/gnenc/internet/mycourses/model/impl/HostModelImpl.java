@@ -53,11 +53,11 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	public static final String TABLE_NAME = "MC_Host";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "hostId", new Integer(Types.BIGINT) },
-			{ "localEntityId", new Integer(Types.BIGINT) },
+			{ "entityId", new Integer(Types.BIGINT) },
 			{ "remoteEntityId", new Integer(Types.BIGINT) },
 			{ "peerId", new Integer(Types.BIGINT) }
 		};
-	public static final String TABLE_SQL_CREATE = "create table MC_Host (hostId LONG not null primary key,localEntityId LONG,remoteEntityId LONG,peerId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table MC_Host (hostId LONG not null primary key,entityId LONG,remoteEntityId LONG,peerId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table MC_Host";
 	public static final String ORDER_BY_JPQL = " ORDER BY host.hostId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MC_Host.hostId ASC";
@@ -96,12 +96,12 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		_hostId = hostId;
 	}
 
-	public long getLocalEntityId() {
-		return _localEntityId;
+	public long getEntityId() {
+		return _entityId;
 	}
 
-	public void setLocalEntityId(long localEntityId) {
-		_localEntityId = localEntityId;
+	public void setEntityId(long entityId) {
+		_entityId = entityId;
 	}
 
 	public long getRemoteEntityId() {
@@ -148,7 +148,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 		hostImpl.setHostId(getHostId());
 
-		hostImpl.setLocalEntityId(getLocalEntityId());
+		hostImpl.setEntityId(getEntityId());
 
 		hostImpl.setRemoteEntityId(getRemoteEntityId());
 
@@ -210,8 +210,8 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 		sb.append("{hostId=");
 		sb.append(getHostId());
-		sb.append(", localEntityId=");
-		sb.append(getLocalEntityId());
+		sb.append(", entityId=");
+		sb.append(getEntityId());
 		sb.append(", remoteEntityId=");
 		sb.append(getRemoteEntityId());
 		sb.append(", peerId=");
@@ -233,8 +233,8 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		sb.append(getHostId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>localEntityId</column-name><column-value><![CDATA[");
-		sb.append(getLocalEntityId());
+			"<column><column-name>entityId</column-name><column-value><![CDATA[");
+		sb.append(getEntityId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>remoteEntityId</column-name><column-value><![CDATA[");
@@ -251,7 +251,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	}
 
 	private long _hostId;
-	private long _localEntityId;
+	private long _entityId;
 	private long _remoteEntityId;
 	private long _peerId;
 	private transient ExpandoBridge _expandoBridge;

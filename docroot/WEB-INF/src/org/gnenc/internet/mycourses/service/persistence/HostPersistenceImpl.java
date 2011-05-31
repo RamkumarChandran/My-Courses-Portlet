@@ -271,7 +271,7 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 		hostImpl.setPrimaryKey(host.getPrimaryKey());
 
 		hostImpl.setHostId(host.getHostId());
-		hostImpl.setLocalEntityId(host.getLocalEntityId());
+		hostImpl.setEntityId(host.getEntityId());
 		hostImpl.setRemoteEntityId(host.getRemoteEntityId());
 		hostImpl.setPeerId(host.getPeerId());
 
@@ -362,46 +362,46 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Finds all the hosts where localEntityId = &#63; and remoteEntityId = &#63;.
+	 * Finds all the hosts where entityId = &#63; and remoteEntityId = &#63;.
 	 *
-	 * @param localEntityId the local entity id to search with
+	 * @param entityId the entity id to search with
 	 * @param remoteEntityId the remote entity id to search with
 	 * @return the matching hosts
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Host> findByLRentity(long localEntityId, long remoteEntityId)
+	public List<Host> findByLRentity(long entityId, long remoteEntityId)
 		throws SystemException {
-		return findByLRentity(localEntityId, remoteEntityId, QueryUtil.ALL_POS,
+		return findByLRentity(entityId, remoteEntityId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Finds a range of all the hosts where localEntityId = &#63; and remoteEntityId = &#63;.
+	 * Finds a range of all the hosts where entityId = &#63; and remoteEntityId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param localEntityId the local entity id to search with
+	 * @param entityId the entity id to search with
 	 * @param remoteEntityId the remote entity id to search with
 	 * @param start the lower bound of the range of hosts to return
 	 * @param end the upper bound of the range of hosts to return (not inclusive)
 	 * @return the range of matching hosts
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Host> findByLRentity(long localEntityId, long remoteEntityId,
+	public List<Host> findByLRentity(long entityId, long remoteEntityId,
 		int start, int end) throws SystemException {
-		return findByLRentity(localEntityId, remoteEntityId, start, end, null);
+		return findByLRentity(entityId, remoteEntityId, start, end, null);
 	}
 
 	/**
-	 * Finds an ordered range of all the hosts where localEntityId = &#63; and remoteEntityId = &#63;.
+	 * Finds an ordered range of all the hosts where entityId = &#63; and remoteEntityId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param localEntityId the local entity id to search with
+	 * @param entityId the entity id to search with
 	 * @param remoteEntityId the remote entity id to search with
 	 * @param start the lower bound of the range of hosts to return
 	 * @param end the upper bound of the range of hosts to return (not inclusive)
@@ -409,11 +409,11 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	 * @return the ordered range of matching hosts
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Host> findByLRentity(long localEntityId, long remoteEntityId,
+	public List<Host> findByLRentity(long entityId, long remoteEntityId,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
 		Object[] finderArgs = new Object[] {
-				localEntityId, remoteEntityId,
+				entityId, remoteEntityId,
 				
 				String.valueOf(start), String.valueOf(end),
 				String.valueOf(orderByComparator)
@@ -435,7 +435,7 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 			query.append(_SQL_SELECT_HOST_WHERE);
 
-			query.append(_FINDER_COLUMN_LRENTITY_LOCALENTITYID_2);
+			query.append(_FINDER_COLUMN_LRENTITY_ENTITYID_2);
 
 			query.append(_FINDER_COLUMN_LRENTITY_REMOTEENTITYID_2);
 
@@ -459,7 +459,7 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(localEntityId);
+				qPos.add(entityId);
 
 				qPos.add(remoteEntityId);
 
@@ -488,23 +488,23 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Finds the first host in the ordered set where localEntityId = &#63; and remoteEntityId = &#63;.
+	 * Finds the first host in the ordered set where entityId = &#63; and remoteEntityId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param localEntityId the local entity id to search with
+	 * @param entityId the entity id to search with
 	 * @param remoteEntityId the remote entity id to search with
 	 * @param orderByComparator the comparator to order the set by
 	 * @return the first matching host
 	 * @throws org.gnenc.internet.mycourses.NoSuchHostException if a matching host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Host findByLRentity_First(long localEntityId, long remoteEntityId,
+	public Host findByLRentity_First(long entityId, long remoteEntityId,
 		OrderByComparator orderByComparator)
 		throws NoSuchHostException, SystemException {
-		List<Host> list = findByLRentity(localEntityId, remoteEntityId, 0, 1,
+		List<Host> list = findByLRentity(entityId, remoteEntityId, 0, 1,
 				orderByComparator);
 
 		if (list.isEmpty()) {
@@ -512,8 +512,8 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("localEntityId=");
-			msg.append(localEntityId);
+			msg.append("entityId=");
+			msg.append(entityId);
 
 			msg.append(", remoteEntityId=");
 			msg.append(remoteEntityId);
@@ -528,34 +528,34 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Finds the last host in the ordered set where localEntityId = &#63; and remoteEntityId = &#63;.
+	 * Finds the last host in the ordered set where entityId = &#63; and remoteEntityId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param localEntityId the local entity id to search with
+	 * @param entityId the entity id to search with
 	 * @param remoteEntityId the remote entity id to search with
 	 * @param orderByComparator the comparator to order the set by
 	 * @return the last matching host
 	 * @throws org.gnenc.internet.mycourses.NoSuchHostException if a matching host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Host findByLRentity_Last(long localEntityId, long remoteEntityId,
+	public Host findByLRentity_Last(long entityId, long remoteEntityId,
 		OrderByComparator orderByComparator)
 		throws NoSuchHostException, SystemException {
-		int count = countByLRentity(localEntityId, remoteEntityId);
+		int count = countByLRentity(entityId, remoteEntityId);
 
-		List<Host> list = findByLRentity(localEntityId, remoteEntityId,
-				count - 1, count, orderByComparator);
+		List<Host> list = findByLRentity(entityId, remoteEntityId, count - 1,
+				count, orderByComparator);
 
 		if (list.isEmpty()) {
 			StringBundler msg = new StringBundler(6);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("localEntityId=");
-			msg.append(localEntityId);
+			msg.append("entityId=");
+			msg.append(entityId);
 
 			msg.append(", remoteEntityId=");
 			msg.append(remoteEntityId);
@@ -570,21 +570,21 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Finds the hosts before and after the current host in the ordered set where localEntityId = &#63; and remoteEntityId = &#63;.
+	 * Finds the hosts before and after the current host in the ordered set where entityId = &#63; and remoteEntityId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param hostId the primary key of the current host
-	 * @param localEntityId the local entity id to search with
+	 * @param entityId the entity id to search with
 	 * @param remoteEntityId the remote entity id to search with
 	 * @param orderByComparator the comparator to order the set by
 	 * @return the previous, current, and next host
 	 * @throws org.gnenc.internet.mycourses.NoSuchHostException if a host with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Host[] findByLRentity_PrevAndNext(long hostId, long localEntityId,
+	public Host[] findByLRentity_PrevAndNext(long hostId, long entityId,
 		long remoteEntityId, OrderByComparator orderByComparator)
 		throws NoSuchHostException, SystemException {
 		Host host = findByPrimaryKey(hostId);
@@ -596,12 +596,12 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 			Host[] array = new HostImpl[3];
 
-			array[0] = getByLRentity_PrevAndNext(session, host, localEntityId,
+			array[0] = getByLRentity_PrevAndNext(session, host, entityId,
 					remoteEntityId, orderByComparator, true);
 
 			array[1] = host;
 
-			array[2] = getByLRentity_PrevAndNext(session, host, localEntityId,
+			array[2] = getByLRentity_PrevAndNext(session, host, entityId,
 					remoteEntityId, orderByComparator, false);
 
 			return array;
@@ -615,7 +615,7 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	protected Host getByLRentity_PrevAndNext(Session session, Host host,
-		long localEntityId, long remoteEntityId,
+		long entityId, long remoteEntityId,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -629,7 +629,7 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 		query.append(_SQL_SELECT_HOST_WHERE);
 
-		query.append(_FINDER_COLUMN_LRENTITY_LOCALENTITYID_2);
+		query.append(_FINDER_COLUMN_LRENTITY_ENTITYID_2);
 
 		query.append(_FINDER_COLUMN_LRENTITY_REMOTEENTITYID_2);
 
@@ -700,7 +700,7 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(localEntityId);
+		qPos.add(entityId);
 
 		qPos.add(remoteEntityId);
 
@@ -831,15 +831,15 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Removes all the hosts where localEntityId = &#63; and remoteEntityId = &#63; from the database.
+	 * Removes all the hosts where entityId = &#63; and remoteEntityId = &#63; from the database.
 	 *
-	 * @param localEntityId the local entity id to search with
+	 * @param entityId the entity id to search with
 	 * @param remoteEntityId the remote entity id to search with
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByLRentity(long localEntityId, long remoteEntityId)
+	public void removeByLRentity(long entityId, long remoteEntityId)
 		throws SystemException {
-		for (Host host : findByLRentity(localEntityId, remoteEntityId)) {
+		for (Host host : findByLRentity(entityId, remoteEntityId)) {
 			remove(host);
 		}
 	}
@@ -856,16 +856,16 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Counts all the hosts where localEntityId = &#63; and remoteEntityId = &#63;.
+	 * Counts all the hosts where entityId = &#63; and remoteEntityId = &#63;.
 	 *
-	 * @param localEntityId the local entity id to search with
+	 * @param entityId the entity id to search with
 	 * @param remoteEntityId the remote entity id to search with
 	 * @return the number of matching hosts
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int countByLRentity(long localEntityId, long remoteEntityId)
+	public int countByLRentity(long entityId, long remoteEntityId)
 		throws SystemException {
-		Object[] finderArgs = new Object[] { localEntityId, remoteEntityId };
+		Object[] finderArgs = new Object[] { entityId, remoteEntityId };
 
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_LRENTITY,
 				finderArgs, this);
@@ -875,7 +875,7 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 			query.append(_SQL_COUNT_HOST_WHERE);
 
-			query.append(_FINDER_COLUMN_LRENTITY_LOCALENTITYID_2);
+			query.append(_FINDER_COLUMN_LRENTITY_ENTITYID_2);
 
 			query.append(_FINDER_COLUMN_LRENTITY_REMOTEENTITYID_2);
 
@@ -890,7 +890,7 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(localEntityId);
+				qPos.add(entityId);
 
 				qPos.add(remoteEntityId);
 
@@ -1001,7 +1001,7 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	private static final String _SQL_SELECT_HOST_WHERE = "SELECT host FROM Host host WHERE ";
 	private static final String _SQL_COUNT_HOST = "SELECT COUNT(host) FROM Host host";
 	private static final String _SQL_COUNT_HOST_WHERE = "SELECT COUNT(host) FROM Host host WHERE ";
-	private static final String _FINDER_COLUMN_LRENTITY_LOCALENTITYID_2 = "host.localEntityId = ? AND ";
+	private static final String _FINDER_COLUMN_LRENTITY_ENTITYID_2 = "host.entityId = ? AND ";
 	private static final String _FINDER_COLUMN_LRENTITY_REMOTEENTITYID_2 = "host.remoteEntityId = ?";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "host.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Host exists with the primary key ";

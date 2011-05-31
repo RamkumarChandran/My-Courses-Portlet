@@ -14,7 +14,12 @@
 
 package org.gnenc.internet.mycourses.service.impl;
 
+import java.util.List;
+
+import org.gnenc.internet.mycourses.model.UserEnrollment;
 import org.gnenc.internet.mycourses.service.base.UserEnrollmentLocalServiceBaseImpl;
+
+import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The implementation of the user enrollment local service.
@@ -37,4 +42,17 @@ import org.gnenc.internet.mycourses.service.base.UserEnrollmentLocalServiceBaseI
  */
 public class UserEnrollmentLocalServiceImpl
 	extends UserEnrollmentLocalServiceBaseImpl {
+	
+	public List<UserEnrollment> getUserEnrollmentsByUserId(long userId) {
+		List<UserEnrollment> enrollments = null;
+		
+		try {
+			enrollments = userEnrollmentPersistence.findByUserId(userId);
+		} catch (SystemException e) {
+			e.printStackTrace();
+			enrollments = null;
+		}
+		
+		return enrollments;
+	}
 }

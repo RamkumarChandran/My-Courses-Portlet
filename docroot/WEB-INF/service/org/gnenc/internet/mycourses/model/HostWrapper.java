@@ -44,12 +44,12 @@ public class HostWrapper implements Host {
 		_host.setHostId(hostId);
 	}
 
-	public long getLocalEntityId() {
-		return _host.getLocalEntityId();
+	public long getEntityId() {
+		return _host.getEntityId();
 	}
 
-	public void setLocalEntityId(long localEntityId) {
-		_host.setLocalEntityId(localEntityId);
+	public void setEntityId(long entityId) {
+		_host.setEntityId(entityId);
 	}
 
 	public long getRemoteEntityId() {

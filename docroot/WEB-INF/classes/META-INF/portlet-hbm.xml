@@ -8,10 +8,12 @@
 	<import class="org.gnenc.internet.mycourses.model.Host" />
 	<class name="org.gnenc.internet.mycourses.model.impl.CourseImpl" table="MC_Course">
 		<cache usage="read-write" />
-		<id name="courseId" type="long">
+		<id name="id" column="id_" type="long">
 			<generator class="assigned" />
 		</id>
+		<property name="courseId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="entityId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="lastRefresh" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="org.gnenc.internet.mycourses.model.impl.EntityImpl" table="MC_Entity">
@@ -26,10 +28,11 @@
 	</class>
 	<class name="org.gnenc.internet.mycourses.model.impl.UserEnrollmentImpl" table="MC_UserEnrollment">
 		<cache usage="read-write" />
-		<id name="Id" type="long">
+		<id name="id" column="id_" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="courseId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="lastRefresh" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="org.gnenc.internet.mycourses.model.impl.HostImpl" table="MC_Host">
@@ -37,7 +40,7 @@
 		<id name="hostId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property name="localEntityId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="entityId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="remoteEntityId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="peerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
