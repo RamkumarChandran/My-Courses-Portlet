@@ -6,7 +6,6 @@
 		<field name="courseId" type="long" />
 		<field name="name" type="String" />
 		<field name="entityId" type="long" />
-		<field name="lastRefresh" type="long" />
 	</model>
 	<model name="org.gnenc.internet.mycourses.model.Entity">
 		<field name="entityId" type="long" />

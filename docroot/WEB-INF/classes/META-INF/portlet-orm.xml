@@ -15,7 +15,6 @@
 			<basic name="courseId" />
 			<basic name="name" />
 			<basic name="entityId" />
-			<basic name="lastRefresh" />
 			<transient name="primaryKey" />
 		</attributes>
 	</mapped-superclass>

@@ -112,20 +112,6 @@ public interface CourseModel extends BaseModel<Course> {
 	public void setEntityId(long entityId);
 
 	/**
-	 * Gets the last refresh of this course.
-	 *
-	 * @return the last refresh of this course
-	 */
-	public long getLastRefresh();
-
-	/**
-	 * Sets the last refresh of this course.
-	 *
-	 * @param lastRefresh the last refresh of this course
-	 */
-	public void setLastRefresh(long lastRefresh);
-
-	/**
 	 * Gets a copy of this course as an escaped model instance by wrapping it with an {@link com.liferay.portal.kernel.bean.AutoEscapeBeanHandler}.
 	 *
 	 * @return the escaped model instance

@@ -15,13 +15,17 @@
 		<column name="name" type="String" />
 		
 		<column name="entityId" type="long" />
-		<column name="lastRefresh" type="long" />
 		
 		<order by="asc">
 			<order-column name="name" case-sensitive="false" />
 		</order>
 		
 		<finder name="entityId" return-type="Collection" >
+			<finder-column name="entityId" />
+		</finder>
+		
+		<finder name="C_E" return-type="Collection" >
+			<finder-column name="courseId" />
 			<finder-column name="entityId" />
 		</finder>
 		

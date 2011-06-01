@@ -87,13 +87,6 @@ public class ClpSerializer {
 
 					method3.invoke(newModel, value3);
 
-					Method method4 = newModelClass.getMethod("setLastRefresh",
-							new Class[] { Long.TYPE });
-
-					Long value4 = new Long(oldCplModel.getLastRefresh());
-
-					method4.invoke(newModel, value4);
-
 					return newModel;
 				}
 				catch (Exception e) {
@@ -341,12 +334,6 @@ public class ClpSerializer {
 					Long value3 = (Long)method3.invoke(oldModel, (Object[])null);
 
 					newModel.setEntityId(value3);
-
-					Method method4 = oldModelClass.getMethod("getLastRefresh");
-
-					Long value4 = (Long)method4.invoke(oldModel, (Object[])null);
-
-					newModel.setLastRefresh(value4);
 
 					return newModel;
 				}

@@ -68,14 +68,6 @@ public class CourseWrapper implements Course {
 		_course.setEntityId(entityId);
 	}
 
-	public long getLastRefresh() {
-		return _course.getLastRefresh();
-	}
-
-	public void setLastRefresh(long lastRefresh) {
-		_course.setLastRefresh(lastRefresh);
-	}
-
 	public org.gnenc.internet.mycourses.model.Course toEscapedModel() {
 		return _course.toEscapedModel();
 	}
