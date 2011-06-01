@@ -1,3 +1,4 @@
+create index IX_1A6E8826 on MC_Course (courseId, entityId);
 create index IX_B4A6051C on MC_Course (entityId);
 
 create index IX_FDF7CA39 on MC_Entity (emailDomains);

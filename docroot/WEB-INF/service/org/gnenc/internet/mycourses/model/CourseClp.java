@@ -73,14 +73,6 @@ public class CourseClp extends BaseModelImpl<Course> implements Course {
 		_entityId = entityId;
 	}
 
-	public long getLastRefresh() {
-		return _lastRefresh;
-	}
-
-	public void setLastRefresh(long lastRefresh) {
-		_lastRefresh = lastRefresh;
-	}
-
 	public Course toEscapedModel() {
 		if (isEscapedModel()) {
 			return this;
@@ -98,7 +90,6 @@ public class CourseClp extends BaseModelImpl<Course> implements Course {
 		clone.setCourseId(getCourseId());
 		clone.setName(getName());
 		clone.setEntityId(getEntityId());
-		clone.setLastRefresh(getLastRefresh());
 
 		return clone;
 	}
@@ -144,7 +135,7 @@ public class CourseClp extends BaseModelImpl<Course> implements Course {
 	}
 
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -154,15 +145,13 @@ public class CourseClp extends BaseModelImpl<Course> implements Course {
 		sb.append(getName());
 		sb.append(", entityId=");
 		sb.append(getEntityId());
-		sb.append(", lastRefresh=");
-		sb.append(getLastRefresh());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gnenc.internet.mycourses.model.Course");
@@ -184,10 +173,6 @@ public class CourseClp extends BaseModelImpl<Course> implements Course {
 			"<column><column-name>entityId</column-name><column-value><![CDATA[");
 		sb.append(getEntityId());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastRefresh</column-name><column-value><![CDATA[");
-		sb.append(getLastRefresh());
-		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -198,5 +183,4 @@ public class CourseClp extends BaseModelImpl<Course> implements Course {
 	private long _courseId;
 	private String _name;
 	private long _entityId;
-	private long _lastRefresh;
 }

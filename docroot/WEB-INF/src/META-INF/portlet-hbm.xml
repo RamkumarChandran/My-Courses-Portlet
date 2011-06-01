@@ -14,7 +14,6 @@
 		<property name="courseId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="entityId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="lastRefresh" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="org.gnenc.internet.mycourses.model.impl.EntityImpl" table="MC_Entity">
 		<cache usage="read-write" />

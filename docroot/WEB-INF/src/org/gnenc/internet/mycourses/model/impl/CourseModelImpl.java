@@ -57,10 +57,9 @@ public class CourseModelImpl extends BaseModelImpl<Course>
 			{ "id_", new Integer(Types.BIGINT) },
 			{ "courseId", new Integer(Types.BIGINT) },
 			{ "name", new Integer(Types.VARCHAR) },
-			{ "entityId", new Integer(Types.BIGINT) },
-			{ "lastRefresh", new Integer(Types.BIGINT) }
+			{ "entityId", new Integer(Types.BIGINT) }
 		};
-	public static final String TABLE_SQL_CREATE = "create table MC_Course (id_ LONG not null primary key,courseId LONG,name VARCHAR(75) null,entityId LONG,lastRefresh LONG)";
+	public static final String TABLE_SQL_CREATE = "create table MC_Course (id_ LONG not null primary key,courseId LONG,name VARCHAR(75) null,entityId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table MC_Course";
 	public static final String ORDER_BY_JPQL = " ORDER BY course.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MC_Course.name ASC";
@@ -128,14 +127,6 @@ public class CourseModelImpl extends BaseModelImpl<Course>
 		_entityId = entityId;
 	}
 
-	public long getLastRefresh() {
-		return _lastRefresh;
-	}
-
-	public void setLastRefresh(long lastRefresh) {
-		_lastRefresh = lastRefresh;
-	}
-
 	public Course toEscapedModel() {
 		if (isEscapedModel()) {
 			return (Course)this;
@@ -169,8 +160,6 @@ public class CourseModelImpl extends BaseModelImpl<Course>
 		courseImpl.setName(getName());
 
 		courseImpl.setEntityId(getEntityId());
-
-		courseImpl.setLastRefresh(getLastRefresh());
 
 		return courseImpl;
 	}
@@ -216,7 +205,7 @@ public class CourseModelImpl extends BaseModelImpl<Course>
 	}
 
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -226,15 +215,13 @@ public class CourseModelImpl extends BaseModelImpl<Course>
 		sb.append(getName());
 		sb.append(", entityId=");
 		sb.append(getEntityId());
-		sb.append(", lastRefresh=");
-		sb.append(getLastRefresh());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gnenc.internet.mycourses.model.Course");
@@ -256,10 +243,6 @@ public class CourseModelImpl extends BaseModelImpl<Course>
 			"<column><column-name>entityId</column-name><column-value><![CDATA[");
 		sb.append(getEntityId());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastRefresh</column-name><column-value><![CDATA[");
-		sb.append(getLastRefresh());
-		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -270,6 +253,5 @@ public class CourseModelImpl extends BaseModelImpl<Course>
 	private long _courseId;
 	private String _name;
 	private long _entityId;
-	private long _lastRefresh;
 	private transient ExpandoBridge _expandoBridge;
 }

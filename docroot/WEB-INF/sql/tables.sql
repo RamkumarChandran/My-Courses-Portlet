@@ -2,8 +2,7 @@ create table MC_Course (
 	id_ LONG not null primary key,
 	courseId LONG,
 	name VARCHAR(75) null,
-	entityId LONG,
-	lastRefresh LONG
+	entityId LONG
 );
 
 create table MC_Entity (

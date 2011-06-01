@@ -202,6 +202,117 @@ public interface CoursePersistence extends BasePersistence<Course> {
 			org.gnenc.internet.mycourses.NoSuchCourseException;
 
 	/**
+	* Finds all the courses where courseId = &#63; and entityId = &#63;.
+	*
+	* @param courseId the course id to search with
+	* @param entityId the entity id to search with
+	* @return the matching courses
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<org.gnenc.internet.mycourses.model.Course> findByC_E(
+		long courseId, long entityId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Finds a range of all the courses where courseId = &#63; and entityId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param courseId the course id to search with
+	* @param entityId the entity id to search with
+	* @param start the lower bound of the range of courses to return
+	* @param end the upper bound of the range of courses to return (not inclusive)
+	* @return the range of matching courses
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<org.gnenc.internet.mycourses.model.Course> findByC_E(
+		long courseId, long entityId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Finds an ordered range of all the courses where courseId = &#63; and entityId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param courseId the course id to search with
+	* @param entityId the entity id to search with
+	* @param start the lower bound of the range of courses to return
+	* @param end the upper bound of the range of courses to return (not inclusive)
+	* @param orderByComparator the comparator to order the results by
+	* @return the ordered range of matching courses
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<org.gnenc.internet.mycourses.model.Course> findByC_E(
+		long courseId, long entityId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Finds the first course in the ordered set where courseId = &#63; and entityId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param courseId the course id to search with
+	* @param entityId the entity id to search with
+	* @param orderByComparator the comparator to order the set by
+	* @return the first matching course
+	* @throws org.gnenc.internet.mycourses.NoSuchCourseException if a matching course could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public org.gnenc.internet.mycourses.model.Course findByC_E_First(
+		long courseId, long entityId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gnenc.internet.mycourses.NoSuchCourseException;
+
+	/**
+	* Finds the last course in the ordered set where courseId = &#63; and entityId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param courseId the course id to search with
+	* @param entityId the entity id to search with
+	* @param orderByComparator the comparator to order the set by
+	* @return the last matching course
+	* @throws org.gnenc.internet.mycourses.NoSuchCourseException if a matching course could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public org.gnenc.internet.mycourses.model.Course findByC_E_Last(
+		long courseId, long entityId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gnenc.internet.mycourses.NoSuchCourseException;
+
+	/**
+	* Finds the courses before and after the current course in the ordered set where courseId = &#63; and entityId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param id the primary key of the current course
+	* @param courseId the course id to search with
+	* @param entityId the entity id to search with
+	* @param orderByComparator the comparator to order the set by
+	* @return the previous, current, and next course
+	* @throws org.gnenc.internet.mycourses.NoSuchCourseException if a course with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public org.gnenc.internet.mycourses.model.Course[] findByC_E_PrevAndNext(
+		long id, long courseId, long entityId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gnenc.internet.mycourses.NoSuchCourseException;
+
+	/**
 	* Finds all the courses.
 	*
 	* @return the courses
@@ -254,6 +365,16 @@ public interface CoursePersistence extends BasePersistence<Course> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes all the courses where courseId = &#63; and entityId = &#63; from the database.
+	*
+	* @param courseId the course id to search with
+	* @param entityId the entity id to search with
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByC_E(long courseId, long entityId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Removes all the courses from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -269,6 +390,17 @@ public interface CoursePersistence extends BasePersistence<Course> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public int countByentityId(long entityId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Counts all the courses where courseId = &#63; and entityId = &#63;.
+	*
+	* @param courseId the course id to search with
+	* @param entityId the entity id to search with
+	* @return the number of matching courses
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_E(long courseId, long entityId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
