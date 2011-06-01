@@ -446,6 +446,38 @@ public class EntityLocalServiceClp implements EntityLocalService {
 		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
 	}
 
+	public java.lang.String getEntityName(long entityId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gnenc.internet.mycourses.NoSuchEntityException {
+		Object returnObj = null;
+
+		MethodHandler methodHandler = new MethodHandler(_getEntityNameMethodKey15,
+				entityId);
+
+		try {
+			returnObj = _classLoaderProxy.invoke(methodHandler);
+		}
+		catch (Throwable t) {
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof org.gnenc.internet.mycourses.NoSuchEntityException) {
+				throw (org.gnenc.internet.mycourses.NoSuchEntityException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
+	}
+
 	public ClassLoaderProxy getClassLoaderProxy() {
 		return _classLoaderProxy;
 	}
@@ -487,4 +519,6 @@ public class EntityLocalServiceClp implements EntityLocalService {
 			"getEntityByDomain", java.lang.String.class);
 	private MethodKey _getEntityUrlMethodKey14 = new MethodKey(_classLoaderProxy.getClassName(),
 			"getEntityUrl", long.class);
+	private MethodKey _getEntityNameMethodKey15 = new MethodKey(_classLoaderProxy.getClassName(),
+			"getEntityName", long.class);
 }

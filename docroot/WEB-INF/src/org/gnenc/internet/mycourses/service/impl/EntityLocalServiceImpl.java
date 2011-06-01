@@ -62,4 +62,11 @@ public class EntityLocalServiceImpl extends EntityLocalServiceBaseImpl {
 		
 		return url;
 	}
+	
+	public String getEntityName(long entityId) throws NoSuchEntityException, SystemException {
+		Entity entity = entityPersistence.findByPrimaryKey(entityId);
+		String name = entity.getEntityName();
+		
+		return name;
+	}
 }

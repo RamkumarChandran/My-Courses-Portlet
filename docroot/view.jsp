@@ -18,20 +18,22 @@
 <% 
 /** long entityId = MyCoursePortlet.getUserHomeSchool(renderRequest); */
 long entityId = 1;
-String url = EntityLocalServiceUtil.getEntityUrl(entityId);
+String entityUrl = EntityLocalServiceUtil.getEntityUrl(entityId);
+String entityName = EntityLocalServiceUtil.getEntityName(entityId);
 List<Course> courses = MyCoursePortlet.getAllEnrollments(renderRequest);
 %>
 
 <div id="mycourses">
 	<p id="headline_main">My Courses</p>
+	
 	<span id="tip">Click course name to go to class</span>
 	
-	<h2 class="headline_entity"></h2>
+	<p class="headline_entity"><%=entityName %></p>
 	<%
 	for (Course course : courses) 
 	{
 	%>
-		<a href='<%=url%>/course/view.php?id=<%=course.getCourseId()%>' target='_blank' class='courseName'><%=course.getName().toString()%></a>
+		<a href='<%=entityUrl%>/course/view.php?id=<%=course.getCourseId()%>' target='_blank' class='courseName'><%=course.getName().toString()%></a>
 	<% 
 	} 
 	%>

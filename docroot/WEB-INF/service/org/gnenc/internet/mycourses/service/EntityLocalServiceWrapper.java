@@ -235,6 +235,12 @@ public class EntityLocalServiceWrapper implements EntityLocalService {
 		return _entityLocalService.getEntityUrl(entityId);
 	}
 
+	public java.lang.String getEntityName(long entityId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gnenc.internet.mycourses.NoSuchEntityException {
+		return _entityLocalService.getEntityName(entityId);
+	}
+
 	public EntityLocalService getWrappedEntityLocalService() {
 		return _entityLocalService;
 	}

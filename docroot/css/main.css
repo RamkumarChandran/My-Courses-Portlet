@@ -5,7 +5,19 @@
 	padding-bottom: 0px;
 }
 
+.headline_entity {
+	font-weight: bold;
+	font-size: 1.5em;
+	margin-top: 20px;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}
+
 .courseName {
+	position: relative;
+	left: 15px;
 	display: block;
 	font-size: 1.4em;
+	margin-top: 0px;
+	padding-top: 0px;
 }

@@ -68,7 +68,7 @@ public class HostWrapper implements Host {
 		_host.setPeerId(peerId);
 	}
 
-	public Host toEscapedModel() {
+	public org.gnenc.internet.mycourses.model.Host toEscapedModel() {
 		return _host.toEscapedModel();
 	}
 
@@ -113,7 +113,7 @@ public class HostWrapper implements Host {
 		return _host.clone();
 	}
 
-	public int compareTo(Host host) {
+	public int compareTo(org.gnenc.internet.mycourses.model.Host host) {
 		return _host.compareTo(host);
 	}
 

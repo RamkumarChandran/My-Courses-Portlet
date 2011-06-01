@@ -76,7 +76,7 @@ public class CourseWrapper implements Course {
 		_course.setLastRefresh(lastRefresh);
 	}
 
-	public Course toEscapedModel() {
+	public org.gnenc.internet.mycourses.model.Course toEscapedModel() {
 		return _course.toEscapedModel();
 	}
 
@@ -121,7 +121,7 @@ public class CourseWrapper implements Course {
 		return _course.clone();
 	}
 
-	public int compareTo(Course course) {
+	public int compareTo(org.gnenc.internet.mycourses.model.Course course) {
 		return _course.compareTo(course);
 	}
 

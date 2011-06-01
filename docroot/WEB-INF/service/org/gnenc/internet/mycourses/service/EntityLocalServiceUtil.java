@@ -245,6 +245,12 @@ public class EntityLocalServiceUtil {
 		return getService().getEntityUrl(entityId);
 	}
 
+	public static java.lang.String getEntityName(long entityId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gnenc.internet.mycourses.NoSuchEntityException {
+		return getService().getEntityName(entityId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

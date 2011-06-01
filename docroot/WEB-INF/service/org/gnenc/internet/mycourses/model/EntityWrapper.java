@@ -76,7 +76,7 @@ public class EntityWrapper implements Entity {
 		_entity.setDbName(dbName);
 	}
 
-	public Entity toEscapedModel() {
+	public org.gnenc.internet.mycourses.model.Entity toEscapedModel() {
 		return _entity.toEscapedModel();
 	}
 
@@ -121,7 +121,7 @@ public class EntityWrapper implements Entity {
 		return _entity.clone();
 	}
 
-	public int compareTo(Entity entity) {
+	public int compareTo(org.gnenc.internet.mycourses.model.Entity entity) {
 		return _entity.compareTo(entity);
 	}
 
