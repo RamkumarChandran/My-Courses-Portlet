@@ -16,8 +16,7 @@
 <%@include file="/init.jsp" %>
 
 <% 
-/** long entityId = MyCoursePortlet.getUserHomeSchool(renderRequest); */
-long entityId = 1;
+long entityId = MyCoursePortlet.getUserHomeSchool(renderRequest);
 String entityUrl = EntityLocalServiceUtil.getEntityUrl(entityId);
 String entityName = EntityLocalServiceUtil.getEntityName(entityId);
 List<Course> courses = MyCoursePortlet.getAllEnrollments(renderRequest);
@@ -28,8 +27,13 @@ List<Course> courses = MyCoursePortlet.getAllEnrollments(renderRequest);
 	
 	<span id="tip">Click course name to go to class</span>
 	
-	<p class="headline_entity"><%=entityName %></p>
+	<p class="headline_entity"><%=entityName %></p> 
 	<%
+	if (courses.isEmpty()) {
+		%>
+		<span>You are not enrolled in any classes at <%=entityName %></span>
+		<%
+	}
 	for (Course course : courses) 
 	{
 	%>

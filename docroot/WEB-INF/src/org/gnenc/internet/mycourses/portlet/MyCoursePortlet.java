@@ -31,8 +31,7 @@ public class MyCoursePortlet extends MVCPortlet {
 		long userId = themeDisplay.getUser().getUserId();
 		String userEmail = themeDisplay.getUser().getEmailAddress();
 		
-		/** long entityId = getUserHomeSchool(request); */
-		long entityId = 1;
+		long entityId = getUserHomeSchool(request);
 		
 		List<UserEnrollment> enrollments = UserEnrollmentLocalServiceUtil.getUserEnrollmentsByUserId(userId);
 		
