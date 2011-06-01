@@ -48,7 +48,11 @@ public class MyCoursePortlet extends MVCPortlet {
 	}
 	
 	public static long getUserHomeSchool(RenderRequest request) throws SystemException {		
-		/** Strip domain out of email address to determine home school */
+		/** This needs to change.  A better idea is to probably tie the user to a user group in Liferay
+		 *  We have define the user group association from the directory.  We can define the relationship
+		 *  between a user group and a school/ESU in the Entity table manually via the future 
+		 *  control panel portlet.
+		 *  */
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
 		String userEmail = themeDisplay.getUser().getEmailAddress();
 		
