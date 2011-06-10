@@ -1,9 +1,7 @@
 package org.gnenc.internet.mycourses.portlet;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.ListIterator;
 
 import javax.portlet.RenderRequest;
 
@@ -11,10 +9,8 @@ import org.gnenc.internet.mycourses.model.Course;
 import org.gnenc.internet.mycourses.model.Entity;
 import org.gnenc.internet.mycourses.model.UserEnrollment;
 import org.gnenc.internet.mycourses.service.CourseLocalServiceUtil;
-import org.gnenc.internet.mycourses.service.EntityLocalService;
 import org.gnenc.internet.mycourses.service.EntityLocalServiceUtil;
 import org.gnenc.internet.mycourses.service.UserEnrollmentLocalServiceUtil;
-import org.gnenc.internet.mycourses.service.impl.EntityLocalServiceImpl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
