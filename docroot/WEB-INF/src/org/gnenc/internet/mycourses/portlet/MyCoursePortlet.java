@@ -31,7 +31,19 @@ public class MyCoursePortlet extends MVCPortlet {
 		
 		List<UserEnrollment> enrollments = UserEnrollmentLocalServiceUtil.getUserEnrollmentsByUserId(userId);
 		
+		/** Insert check to test # of enrollments - If = 0, go get from Moodle DB.  Else, go on. */
+		
 		for (UserEnrollment enrollment : enrollments) {
+			/** Check last refresh date on enrollment.  If older than standard, go get from Moodle DB
+			 * 
+			 *  Make the following in a new method:
+			 *  If one enrollment is old, we assume they all are, and go update all user's enrollments
+			 *  We want to exit this loop if we have to go update
+			 *  
+			 *  The Moodle DB will send back the Course Name and Id, too, so we might as well
+			 *  go ahead and check and update the Course Info in Liferay while we're at it.
+			 *  There is no last refresh on course info so we check, update if necessary, and move on
+			 */
 			Course course = CourseLocalServiceUtil.getCourseByEntity(
 					enrollment.getCourseId(),entityId
 			);
