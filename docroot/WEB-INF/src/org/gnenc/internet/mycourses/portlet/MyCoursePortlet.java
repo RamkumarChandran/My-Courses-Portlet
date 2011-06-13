@@ -31,6 +31,15 @@ public class MyCoursePortlet extends MVCPortlet {
 		
 		List<UserEnrollment> enrollments = UserEnrollmentLocalServiceUtil.getUserEnrollmentsByUserId(userId);
 		
+		int numberCoursesEnrolled = enrollments.size();
+		
+		if (numberCoursesEnrolled == 0)
+		{
+			performTableUpdate();
+		}
+			
+		
+		
 		/** Insert check to test # of enrollments - If = 0, go get from Moodle DB.  Else, go on. */
 		
 		for (UserEnrollment enrollment : enrollments) {
@@ -71,5 +80,11 @@ public class MyCoursePortlet extends MVCPortlet {
 		long entityId = entity.get(0).getEntityId();
 		
 		return entityId;
+	}
+	
+	
+	public static void performTableUpdate ()
+	{
+		
 	}
 }
