@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2010 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -68,7 +68,7 @@ public class HostWrapper implements Host {
 		_host.setPeerId(peerId);
 	}
 
-	public org.gnenc.internet.mycourses.model.Host toEscapedModel() {
+	public Host toEscapedModel() {
 		return _host.toEscapedModel();
 	}
 
@@ -113,7 +113,7 @@ public class HostWrapper implements Host {
 		return _host.clone();
 	}
 
-	public int compareTo(org.gnenc.internet.mycourses.model.Host host) {
+	public int compareTo(Host host) {
 		return _host.compareTo(host);
 	}
 

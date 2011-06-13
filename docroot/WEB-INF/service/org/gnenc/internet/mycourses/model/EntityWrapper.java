@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2010 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -76,7 +76,7 @@ public class EntityWrapper implements Entity {
 		_entity.setDbName(dbName);
 	}
 
-	public org.gnenc.internet.mycourses.model.Entity toEscapedModel() {
+	public Entity toEscapedModel() {
 		return _entity.toEscapedModel();
 	}
 
@@ -121,7 +121,7 @@ public class EntityWrapper implements Entity {
 		return _entity.clone();
 	}
 
-	public int compareTo(org.gnenc.internet.mycourses.model.Entity entity) {
+	public int compareTo(Entity entity) {
 		return _entity.compareTo(entity);
 	}
 

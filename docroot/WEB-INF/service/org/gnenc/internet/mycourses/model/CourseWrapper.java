@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2010 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -76,7 +76,7 @@ public class CourseWrapper implements Course {
 		_course.setLastRefresh(lastRefresh);
 	}
 
-	public org.gnenc.internet.mycourses.model.Course toEscapedModel() {
+	public Course toEscapedModel() {
 		return _course.toEscapedModel();
 	}
 
@@ -121,7 +121,7 @@ public class CourseWrapper implements Course {
 		return _course.clone();
 	}
 
-	public int compareTo(org.gnenc.internet.mycourses.model.Course course) {
+	public int compareTo(Course course) {
 		return _course.compareTo(course);
 	}
 

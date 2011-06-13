@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2010 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -33,7 +33,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  */
 public class ClpSerializer {
-	public static final String SERVLET_CONTEXT_NAME = "My-Courses-portlet";
+	public static final String SERVLET_CONTEXT_NAME = "liferay-moodle-portlet";
 
 	public static void setClassLoader(ClassLoader classLoader) {
 		_classLoader = classLoader;
