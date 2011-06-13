@@ -16,6 +16,7 @@ import org.gnenc.internet.mycourses.service.CourseLocalServiceUtil;
 import org.gnenc.internet.mycourses.service.EntityLocalServiceUtil;
 import org.gnenc.internet.mycourses.service.UserEnrollmentLocalServiceUtil;
 
+import com.liferay.counter.service.CounterLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -91,11 +92,14 @@ public class MyCoursePortlet extends MVCPortlet {
 	
 	public static void courseUpdate ()
 	{
+		
+		
 		/**
 		 * Name will probably be changed.  This method will call the perfromTableUpdate
 		 * method that gets all of the moodle courses.  Once it has all of the updated
 		 * courses, each column will be compared with a specified date to see
-		 * if it needs to be refreshed.
+		 * if it needs to be refreshed.  Will call UpdateCourse, send it a course object or user enroll object
+		 * .  Build it in the same way.
 		 */
 	}
 	
@@ -117,7 +121,7 @@ public class MyCoursePortlet extends MVCPortlet {
 	
 		
 		
-		for (int count = courseName.size();count>0;count--)
+		for (int count = courseName.size()-1;count>=0;count--)
 		{
 			String str = courseId.get(count).toString();
 			long id = Long.valueOf(str);
@@ -129,13 +133,14 @@ public class MyCoursePortlet extends MVCPortlet {
 			course.setName(name);
 			course.setCourseId(id);
 			course.setEntityId(entId);
-			CourseLocalServiceUtil.addCourse(course);
+			Course course1 = CourseLocalServiceUtil.addCourse(course);
 			
 			UserEnrollment userEnroll = new UserEnrollmentImpl();
 			
 			userEnroll.setUserId(userId);
-			userEnroll.setCourseId(id);
+			userEnroll.setCourseId(course1.getId());
 			userEnroll.setLastRefresh(new Date());
+		
 			
 			UserEnrollmentLocalServiceUtil.addUserEnrollment(userEnroll);
 			
