@@ -35,7 +35,7 @@ public class MyCoursePortlet extends MVCPortlet {
 		
 		if (numberCoursesEnrolled == 0)
 		{
-			performTableUpdate();
+			performTableUpdate(userEmail);
 		}
 			
 		
@@ -95,12 +95,39 @@ public class MyCoursePortlet extends MVCPortlet {
 		 */
 	}
 	
-	public static void performTableUpdate ()
+	public static void performTableUpdate (String userEmail)
 	{
+		
+		
+		String dbUrl = "corin.vps.gnenc.org/moodle_esu10";
+		String dbUser = "esu10moodle";
+		String dbPass = "UtVz85rTEZpR";
+			
+			ArrayList courses = MoodleJdbc.findCoursesByEmail(userEmail, dbUrl, dbUser, dbPass);
+			
+			ArrayList courseName = ((ArrayList)courses.get(0));
+			ArrayList courseId = ((ArrayList)courses.get(1));
+		
+			;
+			
+			for (int count = courseName.size();count>0;count--)
+			{
+				String str = courseId.get(count).toString();
+				long id = Long.valueOf(str);
+				
+				String name = courseName.get(count).toString();
+				
+				
+				
+			}
+			
+			
+			
 		/**
 		 * The method name will need to change.  This method will go get all
 		 * of the Moodle DB's information.  It will be inserted into the list of
-		 * the users courses.
+		 * the users courses.  Call add course for each one I get back from moodle.
+		 * CourseLocalServiceUtil.addCourse(parameters).
 		 */
 		
 	}
