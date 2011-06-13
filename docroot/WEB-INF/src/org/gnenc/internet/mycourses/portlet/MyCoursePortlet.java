@@ -1,7 +1,9 @@
 package org.gnenc.internet.mycourses.portlet;
 
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 import javax.portlet.RenderRequest;
 
@@ -133,7 +135,9 @@ public class MyCoursePortlet extends MVCPortlet {
 			
 			userEnroll.setUserId(userId);
 			userEnroll.setCourseId(id);
-		
+			userEnroll.setLastRefresh(new Date());
+			
+			UserEnrollmentLocalServiceUtil.addUserEnrollment(userEnroll);
 			
 		}
 		
