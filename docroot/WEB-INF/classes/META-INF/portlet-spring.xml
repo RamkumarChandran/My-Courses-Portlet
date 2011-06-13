@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="org.gnenc.internet.mycourses.service.CourseLocalService" class="org.gnenc.internet.mycourses.service.impl.CourseLocalServiceImpl" />
+	<bean id="org.gnenc.internet.mycourses.service.CourseLocalServiceUtil" class="org.gnenc.internet.mycourses.service.CourseLocalServiceUtil">
+		<property name="service" ref="org.gnenc.internet.mycourses.service.CourseLocalService" />
+	</bean>
+	<bean id="org.gnenc.internet.mycourses.service.persistence.CoursePersistence" class="org.gnenc.internet.mycourses.service.persistence.CoursePersistenceImpl" parent="basePersistence" />
+	<bean id="org.gnenc.internet.mycourses.service.EntityLocalService" class="org.gnenc.internet.mycourses.service.impl.EntityLocalServiceImpl" />
+	<bean id="org.gnenc.internet.mycourses.service.EntityLocalServiceUtil" class="org.gnenc.internet.mycourses.service.EntityLocalServiceUtil">
+		<property name="service" ref="org.gnenc.internet.mycourses.service.EntityLocalService" />
+	</bean>
+	<bean id="org.gnenc.internet.mycourses.service.persistence.EntityPersistence" class="org.gnenc.internet.mycourses.service.persistence.EntityPersistenceImpl" parent="basePersistence" />
+	<bean id="org.gnenc.internet.mycourses.service.UserEnrollmentLocalService" class="org.gnenc.internet.mycourses.service.impl.UserEnrollmentLocalServiceImpl" />
+	<bean id="org.gnenc.internet.mycourses.service.UserEnrollmentLocalServiceUtil" class="org.gnenc.internet.mycourses.service.UserEnrollmentLocalServiceUtil">
+		<property name="service" ref="org.gnenc.internet.mycourses.service.UserEnrollmentLocalService" />
+	</bean>
+	<bean id="org.gnenc.internet.mycourses.service.persistence.UserEnrollmentPersistence" class="org.gnenc.internet.mycourses.service.persistence.UserEnrollmentPersistenceImpl" parent="basePersistence" />
+	<bean id="org.gnenc.internet.mycourses.service.HostLocalService" class="org.gnenc.internet.mycourses.service.impl.HostLocalServiceImpl" />
+	<bean id="org.gnenc.internet.mycourses.service.HostLocalServiceUtil" class="org.gnenc.internet.mycourses.service.HostLocalServiceUtil">
+		<property name="service" ref="org.gnenc.internet.mycourses.service.HostLocalService" />
+	</bean>
+	<bean id="org.gnenc.internet.mycourses.service.persistence.HostPersistence" class="org.gnenc.internet.mycourses.service.persistence.HostPersistenceImpl" parent="basePersistence" />
+</beans>

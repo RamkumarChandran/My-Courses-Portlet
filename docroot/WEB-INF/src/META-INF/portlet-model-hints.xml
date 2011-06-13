@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model-hints>
+	<model name="org.gnenc.internet.mycourses.model.Course">
+		<field name="id" type="long" />
+		<field name="courseId" type="long" />
+		<field name="name" type="String" />
+		<field name="entityId" type="long" />
+	</model>
+	<model name="org.gnenc.internet.mycourses.model.Entity">
+		<field name="entityId" type="long" />
+		<field name="entityName" type="String" />
+		<field name="url" type="String" />
+		<field name="emailDomains" type="String" />
+		<field name="dbName" type="String" />
+	</model>
+	<model name="org.gnenc.internet.mycourses.model.UserEnrollment">
+		<field name="id" type="long" />
+		<field name="userId" type="long" />
+		<field name="courseId" type="long" />
+		<field name="lastRefresh" type="Date" />
+	</model>
+	<model name="org.gnenc.internet.mycourses.model.Host">
+		<field name="hostId" type="long" />
+		<field name="entityId" type="long" />
+		<field name="remoteEntityId" type="long" />
+		<field name="peerId" type="long" />
+	</model>
+</model-hints>
