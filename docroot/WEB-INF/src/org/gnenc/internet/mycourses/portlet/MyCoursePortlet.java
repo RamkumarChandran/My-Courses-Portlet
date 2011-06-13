@@ -8,6 +8,8 @@ import javax.portlet.RenderRequest;
 import org.gnenc.internet.mycourses.model.Course;
 import org.gnenc.internet.mycourses.model.Entity;
 import org.gnenc.internet.mycourses.model.UserEnrollment;
+import org.gnenc.internet.mycourses.model.impl.CourseImpl;
+import org.gnenc.internet.mycourses.model.impl.UserEnrollmentImpl;
 import org.gnenc.internet.mycourses.service.CourseLocalServiceUtil;
 import org.gnenc.internet.mycourses.service.EntityLocalServiceUtil;
 import org.gnenc.internet.mycourses.service.UserEnrollmentLocalServiceUtil;
@@ -35,7 +37,7 @@ public class MyCoursePortlet extends MVCPortlet {
 		
 		if (numberCoursesEnrolled == 0)
 		{
-			performTableUpdate(userEmail);
+			performTableUpdate(userEmail,entityId,userId);
 		}
 			
 		
@@ -95,32 +97,46 @@ public class MyCoursePortlet extends MVCPortlet {
 		 */
 	}
 	
-	public static void performTableUpdate (String userEmail)
+	public static void performTableUpdate (String userEmail, long entId, long userId) throws SystemException, PortalException
 	{
 		
 		
-		String dbUrl = "corin.vps.gnenc.org/moodle_esu10";
+		String dbServer = "corin.vps.gnenc.org";
+		Entity entity = EntityLocalServiceUtil.getEntity(entId);
+		String dbName = entity.getDbName();
+		String dbUrl = dbServer + "/" + dbName;	
 		String dbUser = "esu10moodle";
 		String dbPass = "UtVz85rTEZpR";
 			
-			ArrayList courses = MoodleJdbc.findCoursesByEmail(userEmail, dbUrl, dbUser, dbPass);
-			
-			ArrayList courseName = ((ArrayList)courses.get(0));
-			ArrayList courseId = ((ArrayList)courses.get(1));
+		ArrayList courses = MoodleJdbc.findCoursesByEmail(userEmail, dbUrl, dbUser, dbPass);
 		
-			;
+		ArrayList courseName = ((ArrayList)courses.get(0));
+		ArrayList courseId = ((ArrayList)courses.get(1));
+	
+		
+		
+		for (int count = courseName.size();count>0;count--)
+		{
+			String str = courseId.get(count).toString();
+			long id = Long.valueOf(str);
 			
-			for (int count = courseName.size();count>0;count--)
-			{
-				String str = courseId.get(count).toString();
-				long id = Long.valueOf(str);
-				
-				String name = courseName.get(count).toString();
-				
-				
-				
-			}
+			String name = courseName.get(count).toString();
 			
+			Course course = new CourseImpl();
+			
+			course.setName(name);
+			course.setCourseId(id);
+			course.setEntityId(entId);
+			CourseLocalServiceUtil.addCourse(course);
+			
+			UserEnrollment userEnroll = new UserEnrollmentImpl();
+			
+			userEnroll.setUserId(userId);
+			userEnroll.setCourseId(id);
+		
+			
+		}
+		
 			
 			
 		/**
