@@ -102,6 +102,6 @@ public class MyCoursePortlet extends MVCPortlet {
 		 * of the Moodle DB's information.  It will be inserted into the list of
 		 * the users courses.
 		 */
-		//Get Moodle DB information, insert into DB
+		
 	}
 }
