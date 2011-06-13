@@ -49,25 +49,4 @@ public class CourseLocalServiceImpl extends CourseLocalServiceBaseImpl {
 		}
 		return course;
 	}
-	
-	public Course addCourse(String courseName, long courseId, long entityId) throws SystemException {
-		
-		Course course = coursePersistence.create(
-				counterLocalService.increment(
-						Course.class.getName()));
-		
-		course.setName(courseName);
-		course.setCourseId(courseId);
-		course.setEntityId(entityId);
-		
-		return coursePersistence.update(course, false);
-	}
-	
-	public Course updateCourseName(long courseId, long entityId, String courseName) throws NoSuchCourseException, SystemException {
-		
-		Course course = getCourseByEntity(courseId,entityId);
-		course.setName(courseName);
-		
-		return coursePersistence.update(course, true);
-	}
 }
