@@ -31,7 +31,7 @@ public class MyCoursePortlet extends MVCPortlet {
 		
 		List<UserEnrollment> enrollments = UserEnrollmentLocalServiceUtil.getUserEnrollmentsByUserId(userId);
 		
-		int numberCoursesEnrolled = enrollments.size();
+		long numberCoursesEnrolled = enrollments.size();
 		
 		if (numberCoursesEnrolled == 0)
 		{
@@ -43,6 +43,9 @@ public class MyCoursePortlet extends MVCPortlet {
 		/** Insert check to test # of enrollments - If = 0, go get from Moodle DB.  Else, go on. */
 		
 		for (UserEnrollment enrollment : enrollments) {
+			
+			
+			
 			/** Check last refresh date on enrollment.  If older than standard, go get from Moodle DB
 			 * 
 			 *  Make the following in a new method:
@@ -82,9 +85,23 @@ public class MyCoursePortlet extends MVCPortlet {
 		return entityId;
 	}
 	
+	public static void courseUpdate ()
+	{
+		/**
+		 * Name will probably be changed.  This method will call the perfromTableUpdate
+		 * method that gets all of the moodle courses.  Once it has all of the updated
+		 * courses, each column will be compared with a specified date to see
+		 * if it needs to be refreshed.
+		 */
+	}
 	
 	public static void performTableUpdate ()
 	{
-		
+		/**
+		 * The method name will need to change.  This method will go get all
+		 * of the Moodle DB's information.  It will be inserted into the list of
+		 * the users courses.
+		 */
+		//Get Moodle DB information, insert into DB
 	}
 }
