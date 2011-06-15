@@ -23,8 +23,9 @@ List<Course> courses = MyCoursePortlet.getAllEnrollments(renderRequest);
 %>
 
 <div id="mycourses">
-	<p id="headline_main">My Courses</p>
+	<img id='schoolhouse' src='<%=renderRequest.getContextPath()%>/images/schoolhouse-sm.png' alt='schoolhouse' />
 	
+	<p id="headline_main">My Courses</p>
 	<span id="tip">Click course name to go to class</span>
 	
 	<p class="headline_entity"><%=entityName %></p> 

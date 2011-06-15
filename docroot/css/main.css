@@ -1,20 +1,25 @@
 #mycourses {
-	margin: 5px 5px 20px;
+	margin: 0px 10px 20px;
 }
 
 #headline_main {
 	font-weight: bold;
 	font-size: 1.8em;
-	margin-bottom: 0px;
-	padding-bottom: 0px;
+	margin: 0px;
+	padding: 10px 0px 0px 0px;
+}
+
+#schoolhouse {
+	float: left;
+	margin: 0px 20px 20px 5px;
 }
 
 .headline_entity {
 	font-weight: bold;
 	font-size: 1.5em;
-	margin-top: 20px;
-	margin-bottom: 0px;
-	padding-bottom: 0px;
+	padding: 0px;
+	margin: 20px 0px 0px;
+	clear: left;
 }
 
 .courseName {
@@ -22,6 +27,5 @@
 	left: 15px;
 	display: block;
 	font-size: 1.4em;
-	margin-top: 0px;
-	padding-top: 0px;
+	
 }
