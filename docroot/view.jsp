@@ -15,11 +15,16 @@
 %>
 <%@include file="/init.jsp" %>
 
-<% 
-long entityId = MyCoursePortlet.getUserHomeSchool(renderRequest);
-String entityUrl = EntityLocalServiceUtil.getEntityUrl(entityId);
-String entityName = EntityLocalServiceUtil.getEntityName(entityId);
+<%
+/** Retrieve all user enrollments, regardless of entity */
+
 List<Course> courses = MyCoursePortlet.getAllEnrollments(renderRequest);
+
+/** Retrieve information about user's main entity, or "home school" */
+
+long homeEntityId = MyCoursePortlet.getUserHomeSchool(renderRequest);
+String homeEntityUrl = EntityLocalServiceUtil.getEntityUrl(homeEntityId);
+String homeEntityName = EntityLocalServiceUtil.getEntityName(homeEntityId);
 %>
 
 <div id="mycourses">
@@ -28,18 +33,59 @@ List<Course> courses = MyCoursePortlet.getAllEnrollments(renderRequest);
 	<p id="headline_main">My Courses</p>
 	<span id="tip">Click course name to go to class</span>
 	
-	<p class="headline_entity"><%=entityName %></p> 
+	<!-- Display home school enrollments -->
+	
+	<p class="headline_entity"><%=homeEntityName %></p> 
 	<%
 	if (courses.isEmpty()) {
 		%>
-		<span>You are not enrolled in any classes at <%=entityName %></span>
+		<span>You are not enrolled in any classes at <%=homeEntityName %></span>
 		<%
 	}
 	for (Course course : courses) 
-	{
+	{ 
+		if (course.getEntityId() == homeEntityId) {
 	%>
-		<a href='<%=entityUrl%>/course/view.php?id=<%=course.getCourseId()%>' target='_blank' class='courseName'><%=course.getName().toString()%></a>
+			<a href='<%=homeEntityUrl%>/course/view.php?id=<%=course.getCourseId()%>' target='_blank' class='courseName'><%=course.getName().toString()%></a>
 	<% 
+		}
 	} 
+	%>
+	
+	<!-- Check for and display any remote enrollments -->
+	
+	<%
+	//PortletPreferences prefs = renderRequest.getPreferences();
+	
+	//List<String> remoteEntityIds = Arrays.asList(prefs.getValues("remoteEntities", new String[] {null}));
+	
+	List<String> remoteEntityIds = new ArrayList<String>();
+	//remoteEntityIds.add("2");	
+	
+	for (String entityId : remoteEntityIds) {
+		Entity entity = EntityLocalServiceUtil.getEntity(Long.valueOf(entityId));
+		List<Host> host = HostLocalServiceUtil.findByLR(homeEntityId, entity.getEntityId());
+		long peerId = host.get(0).getPeerId();
+		
+		%>
+		<p class="headline_entity"><%=entity.getEntityName().toString() %></p>
+		<%
+		if (courses.isEmpty()) {
+			%>
+			<span>You are not enrolled in any classes at <%=entity.getEntityName().toString() %></span>
+			<%
+		}
+		for (Course course : courses) 
+		{
+			%>
+			<%=course.getEntityId()%>
+			<%
+			if (course.getEntityId() == entity.getEntityId()) {
+		%>
+				<a href='<%=homeEntityUrl %>/auth/mnet/jump.php?hostid=<%=peerId %>&wantsurl=/course/view.php?id=<%=course.getCourseId()%>' target='_blank' class='courseName'><%=course.getName().toString()%></a>
+		<% 
+			}
+		} 
+	}
 	%>
 </div>

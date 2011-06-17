@@ -203,4 +203,8 @@ public interface HostLocalService {
 	public org.gnenc.internet.mycourses.model.Host updateHost(
 		org.gnenc.internet.mycourses.model.Host host, boolean merge)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<org.gnenc.internet.mycourses.model.Host> findByLR(
+		long localEntityId, long remoteEntityId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

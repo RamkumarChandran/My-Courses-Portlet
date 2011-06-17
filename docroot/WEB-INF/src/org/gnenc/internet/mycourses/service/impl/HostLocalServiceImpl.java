@@ -14,7 +14,12 @@
 
 package org.gnenc.internet.mycourses.service.impl;
 
+import java.util.List;
+
+import org.gnenc.internet.mycourses.model.Host;
 import org.gnenc.internet.mycourses.service.base.HostLocalServiceBaseImpl;
+
+import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The implementation of the host local service.
@@ -36,4 +41,10 @@ import org.gnenc.internet.mycourses.service.base.HostLocalServiceBaseImpl;
  * @see org.gnenc.internet.mycourses.service.HostLocalServiceUtil
  */
 public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
+	
+	public List<Host> findByLR(long localEntityId, long remoteEntityId) throws SystemException {
+		List<Host> host = hostPersistence.findByLRentity(localEntityId, remoteEntityId);
+		
+		return host;
+	}
 }

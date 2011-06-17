@@ -16,7 +16,6 @@ import org.gnenc.internet.mycourses.service.CourseLocalServiceUtil;
 import org.gnenc.internet.mycourses.service.EntityLocalServiceUtil;
 import org.gnenc.internet.mycourses.service.UserEnrollmentLocalServiceUtil;
 
-import com.liferay.counter.service.CounterLocalService;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -62,8 +61,9 @@ public class MyCoursePortlet extends MVCPortlet {
 			 *  go ahead and check and update the Course Info in Liferay while we're at it.
 			 *  There is no last refresh on course info so we check, update if necessary, and move on
 			 */
-			Course course = CourseLocalServiceUtil.getCourseByEntity(
-					enrollment.getCourseId(),entityId);
+			Course course = CourseLocalServiceUtil.getCourse(enrollment.getCourseId());
+			//Course course = CourseLocalServiceUtil.getCourseByEntity(
+			//		enrollment.getCourseId(),entityId);
 			if (course != null) {		
 				courseInfo.add(course);
 			}

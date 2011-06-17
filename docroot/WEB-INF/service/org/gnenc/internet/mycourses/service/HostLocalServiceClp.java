@@ -385,6 +385,34 @@ public class HostLocalServiceClp implements HostLocalService {
 		return (org.gnenc.internet.mycourses.model.Host)ClpSerializer.translateOutput(returnObj);
 	}
 
+	public java.util.List<org.gnenc.internet.mycourses.model.Host> findByLR(
+		long localEntityId, long remoteEntityId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		MethodHandler methodHandler = new MethodHandler(_findByLRMethodKey13,
+				localEntityId, remoteEntityId);
+
+		try {
+			returnObj = _classLoaderProxy.invoke(methodHandler);
+		}
+		catch (Throwable t) {
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<org.gnenc.internet.mycourses.model.Host>)ClpSerializer.translateOutput(returnObj);
+	}
+
 	public ClassLoaderProxy getClassLoaderProxy() {
 		return _classLoaderProxy;
 	}
@@ -422,4 +450,6 @@ public class HostLocalServiceClp implements HostLocalService {
 	private MethodKey _updateHostMethodKey12 = new MethodKey(_classLoaderProxy.getClassName(),
 			"updateHost", org.gnenc.internet.mycourses.model.Host.class,
 			boolean.class);
+	private MethodKey _findByLRMethodKey13 = new MethodKey(_classLoaderProxy.getClassName(),
+			"findByLR", long.class, long.class);
 }
