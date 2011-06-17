@@ -77,9 +77,6 @@ String homeEntityName = EntityLocalServiceUtil.getEntityName(homeEntityId);
 		}
 		for (Course course : courses) 
 		{
-			%>
-			<%=course.getEntityId()%>
-			<%
 			if (course.getEntityId() == entity.getEntityId()) {
 		%>
 				<a href='<%=homeEntityUrl %>/auth/mnet/jump.php?hostid=<%=peerId %>&wantsurl=/course/view.php?id=<%=course.getCourseId()%>' target='_blank' class='courseName'><%=course.getName().toString()%></a>
