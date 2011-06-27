@@ -9,3 +9,4 @@ create index IX_3BFA5AA1 on MC_Host (entityId, remoteEntityId);
 create index IX_9006F768 on MC_UserEnrollment (courseId);
 create index IX_4CED5E37 on MC_UserEnrollment (lastRefresh);
 create index IX_88777318 on MC_UserEnrollment (userId);
+create index IX_48DC9122 on MC_UserEnrollment (userId, courseId);

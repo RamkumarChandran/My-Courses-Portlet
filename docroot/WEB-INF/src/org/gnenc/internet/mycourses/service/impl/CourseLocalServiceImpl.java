@@ -14,8 +14,11 @@
 
 package org.gnenc.internet.mycourses.service.impl;
 
+import java.util.List;
+
 import org.gnenc.internet.mycourses.NoSuchCourseException;
 import org.gnenc.internet.mycourses.model.Course;
+import org.gnenc.internet.mycourses.model.impl.CourseImpl;
 import org.gnenc.internet.mycourses.service.base.CourseLocalServiceBaseImpl;
 
 import com.liferay.portal.kernel.exception.SystemException;
@@ -43,10 +46,21 @@ public class CourseLocalServiceImpl extends CourseLocalServiceBaseImpl {
 	
 	public Course getCourseByEntity(long courseId, long entityId) throws NoSuchCourseException, SystemException {
 
-		Course course = coursePersistence.findByPrimaryKey(courseId);
-		if (course.getEntityId() != entityId) {
-			course = null;
+		List<Course> course = coursePersistence.findByC_E(courseId, entityId);
+		
+		Course c = new CourseImpl();
+		
+		if (course.size() == 1) {
+			c.setId(course.get(0).getId());
+			c.setCourseId(course.get(0).getCourseId());
+			c.setName(course.get(0).getName());
+			c.setEntityId(course.get(0).getEntityId());
+		} else if (course.size() == 0) {
+			c = null;
 		}
-		return course;
+		//if (course.getEntityId() != entityId) {
+		//	course = null;
+		//}
+		return c;
 	}
 }

@@ -75,6 +75,11 @@
 			<finder-column name="userId"/>
 		</finder>
 		
+		<finder name="UserId_CourseId" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="courseId" />
+		</finder>
+		
 		<finder name="CourseId" return-type="Collection">
 			<finder-column name="courseId" />
 		</finder>

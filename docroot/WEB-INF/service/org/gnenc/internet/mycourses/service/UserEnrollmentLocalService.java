@@ -211,4 +211,9 @@ public interface UserEnrollmentLocalService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<org.gnenc.internet.mycourses.model.UserEnrollment> getUserEnrollmentsByUserId(
 		long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.gnenc.internet.mycourses.model.UserEnrollment getByUid_CourseId(
+		long userId, long courseId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

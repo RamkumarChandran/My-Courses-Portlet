@@ -1,6 +1,5 @@
 package org.gnenc.internet.mycourses.portlet;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -34,36 +33,13 @@ public class MyCoursePortlet extends MVCPortlet {
 		
 		long entityId = getUserHomeSchool(request);
 		
+		checkCourses(userEmail,entityId,userId);
+		
 		List<UserEnrollment> enrollments = UserEnrollmentLocalServiceUtil.getUserEnrollmentsByUserId(userId);
 		
-		long numberCoursesEnrolled = enrollments.size();
-		
-		if (numberCoursesEnrolled == 0)
-		{
-			performTableUpdate(userEmail,entityId,userId);
-		}
-			
-		
-		
-		/** Insert check to test # of enrollments - If = 0, go get from Moodle DB.  Else, go on. */
-		
 		for (UserEnrollment enrollment : enrollments) {
-			
-			
-			
-			/** Check last refresh date on enrollment.  If older than standard, go get from Moodle DB
-			 * 
-			 *  Make the following in a new method:
-			 *  If one enrollment is old, we assume they all are, and go update all user's enrollments
-			 *  We want to exit this loop if we have to go update
-			 *  
-			 *  The Moodle DB will send back the Course Name and Id, too, so we might as well
-			 *  go ahead and check and update the Course Info in Liferay while we're at it.
-			 *  There is no last refresh on course info so we check, update if necessary, and move on
-			 */
 			Course course = CourseLocalServiceUtil.getCourse(enrollment.getCourseId());
-			//Course course = CourseLocalServiceUtil.getCourseByEntity(
-			//		enrollment.getCourseId(),entityId);
+			
 			if (course != null) {		
 				courseInfo.add(course);
 			}
@@ -90,72 +66,97 @@ public class MyCoursePortlet extends MVCPortlet {
 		return entityId;
 	}
 	
-	public static void courseUpdate ()
-	{
+	private static void checkCourses(String userEmail, long entityId, long userId) throws PortalException, SystemException {
 		
+		List<UserEnrollment> enrollments = UserEnrollmentLocalServiceUtil.getUserEnrollmentsByUserId(userId);
 		
-		/**
-		 * Name will probably be changed.  This method will call the perfromTableUpdate
-		 * method that gets all of the moodle courses.  Once it has all of the updated
-		 * courses, each column will be compared with a specified date to see
-		 * if it needs to be refreshed.  Will call UpdateCourse, send it a course object or user enroll object
-		 * .  Build it in the same way.
-		 */
+		if (enrollments.size() == 0)
+		{
+			updateCourses(userEmail,entityId,userId);
+		}
+			
+		for (UserEnrollment enrollment : enrollments) {
+			Date today = new Date();
+			long oneWeek = 604800000;
+			Date lastRefresh = enrollment.getLastRefresh();
+			
+			if ((today.getTime()-lastRefresh.getTime()) > oneWeek) {
+				
+				//Update Course Enrollments
+				
+				updateCourses(userEmail,entityId,userId);
+				break;
+			}
+		}
 	}
 	
-	public static void performTableUpdate (String userEmail, long entId, long userId) throws SystemException, PortalException
+	@SuppressWarnings("rawtypes")
+	private static void updateCourses (String userEmail, long entityId, long userId) throws PortalException, SystemException
 	{
-		
-		
 		String dbServer = "corin.vps.gnenc.org";
-		Entity entity = EntityLocalServiceUtil.getEntity(entId);
+		Entity entity = EntityLocalServiceUtil.getEntity(entityId);
 		String dbName = entity.getDbName();
 		String dbUrl = dbServer + "/" + dbName;	
 		String dbUser = "esu10moodle";
 		String dbPass = "UtVz85rTEZpR";
 			
-		ArrayList courses = MoodleJdbc.findCoursesByEmail(userEmail, dbUrl, dbUser, dbPass);
+		ArrayList mCourses = MoodleJdbc.findCoursesByEmail(userEmail, dbUrl, dbUser, dbPass);
 		
-		ArrayList courseName = ((ArrayList)courses.get(0));
-		ArrayList courseId = ((ArrayList)courses.get(1));
-	
+		ArrayList courseName = ((ArrayList)mCourses.get(0));
+		ArrayList courseId = ((ArrayList)mCourses.get(1));
 		
-		
-		for (int count = courseName.size()-1;count>=0;count--)
+		for (int i = courseName.size()-1;i>=0;i--)
 		{
-			String str = courseId.get(count).toString();
+			String str = courseId.get(i).toString();
+			String name = courseName.get(i).toString();
 			long id = Long.valueOf(str);
-			
-			String name = courseName.get(count).toString();
-			
 			Course course = new CourseImpl();
 			
-			course.setName(name);
-			course.setCourseId(id);
-			course.setEntityId(entId);
-			course.setId(CounterLocalServiceUtil.increment(Course.class.getName()));
-			Course course1 = CourseLocalServiceUtil.addCourse(course);
+			if (CourseLocalServiceUtil.getCourseByEntity(id, entityId) == null) {
+				
+				// Insert new course
+				
+				Course c = new CourseImpl();
+				
+				c.setName(name);
+				c.setCourseId(id);
+				c.setEntityId(entityId);
+				c.setId(CounterLocalServiceUtil.increment(Course.class.getName()));
+				
+				course = CourseLocalServiceUtil.addCourse(c);
+			} else {
+				
+				// Update existing course
+				
+				Course c = CourseLocalServiceUtil.getCourseByEntity(id, entityId);
+				c.setName(name);
+				c.setNew(false);
+				
+				course = CourseLocalServiceUtil.updateCourse(c);
+			}
 			
-			UserEnrollment userEnroll = new UserEnrollmentImpl();
-			
-			userEnroll.setUserId(userId);
-			userEnroll.setCourseId(course1.getId());
-			userEnroll.setId(CounterLocalServiceUtil.increment(UserEnrollment.class.getName()));
-			userEnroll.setLastRefresh(new Date());
+			UserEnrollment u = UserEnrollmentLocalServiceUtil.getByUid_CourseId(userId,course.getId());
+			if (u == null) {
+				
+				// Insert new user enrollment
+				
+				u = new UserEnrollmentImpl();
+				
+				u.setUserId(userId);
+				u.setCourseId(course.getId());
+				u.setId(CounterLocalServiceUtil.increment(UserEnrollment.class.getName()));
+				u.setLastRefresh(new Date());
 		
-			
-			UserEnrollmentLocalServiceUtil.addUserEnrollment(userEnroll);
-			
+				UserEnrollmentLocalServiceUtil.addUserEnrollment(u);
+			} else {
+				
+				// Update existing user enrollment
+				
+				u.setLastRefresh(new Date());
+				u.setNew(false);
+				
+				UserEnrollmentLocalServiceUtil.updateUserEnrollment(u);
+			}
 		}
-		
-			
-			
-		/**
-		 * The method name will need to change.  This method will go get all
-		 * of the Moodle DB's information.  It will be inserted into the list of
-		 * the users courses.  Call add course for each one I get back from moodle.
-		 * CourseLocalServiceUtil.addCourse(parameters).
-		 */
-		
 	}
 }

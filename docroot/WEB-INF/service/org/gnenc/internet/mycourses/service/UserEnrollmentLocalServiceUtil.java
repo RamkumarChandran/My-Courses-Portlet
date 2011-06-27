@@ -232,6 +232,12 @@ public class UserEnrollmentLocalServiceUtil {
 		return getService().getUserEnrollmentsByUserId(userId);
 	}
 
+	public static org.gnenc.internet.mycourses.model.UserEnrollment getByUid_CourseId(
+		long userId, long courseId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByUid_CourseId(userId, courseId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

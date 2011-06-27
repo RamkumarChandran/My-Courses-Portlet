@@ -228,6 +228,12 @@ public class UserEnrollmentLocalServiceWrapper
 		return _userEnrollmentLocalService.getUserEnrollmentsByUserId(userId);
 	}
 
+	public org.gnenc.internet.mycourses.model.UserEnrollment getByUid_CourseId(
+		long userId, long courseId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userEnrollmentLocalService.getByUid_CourseId(userId, courseId);
+	}
+
 	public UserEnrollmentLocalService getWrappedUserEnrollmentLocalService() {
 		return _userEnrollmentLocalService;
 	}

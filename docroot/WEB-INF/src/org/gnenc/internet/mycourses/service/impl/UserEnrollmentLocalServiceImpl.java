@@ -17,6 +17,7 @@ package org.gnenc.internet.mycourses.service.impl;
 import java.util.List;
 
 import org.gnenc.internet.mycourses.model.UserEnrollment;
+import org.gnenc.internet.mycourses.model.impl.UserEnrollmentImpl;
 import org.gnenc.internet.mycourses.service.base.UserEnrollmentLocalServiceBaseImpl;
 
 import com.liferay.portal.kernel.exception.SystemException;
@@ -46,6 +47,7 @@ public class UserEnrollmentLocalServiceImpl
 	public List<UserEnrollment> getUserEnrollmentsByUserId(long userId) {
 		List<UserEnrollment> enrollments = null;
 		
+		userEnrollmentPersistence.clearCache();
 		try {
 			enrollments = userEnrollmentPersistence.findByUserId(userId);
 		} catch (SystemException e) {
@@ -54,5 +56,22 @@ public class UserEnrollmentLocalServiceImpl
 		}
 		
 		return enrollments;
+	}
+	
+	public UserEnrollment getByUid_CourseId(long userId, long courseId) throws SystemException {
+		
+		List<UserEnrollment> enrollment = userEnrollmentPersistence.findByUserId_CourseId(userId,courseId);
+		
+		UserEnrollment u = new UserEnrollmentImpl();
+		
+		if (enrollment.size() == 1) {
+			u.setId(enrollment.get(0).getId());
+			u.setUserId(enrollment.get(0).getUserId());
+			u.setCourseId(enrollment.get(0).getCourseId());
+		} else if (enrollment.size() == 0) {
+			u = null;
+		} 
+		
+		return u;
 	}
 }
