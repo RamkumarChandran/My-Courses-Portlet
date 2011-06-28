@@ -29,14 +29,29 @@ String homeEntityName = EntityLocalServiceUtil.getEntityName(homeEntityId);
 %>
 
 <div id="mycourses">
-	<img id='schoolhouse' src='<%=renderRequest.getContextPath()%>/images/schoolhouse-sm.png' alt='schoolhouse' />
-	
-	<p id="headline_main">My Courses</p>
-	<span id="tip">Click course name to go to class</span>
+	<div>
+		<img id='schoolhouse' src='<%=renderRequest.getContextPath()%>/images/schoolhouse-sm.png' alt='schoolhouse' />
+		
+		<p id="headline_main">My Courses</p>
+		<span id="tip">
+			<aui:a href="javascript:void();" cssClass="help aui-icon aui-icon-help" />
+		</span>
+	</div>
 	
 	<!-- Display home school enrollments -->
 	
-	<p class="headline_entity"><%=homeEntityName %></p> 
+	<table>
+		<tr>
+		<td>
+			<span id="entity_link_tooltip" title="Go to <b><%=homeEntityName %></b> online learning <br />home page in new window">
+				<aui:a class="entity_link" href="<%=homeEntityUrl%>" target="_blank" cssClass="aui-icon aui-icon-circle-arrow-r" />
+			</span>
+		</td>
+		<td>
+			<span class="entity_name"><%=homeEntityName %></span>
+		</td>
+		</tr>
+	</table>
 	<%
 	if (courses.isEmpty()) {
 		%>
