@@ -14,7 +14,7 @@
 <%@ page import="com.liferay.portal.kernel.exception.SystemException" %>
 <%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 
-<%@ page import="org.gnenc.internet.mycourses.portlet.MyCoursePortlet" %>
+<%@ page import="org.gnenc.internet.mycourses.portlet.MyCoursesPortlet" %>
 <%@ page import="org.gnenc.internet.mycourses.model.Course" %>
 <%@ page import="org.gnenc.internet.mycourses.model.Entity" %>
 <%@ page import="org.gnenc.internet.mycourses.model.Host" %>

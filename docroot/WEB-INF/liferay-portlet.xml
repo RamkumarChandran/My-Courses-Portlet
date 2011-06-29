@@ -12,13 +12,17 @@
 		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>My-Courses-portlet</css-class-wrapper>
 	</portlet>
+	<portlet>
+		<portlet-name>My-Courses-Admin</portlet-name>
+		<icon>/icon.png</icon>
+		<control-panel-entry-category>portal</control-panel-entry-category>
+		<control-panel-entry-weight>11.0</control-panel-entry-weight>
+		<header-portlet-css>/css/admin.css</header-portlet-css>
+		<header-portlet-javascript>/js/admin.js</header-portlet-javascript>
+	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>
-	</role-mapper>
-	<role-mapper>
-		<role-name>guest</role-name>
-		<role-link>Guest</role-link>
 	</role-mapper>
 	<role-mapper>
 		<role-name>power-user</role-name>

@@ -9,7 +9,7 @@
 	<portlet>
 		<portlet-name>My-Courses</portlet-name>
 		<display-name>My Courses</display-name>
-		<portlet-class>org.gnenc.internet.mycourses.portlet.MyCoursePortlet</portlet-class>
+		<portlet-class>org.gnenc.internet.mycourses.portlet.MyCoursesPortlet</portlet-class>
 		<init-param>
 			<name>view-jsp</name>
 			<value>/view.jsp</value>
@@ -22,6 +22,37 @@
 			<title>My Courses</title>
 			<short-title>My Courses</short-title>
 			<keywords>My Courses</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>My-Courses-Admin</portlet-name>
+		<display-name>My Courses Administration</display-name>
+		<portlet-class>org.gnenc.internet.mycourses.portlet.MyCoursesAdminPortlet</portlet-class>
+		<init-param>
+			<name>view-jsp</name>
+			<value>/admin/view.jsp</value>
+		</init-param>
+		<expiration-cache>300</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<resource-bundle>content.Language</resource-bundle>
+		<portlet-info>
+			<title>My Courses Administration</title>
+			<short-title>My Courses Admin</short-title>
+			<keywords>My Courses Administration</keywords>
 		</portlet-info>
 		<security-role-ref>
 			<role-name>administrator</role-name>

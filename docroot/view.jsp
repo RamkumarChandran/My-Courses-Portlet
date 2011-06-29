@@ -1,5 +1,4 @@
-<%
-/**
+<%/**
  * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -11,19 +10,17 @@
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
- */
-%>
+ */%>
 <%@include file="/init.jsp" %>
 
 <%
+	/** Retrieve all user enrollments, regardless of entity */
 
-/** Retrieve all user enrollments, regardless of entity */
-
-List<Course> courses = MyCoursePortlet.getAllEnrollments(renderRequest);
+List<Course> courses = MyCoursesPortlet.getAllEnrollments(renderRequest);
 
 /** Retrieve information about user's main entity, or "home school" */
 
-long homeEntityId = MyCoursePortlet.getUserHomeSchool(renderRequest);
+long homeEntityId = MyCoursesPortlet.getUserHomeSchool(renderRequest);
 String homeEntityUrl = EntityLocalServiceUtil.getEntityUrl(homeEntityId);
 String homeEntityName = EntityLocalServiceUtil.getEntityName(homeEntityId);
 %>
@@ -37,17 +34,17 @@ String homeEntityName = EntityLocalServiceUtil.getEntityName(homeEntityId);
 			<aui:a href="javascript:void();" cssClass="help aui-icon aui-icon-help" />
 		</span>
 	</div>
-
+	
 	<!-- Display home school enrollments -->
-
+ 
 	<table>
 		<tr>
 		<td>
 			<span class="entity_name"><%=homeEntityName %></span>
 		</td>
 		<td>
-			<span id="entity_link_tooltip" title="Go to <b><%=homeEntityName %></b> online learning <br />home page in new window">
-				<aui:a class="entity_link" href="<%=homeEntityUrl%>" target="_blank" cssClass="aui-icon aui-icon-circle-arrow-r" />
+			<span id="entity_link_tooltip" title="Go to <b><%=homeEntityName %></b> online learning <br />home page in a new window">
+				<aui:a class="entity_link" href="<%=homeEntityUrl%>" target="_blank" cssClass="aui-icon aui-icon-home" />
 			</span>
 		</td>
 		</tr>

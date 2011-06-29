@@ -4,6 +4,7 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.Http.Response;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
@@ -22,7 +23,7 @@ import org.gnenc.internet.mycourses.service.CourseLocalServiceUtil;
 import org.gnenc.internet.mycourses.service.EntityLocalServiceUtil;
 import org.gnenc.internet.mycourses.service.UserEnrollmentLocalServiceUtil;
 
-public class MyCoursePortlet extends MVCPortlet {
+public class MyCoursesPortlet extends MVCPortlet {
 
 	public static List<Course> getAllEnrollments(RenderRequest request) throws SystemException, PortalException {
 		List<Course> courseInfo = new ArrayList<Course>();
