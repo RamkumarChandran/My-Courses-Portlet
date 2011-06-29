@@ -14,14 +14,14 @@
 
 package org.gnenc.internet.mycourses.service.impl;
 
+import com.liferay.portal.kernel.exception.SystemException;
+
 import java.util.List;
 
 import org.gnenc.internet.mycourses.NoSuchCourseException;
 import org.gnenc.internet.mycourses.model.Course;
 import org.gnenc.internet.mycourses.model.impl.CourseImpl;
 import org.gnenc.internet.mycourses.service.base.CourseLocalServiceBaseImpl;
-
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The implementation of the course local service.
@@ -43,13 +43,13 @@ import com.liferay.portal.kernel.exception.SystemException;
  * @see org.gnenc.internet.mycourses.service.CourseLocalServiceUtil
  */
 public class CourseLocalServiceImpl extends CourseLocalServiceBaseImpl {
-	
+
 	public Course getCourseByEntity(long courseId, long entityId) throws NoSuchCourseException, SystemException {
 
 		List<Course> course = coursePersistence.findByC_E(courseId, entityId);
-		
+
 		Course c = new CourseImpl();
-		
+
 		if (course.size() == 1) {
 			c.setId(course.get(0).getId());
 			c.setCourseId(course.get(0).getCourseId());
