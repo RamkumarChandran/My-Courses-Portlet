@@ -141,12 +141,33 @@ public class ClpSerializer {
 
 					method3.invoke(newModel, value3);
 
-					Method method4 = newModelClass.getMethod("setDbName",
+					Method method4 = newModelClass.getMethod("setDbServer",
 							new Class[] { String.class });
 
-					String value4 = oldCplModel.getDbName();
+					String value4 = oldCplModel.getDbServer();
 
 					method4.invoke(newModel, value4);
+
+					Method method5 = newModelClass.getMethod("setDbName",
+							new Class[] { String.class });
+
+					String value5 = oldCplModel.getDbName();
+
+					method5.invoke(newModel, value5);
+
+					Method method6 = newModelClass.getMethod("setDbUser",
+							new Class[] { String.class });
+
+					String value6 = oldCplModel.getDbUser();
+
+					method6.invoke(newModel, value6);
+
+					Method method7 = newModelClass.getMethod("setDbPass",
+							new Class[] { String.class });
+
+					String value7 = oldCplModel.getDbPass();
+
+					method7.invoke(newModel, value7);
 
 					return newModel;
 				}
@@ -384,12 +405,33 @@ public class ClpSerializer {
 
 					newModel.setEmailDomains(value3);
 
-					Method method4 = oldModelClass.getMethod("getDbName");
+					Method method4 = oldModelClass.getMethod("getDbServer");
 
 					String value4 = (String)method4.invoke(oldModel,
 							(Object[])null);
 
-					newModel.setDbName(value4);
+					newModel.setDbServer(value4);
+
+					Method method5 = oldModelClass.getMethod("getDbName");
+
+					String value5 = (String)method5.invoke(oldModel,
+							(Object[])null);
+
+					newModel.setDbName(value5);
+
+					Method method6 = oldModelClass.getMethod("getDbUser");
+
+					String value6 = (String)method6.invoke(oldModel,
+							(Object[])null);
+
+					newModel.setDbUser(value6);
+
+					Method method7 = oldModelClass.getMethod("getDbPass");
+
+					String value7 = (String)method7.invoke(oldModel,
+							(Object[])null);
+
+					newModel.setDbPass(value7);
 
 					return newModel;
 				}

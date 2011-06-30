@@ -12,7 +12,10 @@
 		<field name="entityName" type="String" />
 		<field name="url" type="String" />
 		<field name="emailDomains" type="String" />
+		<field name="dbServer" type="String" />
 		<field name="dbName" type="String" />
+		<field name="dbUser" type="String" />
+		<field name="dbPass" type="String" />
 	</model>
 	<model name="org.gnenc.internet.mycourses.model.UserEnrollment">
 		<field name="id" type="long" />

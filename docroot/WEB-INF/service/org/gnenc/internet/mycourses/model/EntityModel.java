@@ -114,6 +114,21 @@ public interface EntityModel extends BaseModel<Entity> {
 	public void setEmailDomains(String emailDomains);
 
 	/**
+	 * Gets the db server of this entity.
+	 *
+	 * @return the db server of this entity
+	 */
+	@AutoEscape
+	public String getDbServer();
+
+	/**
+	 * Sets the db server of this entity.
+	 *
+	 * @param dbServer the db server of this entity
+	 */
+	public void setDbServer(String dbServer);
+
+	/**
 	 * Gets the db name of this entity.
 	 *
 	 * @return the db name of this entity
@@ -127,6 +142,36 @@ public interface EntityModel extends BaseModel<Entity> {
 	 * @param dbName the db name of this entity
 	 */
 	public void setDbName(String dbName);
+
+	/**
+	 * Gets the db user of this entity.
+	 *
+	 * @return the db user of this entity
+	 */
+	@AutoEscape
+	public String getDbUser();
+
+	/**
+	 * Sets the db user of this entity.
+	 *
+	 * @param dbUser the db user of this entity
+	 */
+	public void setDbUser(String dbUser);
+
+	/**
+	 * Gets the db pass of this entity.
+	 *
+	 * @return the db pass of this entity
+	 */
+	@AutoEscape
+	public String getDbPass();
+
+	/**
+	 * Sets the db pass of this entity.
+	 *
+	 * @param dbPass the db pass of this entity
+	 */
+	public void setDbPass(String dbPass);
 
 	/**
 	 * Gets a copy of this entity as an escaped model instance by wrapping it with an {@link com.liferay.portal.kernel.bean.AutoEscapeBeanHandler}.

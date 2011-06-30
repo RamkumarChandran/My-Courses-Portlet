@@ -5,4 +5,7 @@
 	<category name="eLearning">
 		<portlet id="My-Courses" />
 	</category>
+	<category name="category.hidden">
+		<portlet id="My-Courses-Admin" />
+	</category>
 </display>

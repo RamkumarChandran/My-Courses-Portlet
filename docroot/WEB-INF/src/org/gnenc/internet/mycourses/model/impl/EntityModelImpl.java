@@ -58,9 +58,12 @@ public class EntityModelImpl extends BaseModelImpl<Entity>
 			{ "entityName", new Integer(Types.VARCHAR) },
 			{ "url", new Integer(Types.VARCHAR) },
 			{ "emailDomains", new Integer(Types.VARCHAR) },
-			{ "dbName", new Integer(Types.VARCHAR) }
+			{ "dbServer", new Integer(Types.VARCHAR) },
+			{ "dbName", new Integer(Types.VARCHAR) },
+			{ "dbUser", new Integer(Types.VARCHAR) },
+			{ "dbPass", new Integer(Types.VARCHAR) }
 		};
-	public static final String TABLE_SQL_CREATE = "create table MC_Entity (entityId LONG not null primary key,entityName VARCHAR(75) null,url VARCHAR(75) null,emailDomains VARCHAR(75) null,dbName VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table MC_Entity (entityId LONG not null primary key,entityName VARCHAR(75) null,url VARCHAR(75) null,emailDomains VARCHAR(75) null,dbServer VARCHAR(75) null,dbName VARCHAR(75) null,dbUser VARCHAR(75) null,dbPass VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table MC_Entity";
 	public static final String ORDER_BY_JPQL = " ORDER BY entity.entityName ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MC_Entity.entityName ASC";
@@ -138,6 +141,19 @@ public class EntityModelImpl extends BaseModelImpl<Entity>
 		_emailDomains = emailDomains;
 	}
 
+	public String getDbServer() {
+		if (_dbServer == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dbServer;
+		}
+	}
+
+	public void setDbServer(String dbServer) {
+		_dbServer = dbServer;
+	}
+
 	public String getDbName() {
 		if (_dbName == null) {
 			return StringPool.BLANK;
@@ -149,6 +165,32 @@ public class EntityModelImpl extends BaseModelImpl<Entity>
 
 	public void setDbName(String dbName) {
 		_dbName = dbName;
+	}
+
+	public String getDbUser() {
+		if (_dbUser == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dbUser;
+		}
+	}
+
+	public void setDbUser(String dbUser) {
+		_dbUser = dbUser;
+	}
+
+	public String getDbPass() {
+		if (_dbPass == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dbPass;
+		}
+	}
+
+	public void setDbPass(String dbPass) {
+		_dbPass = dbPass;
 	}
 
 	public Entity toEscapedModel() {
@@ -185,7 +227,13 @@ public class EntityModelImpl extends BaseModelImpl<Entity>
 
 		entityImpl.setEmailDomains(getEmailDomains());
 
+		entityImpl.setDbServer(getDbServer());
+
 		entityImpl.setDbName(getDbName());
+
+		entityImpl.setDbUser(getDbUser());
+
+		entityImpl.setDbPass(getDbPass());
 
 		return entityImpl;
 	}
@@ -232,7 +280,7 @@ public class EntityModelImpl extends BaseModelImpl<Entity>
 	}
 
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{entityId=");
 		sb.append(getEntityId());
@@ -242,15 +290,21 @@ public class EntityModelImpl extends BaseModelImpl<Entity>
 		sb.append(getUrl());
 		sb.append(", emailDomains=");
 		sb.append(getEmailDomains());
+		sb.append(", dbServer=");
+		sb.append(getDbServer());
 		sb.append(", dbName=");
 		sb.append(getDbName());
+		sb.append(", dbUser=");
+		sb.append(getDbUser());
+		sb.append(", dbPass=");
+		sb.append(getDbPass());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gnenc.internet.mycourses.model.Entity");
@@ -273,8 +327,20 @@ public class EntityModelImpl extends BaseModelImpl<Entity>
 		sb.append(getEmailDomains());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>dbServer</column-name><column-value><![CDATA[");
+		sb.append(getDbServer());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>dbName</column-name><column-value><![CDATA[");
 		sb.append(getDbName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dbUser</column-name><column-value><![CDATA[");
+		sb.append(getDbUser());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dbPass</column-name><column-value><![CDATA[");
+		sb.append(getDbPass());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -286,6 +352,9 @@ public class EntityModelImpl extends BaseModelImpl<Entity>
 	private String _entityName;
 	private String _url;
 	private String _emailDomains;
+	private String _dbServer;
 	private String _dbName;
+	private String _dbUser;
+	private String _dbPass;
 	private transient ExpandoBridge _expandoBridge;
 }

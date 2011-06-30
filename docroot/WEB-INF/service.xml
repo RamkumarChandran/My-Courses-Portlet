@@ -38,7 +38,10 @@
 		<column name="entityName" type="String" />
 		<column name="url" type="String" />
 		<column name="emailDomains" type="String"/>
+		<column name="dbServer" type="String" />
 		<column name="dbName" type="String" />
+		<column name="dbUser" type="String" />
+		<column name="dbPass" type="String" />
 		
 		<column name="courses" type="Collection" entity="Course" mapping-key="entityId" />
 		

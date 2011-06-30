@@ -18,3 +18,11 @@
 	clear: left;
 	margin-bottom: 40px;	
 }
+
+td {
+	vertical-align: bottom;
+}
+
+.form {
+	width: 100%
+}

@@ -23,7 +23,10 @@
 		<property name="entityName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="url" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="emailDomains" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="dbServer" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="dbName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="dbUser" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="dbPass" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="org.gnenc.internet.mycourses.model.impl.UserEnrollmentImpl" table="MC_UserEnrollment">
 		<cache usage="read-write" />

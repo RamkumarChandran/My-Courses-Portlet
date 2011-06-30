@@ -73,12 +73,36 @@ public class EntityClp extends BaseModelImpl<Entity> implements Entity {
 		_emailDomains = emailDomains;
 	}
 
+	public String getDbServer() {
+		return _dbServer;
+	}
+
+	public void setDbServer(String dbServer) {
+		_dbServer = dbServer;
+	}
+
 	public String getDbName() {
 		return _dbName;
 	}
 
 	public void setDbName(String dbName) {
 		_dbName = dbName;
+	}
+
+	public String getDbUser() {
+		return _dbUser;
+	}
+
+	public void setDbUser(String dbUser) {
+		_dbUser = dbUser;
+	}
+
+	public String getDbPass() {
+		return _dbPass;
+	}
+
+	public void setDbPass(String dbPass) {
+		_dbPass = dbPass;
 	}
 
 	public Entity toEscapedModel() {
@@ -98,7 +122,10 @@ public class EntityClp extends BaseModelImpl<Entity> implements Entity {
 		clone.setEntityName(getEntityName());
 		clone.setUrl(getUrl());
 		clone.setEmailDomains(getEmailDomains());
+		clone.setDbServer(getDbServer());
 		clone.setDbName(getDbName());
+		clone.setDbUser(getDbUser());
+		clone.setDbPass(getDbPass());
 
 		return clone;
 	}
@@ -145,7 +172,7 @@ public class EntityClp extends BaseModelImpl<Entity> implements Entity {
 	}
 
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{entityId=");
 		sb.append(getEntityId());
@@ -155,15 +182,21 @@ public class EntityClp extends BaseModelImpl<Entity> implements Entity {
 		sb.append(getUrl());
 		sb.append(", emailDomains=");
 		sb.append(getEmailDomains());
+		sb.append(", dbServer=");
+		sb.append(getDbServer());
 		sb.append(", dbName=");
 		sb.append(getDbName());
+		sb.append(", dbUser=");
+		sb.append(getDbUser());
+		sb.append(", dbPass=");
+		sb.append(getDbPass());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gnenc.internet.mycourses.model.Entity");
@@ -186,8 +219,20 @@ public class EntityClp extends BaseModelImpl<Entity> implements Entity {
 		sb.append(getEmailDomains());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>dbServer</column-name><column-value><![CDATA[");
+		sb.append(getDbServer());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>dbName</column-name><column-value><![CDATA[");
 		sb.append(getDbName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dbUser</column-name><column-value><![CDATA[");
+		sb.append(getDbUser());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dbPass</column-name><column-value><![CDATA[");
+		sb.append(getDbPass());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -199,5 +244,8 @@ public class EntityClp extends BaseModelImpl<Entity> implements Entity {
 	private String _entityName;
 	private String _url;
 	private String _emailDomains;
+	private String _dbServer;
 	private String _dbName;
+	private String _dbUser;
+	private String _dbPass;
 }

@@ -10,7 +10,10 @@ create table MC_Entity (
 	entityName VARCHAR(75) null,
 	url VARCHAR(75) null,
 	emailDomains VARCHAR(75) null,
-	dbName VARCHAR(75) null
+	dbServer VARCHAR(75) null,
+	dbName VARCHAR(75) null,
+	dbUser VARCHAR(75) null,
+	dbPass VARCHAR(75) null
 );
 
 create table MC_Host (

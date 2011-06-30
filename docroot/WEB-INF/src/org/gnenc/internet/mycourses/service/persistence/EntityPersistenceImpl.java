@@ -292,7 +292,10 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 		entityImpl.setEntityName(entity.getEntityName());
 		entityImpl.setUrl(entity.getUrl());
 		entityImpl.setEmailDomains(entity.getEmailDomains());
+		entityImpl.setDbServer(entity.getDbServer());
 		entityImpl.setDbName(entity.getDbName());
+		entityImpl.setDbUser(entity.getDbUser());
+		entityImpl.setDbPass(entity.getDbPass());
 
 		return entityImpl;
 	}

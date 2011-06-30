@@ -68,12 +68,36 @@ public class EntityWrapper implements Entity {
 		_entity.setEmailDomains(emailDomains);
 	}
 
+	public java.lang.String getDbServer() {
+		return _entity.getDbServer();
+	}
+
+	public void setDbServer(java.lang.String dbServer) {
+		_entity.setDbServer(dbServer);
+	}
+
 	public java.lang.String getDbName() {
 		return _entity.getDbName();
 	}
 
 	public void setDbName(java.lang.String dbName) {
 		_entity.setDbName(dbName);
+	}
+
+	public java.lang.String getDbUser() {
+		return _entity.getDbUser();
+	}
+
+	public void setDbUser(java.lang.String dbUser) {
+		_entity.setDbUser(dbUser);
+	}
+
+	public java.lang.String getDbPass() {
+		return _entity.getDbPass();
+	}
+
+	public void setDbPass(java.lang.String dbPass) {
+		_entity.setDbPass(dbPass);
 	}
 
 	public org.gnenc.internet.mycourses.model.Entity toEscapedModel() {

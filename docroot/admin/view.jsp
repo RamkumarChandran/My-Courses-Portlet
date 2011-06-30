@@ -13,7 +13,14 @@
  * details.
  */
 %>
+  
 <%@include file="/init.jsp" %>
+
+<liferay-ui:success key="entitySaved" message="entity-saved-successfully" />
+<liferay-ui:success key="entityDeleted" message="entityDeleted" />
+<liferay-ui:success key="entityUpdated" message="entityUpdated" />
+<liferay-ui:error key="error-deleting" message="error-deleting" />
+<liferay-ui:error key="error-updating" message="error-updating" />
 
 <div id="mycoursesadmin">
 	<div>
@@ -22,17 +29,57 @@
 	</div>
 	
 	<div id="addEntityForm">
+			
 		<portlet:actionURL name="addEntity" var="addEntityURL" />
 	
 		<aui:form name="form" action="<%=addEntityURL.toString() %>" method="post">
 			<aui:fieldset>
-				<aui:input name="entityName" size="60" />
-				<aui:input name="entityUrl" size="60" />
-				<aui:input name="entityDbServer" size="60" />
-				<aui:input name="entityDbName" size="60" />
-				<aui:input name="entityDbUser" size="60" />
-				<aui:input name="entityDbPass" size="60" type="password" />
-				
+				<table class="form"> 
+					<tr><td>
+						<aui:input name="entityName" size="60" />
+					</td>
+					<td>
+						<liferay-ui:error
+        				key="entity-name-required"
+        				message="entity-name-required" />
+        			</td></tr>
+        			<tr><td>
+						<aui:input name="entityUrl" size="60" />
+					</td><td>
+						<liferay-ui:error
+        				key="entity-url-required"
+        				message="entity-url-required" />
+        			</td></tr>
+        			<tr><td>
+						<aui:input name="entityDbServer" size="60" />
+					</td><td>
+						<liferay-ui:error
+        				key="entity-db-server-required"
+        				message="entity-db-server-required" />
+					</td></tr>
+        			<tr><td>
+						<aui:input name="entityDbName" size="60" />
+					</td><td>
+						<liferay-ui:error
+        				key="entity-db-name-required"
+        				message="entity-db-name-required" />
+					</td></tr>
+        			<tr><td>
+						<aui:input name="entityDbUser" size="60" />
+					</td><td>
+						<liferay-ui:error
+        				key="entity-db-user-required"
+        				message="entity-db-user-required" />
+					</td></tr>
+        			<tr><td>
+						<aui:input name="entityDbPass" size="60" type="password" />
+					</td><td>
+						<liferay-ui:error
+        				key="entity-db-pass-required"
+        				message="entity-db-pass-required" />
+					</td></tr>
+        			<tr><td>
+				</table>
 				<aui:button-row>
 					<aui:button type="submit" />
 				</aui:button-row>
@@ -42,7 +89,15 @@
 	
 	<liferay-ui:search-container emptyResultsMessage="there-are-no-entities" delta="5">
     	<liferay-ui:search-container-results>
-    	<!-- Insert entities here -->
+    	<%
+		    List<Entity> tempResults = MyCoursesAdminPortlet.getEntities(renderRequest);
+		
+		    results = ListUtil.subList(tempResults, searchContainer.getStart(), searchContainer.getEnd());
+		    total = tempResults.size();
+		
+		    pageContext.setAttribute("results", results);
+		    pageContext.setAttribute("total", total);
+	    %>
     	</liferay-ui:search-container-results>
 
     	<liferay-ui:search-container-row

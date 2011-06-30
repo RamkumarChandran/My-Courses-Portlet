@@ -24,7 +24,10 @@
 			<basic name="entityName" />
 			<basic name="url" />
 			<basic name="emailDomains" />
+			<basic name="dbServer" />
 			<basic name="dbName" />
+			<basic name="dbUser" />
+			<basic name="dbPass" />
 			<transient name="primaryKey" />
 		</attributes>
 	</mapped-superclass>
