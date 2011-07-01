@@ -37,21 +37,113 @@ public class MyCoursesAdminPortlet extends MVCPortlet {
 	    entity.setDbPass(ParamUtil.getString(request, "entityDbPass"));
 	    		
 	    ArrayList<String> errors = new ArrayList();
+	    String dbUrl = entity.getDbServer() + "/" + entity.getDbName();
 	
 	    if (validateEntity(entity, errors)) {
-	        EntityLocalServiceUtil.addEntity(entity);
-	        SessionMessages.add(request, "entitySaved");
-	
+	    	
+	    	if (MoodleJdbc.connectToDB(dbUrl, entity.getDbUser(), entity.getDbPass()) != null) {
+		        EntityLocalServiceUtil.addEntity(entity);
+		        SessionMessages.add(request, "entitySaved");
+		
+		    } else {
+		    	SessionErrors.add(request, "error-db-connect");
+		        request.setAttribute("addEntity", entity);
+		        
+		    }
+		    
 	    } else {
-	    	
 	    	for (String error : errors) {
-	    		SessionErrors.add(request, error);
-	    	
-	    	}
+	            SessionErrors.add(request, error);
+	
+	        }
+	    	request.setAttribute("addEntity", entity);
 	    	
 	    }
 	
 	}
+	
+	public void editEntity(ActionRequest request, ActionResponse response)
+	    throws Exception {
+	
+	    long entityKey = ParamUtil.getLong(request, "resourcePrimKey");
+	
+	    if (Validator.isNotNull(entityKey)) {
+	        Entity entity =
+	            EntityLocalServiceUtil.getEntity(entityKey);
+	        request.setAttribute("entity", entity);
+	        response.setRenderParameter("jspPage", editEntityJSP);
+	
+	    }
+	
+	}
+	
+	public void deleteEntity(ActionRequest request, ActionResponse response)
+	    throws Exception {
+		long entityKey = ParamUtil.getLong(request, "resourcePrimKey");
+		//ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(
+		//        WebKeys.THEME_DISPLAY);
+		
+		if (Validator.isNotNull(entityKey)) {
+		    EntityLocalServiceUtil.deleteEntity(entityKey);
+		    SessionMessages.add(request, "entityDeleted");
+		
+		} else {
+		    SessionErrors.add(request, "error-deleting");
+		
+		}
+		
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void updateEntity(ActionRequest request, ActionResponse response)
+    	throws Exception {
+		long entityKey = ParamUtil.getLong(request, "resourcePrimKey");
+		Entity entity = EntityLocalServiceUtil.getEntity(entityKey);
+		
+		entity.setEntityName(ParamUtil.getString(request, "entityName"));
+	    entity.setUrl(ParamUtil.getString(request, "entityUrl"));
+	    entity.setDbServer(ParamUtil.getString(request, "entityDbServer"));
+	    entity.setDbName(ParamUtil.getString(request, "entityDbName"));
+	    entity.setDbUser(ParamUtil.getString(request, "entityDbUser"));
+	    entity.setDbPass(ParamUtil.getString(request, "entityDbPass"));
+		
+		ArrayList<String> errors = new ArrayList();
+		
+		String dbUrl = entity.getDbServer() + "/" + entity.getDbName();
+		
+		if (Validator.isNotNull(entityKey)) {
+		    if (validateEntity(entity, errors)) {
+		    	if (MoodleJdbc.connectToDB(dbUrl, entity.getDbUser(), entity.getDbPass()) != null) {
+			    	EntityLocalServiceUtil.updateEntity(entity);
+			        SessionMessages.add(request, "entitySaved");
+			
+			    } else {
+			    	SessionErrors.add(request, "error-db-connect");
+			        
+			        request.setAttribute("entity", entity);
+			        response.setRenderParameter("jspPage", editEntityJSP);
+			
+			    }
+			
+			} else {
+				for (String error : errors) {
+		            SessionErrors.add(request, error);
+		
+		        }
+			    request.setAttribute("entity", entity);
+		        response.setRenderParameter("jspPage", editEntityJSP);
+		        
+			}
+	    
+	    } else {
+	    	SessionErrors.add(request, "error-updating");
+	    	
+	    	request.setAttribute("entity", entity);
+	    	response.setRenderParameter("jspPage", editEntityJSP);
+	    	
+	    }
+	}
+
 	
 	@SuppressWarnings("unchecked")
 	public static List<Entity> getEntities (RenderRequest request) {
@@ -83,8 +175,9 @@ public class MyCoursesAdminPortlet extends MVCPortlet {
         if (Validator.isNull(entity.getUrl())) {
             errors.add("entity-url-required");
             valid = false;
-        } else {
-        	//Validate URL
+        } else if (Validator.isDomain(entity.getUrl())) {
+        	errors.add("entity-invalid-url");
+        	valid = false;
         }
         
         if (Validator.isNull(entity.getDbServer())) {
@@ -112,5 +205,7 @@ public class MyCoursesAdminPortlet extends MVCPortlet {
         return valid;
 
     }
+	
+	protected String editEntityJSP = "/admin/edit_entity.jsp";
 	
 }
