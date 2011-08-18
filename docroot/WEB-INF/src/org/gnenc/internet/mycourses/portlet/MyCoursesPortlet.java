@@ -94,12 +94,15 @@ public class MyCoursesPortlet extends MVCPortlet {
 	@SuppressWarnings("rawtypes")
 	private static void updateCourses (String userEmail, long entityId, long userId) throws PortalException, SystemException
 	{
-		String dbServer = "corin.vps.gnenc.org";
+		//String dbServer = "corin.vps.gnenc.org";
 		Entity entity = EntityLocalServiceUtil.getEntity(entityId);
 		String dbName = entity.getDbName();
+		String dbServer = entity.getDbServer();
 		String dbUrl = dbServer + "/" + dbName;
-		String dbUser = "esu10moodle";
-		String dbPass = "UtVz85rTEZpR";
+		String dbUser = entity.getDbUser();
+		String dbPass = entity.getDbPass();
+		//String dbUser = "esu10moodle";
+		//String dbPass = "UtVz85rTEZpR";
 
 		ArrayList mCourses = MoodleJdbc.findCoursesByEmail(userEmail, dbUrl, dbUser, dbPass);
 
