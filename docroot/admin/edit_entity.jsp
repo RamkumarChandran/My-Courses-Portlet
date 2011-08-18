@@ -62,6 +62,17 @@ Entity entity = (Entity)request.getAttribute("entity");
         				message="entity-invalid-url" />
         			</td></tr>
         			<tr><td>
+						<aui:input name="entityEmailDomain" size="60" 
+							value="<%=entity.getEmailDomains() %>" />
+					</td><td>
+						<liferay-ui:error
+        				key="entity-email-domain-required"
+        				message="entity-email-domain-required" />
+        				<liferay-ui:error
+        				key="entity-invalid-email-domain"
+        				message="entity-invalid-email-domain" />
+        			</td></tr>
+        			<tr><td>
 						<aui:input name="entityDbServer" size="60" 
 							value="<%=entity.getDbServer() %>" />
 					</td><td>

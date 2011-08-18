@@ -36,7 +36,7 @@ if (addEntity == null) {
 <div id="mycoursesadmin">
 	<div>
 		<img id='schoolhouse' src='<%=renderRequest.getContextPath() %>/images/schoolhouse-med.png' alt='schoolhouse' />
-		<p id="headline_main">Manage Entities</p>
+		<p id="headline_main">Manage School Entity Connections</p>
 		<span id="tip">
 			<aui:a href="javascript:void();" cssClass="help aui-icon aui-icon-help" />
 		</span>
@@ -68,6 +68,17 @@ if (addEntity == null) {
         				<liferay-ui:error
         				key="entity-invalid-url"
         				message="entity-invalid-url" />
+        			</td></tr>
+        			<tr><td>
+						<aui:input name="entityEmailDomain" size="60" 
+							value="<%=addEntity.getEmailDomains() %>" />
+					</td><td>
+						<liferay-ui:error
+        				key="entity-email-domain-required"
+        				message="entity-email-domain-required" />
+        				<liferay-ui:error
+        				key="entity-invalid-email-domain"
+        				message="entity-invalid-email-domain" />
         			</td></tr>
         			<tr><td>
 						<aui:input name="entityDbServer" size="60" 

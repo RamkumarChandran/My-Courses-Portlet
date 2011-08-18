@@ -31,6 +31,7 @@ public class MyCoursesAdminPortlet extends MVCPortlet {
 	    entity.setEntityId(CounterLocalServiceUtil.increment(Entity.class.getName()));
 	    entity.setEntityName(ParamUtil.getString(request, "entityName"));
 	    entity.setUrl(ParamUtil.getString(request, "entityUrl"));
+	    entity.setEmailDomains(ParamUtil.getString(request, "entityEmailDomain"));
 	    entity.setDbServer(ParamUtil.getString(request, "entityDbServer"));
 	    entity.setDbName(ParamUtil.getString(request, "entityDbName"));
 	    entity.setDbUser(ParamUtil.getString(request, "entityDbUser"));
@@ -102,6 +103,7 @@ public class MyCoursesAdminPortlet extends MVCPortlet {
 		
 		entity.setEntityName(ParamUtil.getString(request, "entityName"));
 	    entity.setUrl(ParamUtil.getString(request, "entityUrl"));
+	    entity.setEmailDomains(ParamUtil.getString(request, "entityEmailDomain"));
 	    entity.setDbServer(ParamUtil.getString(request, "entityDbServer"));
 	    entity.setDbName(ParamUtil.getString(request, "entityDbName"));
 	    entity.setDbUser(ParamUtil.getString(request, "entityDbUser"));
@@ -177,6 +179,14 @@ public class MyCoursesAdminPortlet extends MVCPortlet {
             valid = false;
         } else if (Validator.isDomain(entity.getUrl())) {
         	errors.add("entity-invalid-url");
+        	valid = false;
+        }
+        
+        if (Validator.isNull(entity.getEmailDomains())) {
+        	errors.add("entity-email-domain-required");
+        	valid = false;
+        } else if (Validator.isChar(entity.getEmailDomains())) {
+        	errors.add("entity-invalid-email-domain");
         	valid = false;
         }
         

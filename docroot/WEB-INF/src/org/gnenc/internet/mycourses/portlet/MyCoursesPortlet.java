@@ -4,7 +4,6 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.util.Http.Response;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
@@ -34,19 +33,24 @@ public class MyCoursesPortlet extends MVCPortlet {
 
 		long entityId = getUserHomeSchool(request);
 
-		checkCourses(userEmail,entityId,userId);
-
-		List<UserEnrollment> enrollments = UserEnrollmentLocalServiceUtil.getUserEnrollmentsByUserId(userId);
-
-		for (UserEnrollment enrollment : enrollments) {
-			Course course = CourseLocalServiceUtil.getCourse(enrollment.getCourseId());
-
-			if (course != null) {
-				courseInfo.add(course);
+		if (entityId != -1) {
+			checkCourses(userEmail,entityId,userId);
+	
+			List<UserEnrollment> enrollments = UserEnrollmentLocalServiceUtil.getUserEnrollmentsByUserId(userId);
+	
+			for (UserEnrollment enrollment : enrollments) {
+				Course course = CourseLocalServiceUtil.getCourse(enrollment.getCourseId());
+	
+				if (course != null) {
+					courseInfo.add(course);
+				}
 			}
-		}
 
-		return courseInfo;
+			return courseInfo;
+		} else {
+			courseInfo = null;
+			return courseInfo;
+		}
 	}
 
 	public static long getUserHomeSchool(RenderRequest request) throws SystemException {
@@ -56,15 +60,30 @@ public class MyCoursesPortlet extends MVCPortlet {
 		 *  control panel portlet.
 		 *  */
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
-		String userEmail = themeDisplay.getUser().getEmailAddress();
+		
+		if (!themeDisplay.getUser().isDefaultUser()) {
+			String userEmail = themeDisplay.getUser().getEmailAddress();
+		
+			String[] tokens = userEmail.split("@");
+			String domain = tokens[1];
 
-		String[] tokens = userEmail.split("@");
-		String domain = tokens[1];
-
-		List<Entity> entity = EntityLocalServiceUtil.getEntityByDomain(domain);
-		long entityId = entity.get(0).getEntityId();
-
-		return entityId;
+			List<Entity> entity = EntityLocalServiceUtil.getEntityByDomain(domain);
+			if (!entity.isEmpty()) {
+				long entityId = entity.get(0).getEntityId();
+			
+				return entityId;
+			
+			} else {
+				long entityId = -1;
+				
+				return entityId;
+				
+			}
+		} else {
+			long entityId = -1;
+			return entityId;
+		}
+		
 	}
 
 	private static void checkCourses(String userEmail, long entityId, long userId) throws PortalException, SystemException {
