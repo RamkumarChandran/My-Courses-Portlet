@@ -21,6 +21,7 @@ import org.gnenc.internet.mycourses.model.Course;
 import org.gnenc.internet.mycourses.model.Entity;
 import org.gnenc.internet.mycourses.model.UserEnrollment;
 import org.gnenc.internet.mycourses.model.impl.CourseImpl;
+import org.gnenc.internet.mycourses.model.impl.EntityImpl;
 import org.gnenc.internet.mycourses.model.impl.UserEnrollmentImpl;
 import org.gnenc.internet.mycourses.service.CourseLocalServiceUtil;
 import org.gnenc.internet.mycourses.service.EntityLocalServiceUtil;
@@ -28,74 +29,87 @@ import org.gnenc.internet.mycourses.service.UserEnrollmentLocalServiceUtil;
 
 public class MyCoursesPortlet extends MVCPortlet {
 
-	public static List<Course> getAllEnrollments(RenderRequest request) throws SystemException, PortalException {
+	public static List<Course> getAllEnrollments(RenderRequest request) 
+			throws SystemException, PortalException {
 		List<Course> courseInfo = new ArrayList<Course>();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+		long entityId = -1;
+		Entity entity = new EntityImpl();
+		entity.setEntityId(-1);
+		
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 		long userId = themeDisplay.getUser().getUserId();
 		String userEmail = themeDisplay.getUser().getEmailAddress();
+		Boolean isDefaultUser = themeDisplay.getUser().isDefaultUser(); 
+		
+		PortletPreferences prefs = request.getPreferences();
+		String preferredEntity = prefs.getValue("entity","no");
 
-		long entityId = getUserHomeSchool(request);
-
+		if ((preferredEntity == "no") && (!isDefaultUser)) {	
+			
+			// Logged in and no preferred entity set
+			
+			String[] tokens = userEmail.split("@");
+			String domain = tokens[1];
+	
+			List<Entity> entities = EntityLocalServiceUtil.getEntityByDomain(
+					domain);
+			if (!entities.isEmpty()) {
+				
+				// User-Entity affiliation found
+				
+				entityId = entities.get(0).getEntityId();
+				entity = EntityLocalServiceUtil.getEntity(entityId);
+				
+			}
+			
+		} else {
+			
+			// Logged in and preferred entity set
+			
+			entityId = Long.valueOf(preferredEntity);
+			entity = EntityLocalServiceUtil.getEntity(entityId);
+			
+		}
+	
 		if (entityId != -1) {
+			
+			// User affiliation found or preferred entity set
+			
 			checkCourses(userEmail,entityId,userId);
 	
-			List<UserEnrollment> enrollments = UserEnrollmentLocalServiceUtil.getUserEnrollmentsByUserId(userId);
+			List<UserEnrollment> enrollments = 
+				UserEnrollmentLocalServiceUtil.getUserEnrollmentsByUserId(userId);
 	
 			for (UserEnrollment enrollment : enrollments) {
-				Course course = CourseLocalServiceUtil.getCourse(enrollment.getCourseId());
+				Course course = CourseLocalServiceUtil.getCourse(
+						enrollment.getCourseId());
 	
 				if (course != null) {
 					courseInfo.add(course);
+					
 				}
+
 			}
 
-			return courseInfo;
 		} else {
 			courseInfo = null;
-			return courseInfo;
-		}
-	}
-
-	public static long getUserHomeSchool(RenderRequest request) throws SystemException {
-		/** This needs to change.  A better idea is to probably tie the user to a user group in Liferay
-		 *  We have define the user group association from the directory.  We can define the relationship
-		 *  between a user group and a school/ESU in the Entity table manually via the future
-		 *  control panel portlet.
-		 *  */
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
-				
-		if (!themeDisplay.getUser().isDefaultUser()) {
-			String userEmail = themeDisplay.getUser().getEmailAddress();
-		
-			String[] tokens = userEmail.split("@");
-			String domain = tokens[1];
-
-			List<Entity> entity = EntityLocalServiceUtil.getEntityByDomain(domain);
-			if (!entity.isEmpty()) {
-				long entityId = entity.get(0).getEntityId();
-				return entityId;
 			
-			} else {
-				long entityId = -1;
-				return entityId;
-				
-			}
-				
-		} else {
-			long entityId = -1;
-			return entityId;
 		}
-		
+		request.setAttribute("isDefaultUser", isDefaultUser);
+		request.setAttribute("entity", entity);
+		return courseInfo;
+	
 	}
 	
 	public void changeEntity(ActionRequest request, ActionResponse response)
-    	throws Exception {
+    		throws Exception {
 		PortletPreferences prefs = request.getPreferences();
 		prefs.setValue("entity", ParamUtil.getString(request, "entityId"));
 		prefs.store();
 		
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 		long userId = themeDisplay.getUser().getUserId();
 		String userEmail = themeDisplay.getUser().getEmailAddress();
 		long entityId = Long.valueOf(ParamUtil.getString(request, "entityId"));
@@ -104,13 +118,16 @@ public class MyCoursesPortlet extends MVCPortlet {
 	
 	}
 
-	private static void checkCourses(String userEmail, long entityId, long userId) throws PortalException, SystemException {
+	private static void checkCourses(String userEmail, long entityId, long userId) 
+			throws PortalException, SystemException {
 
-		List<UserEnrollment> enrollments = UserEnrollmentLocalServiceUtil.getUserEnrollmentsByUserId(userId);
+		List<UserEnrollment> enrollments = 
+			UserEnrollmentLocalServiceUtil.getUserEnrollmentsByUserId(userId);
 
 		if (enrollments.size() == 0)
 		{
 			updateCourses(userEmail,entityId,userId);
+		
 		}
 
 		for (UserEnrollment enrollment : enrollments) {
@@ -124,24 +141,25 @@ public class MyCoursesPortlet extends MVCPortlet {
 
 				updateCourses(userEmail,entityId,userId);
 				break;
+			
 			}
+		
 		}
+	
 	}
 
 	@SuppressWarnings("rawtypes")
-	private static void updateCourses (String userEmail, long entityId, long userId) throws PortalException, SystemException
-	{
-		//String dbServer = "corin.vps.gnenc.org";
+	private static void updateCourses (String userEmail, long entityId, long userId) 
+			throws PortalException, SystemException	{
 		Entity entity = EntityLocalServiceUtil.getEntity(entityId);
 		String dbName = entity.getDbName();
 		String dbServer = entity.getDbServer();
 		String dbUrl = dbServer + "/" + dbName;
 		String dbUser = entity.getDbUser();
 		String dbPass = entity.getDbPass();
-		//String dbUser = "esu10moodle";
-		//String dbPass = "UtVz85rTEZpR";
 
-		ArrayList mCourses = MoodleJdbc.findCoursesByEmail(userEmail, dbUrl, dbUser, dbPass);
+		ArrayList mCourses = MoodleJdbc.findCoursesByEmail(
+				userEmail, dbUrl, dbUser, dbPass);
 
 		ArrayList courseName = ((ArrayList)mCourses.get(0));
 		ArrayList courseId = ((ArrayList)mCourses.get(1));
@@ -165,6 +183,7 @@ public class MyCoursesPortlet extends MVCPortlet {
 				c.setId(CounterLocalServiceUtil.increment(Course.class.getName()));
 
 				course = CourseLocalServiceUtil.addCourse(c);
+			
 			} else {
 
 				// Update existing course
@@ -174,9 +193,11 @@ public class MyCoursesPortlet extends MVCPortlet {
 				c.setNew(false);
 
 				course = CourseLocalServiceUtil.updateCourse(c);
+			
 			}
 
-			UserEnrollment u = UserEnrollmentLocalServiceUtil.getByUid_CourseId(userId,course.getId());
+			UserEnrollment u = UserEnrollmentLocalServiceUtil.getByUid_CourseId(
+					userId,course.getId());
 			if (u == null) {
 
 				// Insert new user enrollment
@@ -185,10 +206,12 @@ public class MyCoursesPortlet extends MVCPortlet {
 
 				u.setUserId(userId);
 				u.setCourseId(course.getId());
-				u.setId(CounterLocalServiceUtil.increment(UserEnrollment.class.getName()));
+				u.setId(CounterLocalServiceUtil.increment(
+						UserEnrollment.class.getName()));
 				u.setLastRefresh(new Date());
 
 				UserEnrollmentLocalServiceUtil.addUserEnrollment(u);
+			
 			} else {
 
 				// Update existing user enrollment
@@ -197,9 +220,11 @@ public class MyCoursesPortlet extends MVCPortlet {
 				u.setNew(false);
 
 				UserEnrollmentLocalServiceUtil.updateUserEnrollment(u);
+		
 			}
+	
 		}
+	
 	}
-		protected String changeEntityJSP = "change_entity.jsp";
 	
 }

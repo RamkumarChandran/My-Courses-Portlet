@@ -25,10 +25,11 @@ public class MyCoursesAdminPortlet extends MVCPortlet {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void addEntity(ActionRequest request, ActionResponse response)
-    	throws Exception {
+    		throws Exception {
 	    Entity entity = new EntityImpl();
 	    
-	    entity.setEntityId(CounterLocalServiceUtil.increment(Entity.class.getName()));
+	    entity.setEntityId(CounterLocalServiceUtil.increment(
+	    		Entity.class.getName()));
 	    entity.setEntityName(ParamUtil.getString(request, "entityName"));
 	    entity.setUrl(ParamUtil.getString(request, "entityUrl"));
 	    entity.setEmailDomains(ParamUtil.getString(request, "entityEmailDomain"));
@@ -42,7 +43,8 @@ public class MyCoursesAdminPortlet extends MVCPortlet {
 	
 	    if (validateEntity(entity, errors)) {
 	    	
-	    	if (MoodleJdbc.connectToDB(dbUrl, entity.getDbUser(), entity.getDbPass()) != null) {
+	    	if (MoodleJdbc.connectToDB(dbUrl, entity.getDbUser(), 
+	    			entity.getDbPass()) != null) {
 		        EntityLocalServiceUtil.addEntity(entity);
 		        SessionMessages.add(request, "entitySaved");
 		
@@ -64,8 +66,7 @@ public class MyCoursesAdminPortlet extends MVCPortlet {
 	}
 	
 	public void editEntity(ActionRequest request, ActionResponse response)
-	    throws Exception {
-	
+	    	throws Exception {
 	    long entityKey = ParamUtil.getLong(request, "resourcePrimKey");
 	
 	    if (Validator.isNotNull(entityKey)) {
@@ -79,7 +80,7 @@ public class MyCoursesAdminPortlet extends MVCPortlet {
 	}
 	
 	public void deleteEntity(ActionRequest request, ActionResponse response)
-	    throws Exception {
+	    	throws Exception {
 		long entityKey = ParamUtil.getLong(request, "resourcePrimKey");
 		//ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(
 		//        WebKeys.THEME_DISPLAY);
@@ -97,7 +98,7 @@ public class MyCoursesAdminPortlet extends MVCPortlet {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void updateEntity(ActionRequest request, ActionResponse response)
-    	throws Exception {
+    		throws Exception {
 		long entityKey = ParamUtil.getLong(request, "resourcePrimKey");
 		Entity entity = EntityLocalServiceUtil.getEntity(entityKey);
 		
@@ -147,11 +148,11 @@ public class MyCoursesAdminPortlet extends MVCPortlet {
 	}
 
 	public static List<Entity> getEntities (RenderRequest request) {
-		
 		List<Entity> tempResults;
 		
 		try {
-            tempResults = EntityLocalServiceUtil.getEntities(QueryUtil.ALL_POS,QueryUtil.ALL_POS);
+            tempResults = EntityLocalServiceUtil.getEntities(
+            		QueryUtil.ALL_POS,QueryUtil.ALL_POS);
         }
 
         catch (SystemException ex) {
@@ -170,50 +171,58 @@ public class MyCoursesAdminPortlet extends MVCPortlet {
         if (Validator.isNull(entity.getEntityName())) {
             errors.add("entity-name-required");
             valid = false;
+            
         }
         
         if (Validator.isNull(entity.getUrl())) {
             errors.add("entity-url-required");
             valid = false;
+        
         } else if (Validator.isDomain(entity.getUrl())) {
         	errors.add("entity-invalid-url");
         	valid = false;
+        
         }
         
         if (Validator.isNull(entity.getEmailDomains())) {
         	errors.add("entity-email-domain-required");
         	valid = false;
+        
         } else if (Validator.isChar(entity.getEmailDomains())) {
         	errors.add("entity-invalid-email-domain");
         	valid = false;
+        
         }
         
         if (Validator.isNull(entity.getDbServer())) {
             errors.add("entity-db-server-required");
             valid = false;
+        
         } else {
         	//Validate URL
+        
         }
         
         if (Validator.isNull(entity.getDbName())) {
             errors.add("entity-db-name-required");
             valid = false;
+        
         }
         
         if (Validator.isNull(entity.getDbUser())) {
             errors.add("entity-db-user-required");
             valid = false;
+        
         }
         
         if (Validator.isNull(entity.getDbPass())) {
             errors.add("entity-db-pass-required");
             valid = false;
+        
         }
-
         return valid;
 
     }
-	
 	protected String editEntityJSP = "/admin/edit_entity.jsp";
 	
 }
