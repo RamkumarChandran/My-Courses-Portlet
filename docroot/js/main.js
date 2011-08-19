@@ -12,5 +12,13 @@ AUI().use('aui-tooltip', function(A) {
 		align: { points: [ 'bl', 'tl' ] },
 		title: true
 	}).render();
+	
+	var help = new A.Tooltip({
+		trigger: '.change-entity-help',
+		align: { points: [ 'tl', 'bc' ] },
+		bodyContent: "<b>Change School</b><br /><br />" +
+				"Do you see the wrong school listed above?<br /><br />" +
+				"Use the Change School feature to select a different school.  From then on you will see course enrollments for the school you chose.<br /><br />"
+	}).render();
 });
 

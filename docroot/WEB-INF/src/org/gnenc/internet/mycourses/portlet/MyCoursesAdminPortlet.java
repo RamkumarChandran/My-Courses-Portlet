@@ -146,8 +146,6 @@ public class MyCoursesAdminPortlet extends MVCPortlet {
 	    }
 	}
 
-	
-	@SuppressWarnings("unchecked")
 	public static List<Entity> getEntities (RenderRequest request) {
 		
 		List<Entity> tempResults;
@@ -157,7 +155,7 @@ public class MyCoursesAdminPortlet extends MVCPortlet {
         }
 
         catch (SystemException ex) {
-            tempResults  = Collections.EMPTY_LIST;
+            tempResults  = Collections.emptyList();
 
         }
 

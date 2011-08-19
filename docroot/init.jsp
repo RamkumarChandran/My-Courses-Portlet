@@ -8,6 +8,7 @@
 
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Collections" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ListIterator" %>
 
@@ -20,6 +21,7 @@
 <%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.ResultRow" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchEntry" %>
+<%@ page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %>
 
 <%@ page import="org.gnenc.internet.mycourses.portlet.MyCoursesPortlet" %>
 <%@ page import="org.gnenc.internet.mycourses.portlet.MyCoursesAdminPortlet" %>

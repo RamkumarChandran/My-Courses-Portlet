@@ -3,6 +3,7 @@ package org.gnenc.internet.mycourses.portlet;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
@@ -11,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 
 import org.gnenc.internet.mycourses.model.Course;
@@ -60,7 +64,7 @@ public class MyCoursesPortlet extends MVCPortlet {
 		 *  control panel portlet.
 		 *  */
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
-		
+				
 		if (!themeDisplay.getUser().isDefaultUser()) {
 			String userEmail = themeDisplay.getUser().getEmailAddress();
 		
@@ -70,20 +74,34 @@ public class MyCoursesPortlet extends MVCPortlet {
 			List<Entity> entity = EntityLocalServiceUtil.getEntityByDomain(domain);
 			if (!entity.isEmpty()) {
 				long entityId = entity.get(0).getEntityId();
-			
 				return entityId;
 			
 			} else {
 				long entityId = -1;
-				
 				return entityId;
 				
 			}
+				
 		} else {
 			long entityId = -1;
 			return entityId;
 		}
 		
+	}
+	
+	public void changeEntity(ActionRequest request, ActionResponse response)
+    	throws Exception {
+		PortletPreferences prefs = request.getPreferences();
+		prefs.setValue("entity", ParamUtil.getString(request, "entityId"));
+		prefs.store();
+		
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+		long userId = themeDisplay.getUser().getUserId();
+		String userEmail = themeDisplay.getUser().getEmailAddress();
+		long entityId = Long.valueOf(ParamUtil.getString(request, "entityId"));
+		
+		updateCourses(userEmail,entityId,userId);
+	
 	}
 
 	private static void checkCourses(String userEmail, long entityId, long userId) throws PortalException, SystemException {
@@ -182,4 +200,6 @@ public class MyCoursesPortlet extends MVCPortlet {
 			}
 		}
 	}
+		protected String changeEntityJSP = "change_entity.jsp";
+	
 }
