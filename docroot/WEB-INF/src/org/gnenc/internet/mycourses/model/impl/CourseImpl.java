@@ -17,17 +17,23 @@ package org.gnenc.internet.mycourses.model.impl;
 import org.gnenc.internet.mycourses.model.Course;
 
 /**
- * The model implementation for the Course service. Represents a row in the &quot;MC_Course&quot; database table, with each column mapped to a property of this class.
+ * The model implementation for the Course service. Represents a row in the
+ * &quot;MC_Course&quot; database table, with each column mapped to a property
+ * of this class.
  *
  * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link org.gnenc.internet.mycourses.model.Course} interface.
+ * Helper methods and all application logic should be put in this class.
+ * Whenever methods are added, rerun ServiceBuilder to copy their definitions
+ * into the {@link org.gnenc.internet.mycourses.model.Course} interface.
  * </p>
  *
  * <p>
- * Never reference this class directly. All methods that expect a course model instance should use the {@link Course} interface instead.
+ * Never reference this class directly. All methods that expect a course model
+ * instance should use the {@link Course} interface instead.
  * </p>
  */
 public class CourseImpl extends CourseModelImpl implements Course {
 	public CourseImpl() {
+
 	}
 }

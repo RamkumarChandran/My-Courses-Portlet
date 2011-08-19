@@ -40,9 +40,9 @@ Entity entity = (Entity)request.getAttribute("entity");
 <aui:form name="form" action="<%=updateEntityURL.toString() %>" method="post">
 			<aui:fieldset>
 				<aui:input name="resourcePrimKey" value="<%=entity.getEntityId() %>" type="hidden" />
-				<table class="form"> 
+				<table class="form">
 					<tr><td>
-						<aui:input name="entityName" size="60" 
+						<aui:input name="entityName" size="60"
 							value="<%=entity.getEntityName() %>" />
 					</td>
 					<td>
@@ -51,7 +51,7 @@ Entity entity = (Entity)request.getAttribute("entity");
         				message="entity-name-required" />
         			</td></tr>
         			<tr><td>
-						<aui:input name="entityUrl" size="60" 
+						<aui:input name="entityUrl" size="60"
 							value="<%=entity.getUrl() %>" />
 					</td><td>
 						<liferay-ui:error
@@ -62,7 +62,7 @@ Entity entity = (Entity)request.getAttribute("entity");
         				message="entity-invalid-url" />
         			</td></tr>
         			<tr><td>
-						<aui:input name="entityEmailDomain" size="60" 
+						<aui:input name="entityEmailDomain" size="60"
 							value="<%=entity.getEmailDomains() %>" />
 					</td><td>
 						<liferay-ui:error
@@ -73,7 +73,7 @@ Entity entity = (Entity)request.getAttribute("entity");
         				message="entity-invalid-email-domain" />
         			</td></tr>
         			<tr><td>
-						<aui:input name="entityDbServer" size="60" 
+						<aui:input name="entityDbServer" size="60"
 							value="<%=entity.getDbServer() %>" />
 					</td><td>
 						<liferay-ui:error
@@ -81,7 +81,7 @@ Entity entity = (Entity)request.getAttribute("entity");
         				message="entity-db-server-required" />
 					</td></tr>
         			<tr><td>
-						<aui:input name="entityDbName" size="60" 
+						<aui:input name="entityDbName" size="60"
 							value="<%=entity.getDbName() %>" />
 					</td><td>
 						<liferay-ui:error
@@ -89,7 +89,7 @@ Entity entity = (Entity)request.getAttribute("entity");
         				message="entity-db-name-required"  />
 					</td></tr>
         			<tr><td>
-						<aui:input name="entityDbUser" size="60" 
+						<aui:input name="entityDbUser" size="60"
 							value="<%=entity.getDbUser() %>" />
 					</td><td>
 						<liferay-ui:error
@@ -97,7 +97,7 @@ Entity entity = (Entity)request.getAttribute("entity");
         				message="entity-db-user-required" />
 					</td></tr>
         			<tr><td>
-						<aui:input name="entityDbPass" size="60" type="password" 
+						<aui:input name="entityDbPass" size="60" type="password"
 							value="<%=entity.getDbPass() %>" />
 					</td><td>
 						<liferay-ui:error

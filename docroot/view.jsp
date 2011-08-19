@@ -32,7 +32,7 @@ Entity entity = (Entity)request.getAttribute("entity");
 			<aui:a href="javascript:void();" cssClass="help aui-icon aui-icon-help" />
 		</span>
 	</div>
-	
+
 	<%
 	if (isDefaultUser) {
 	%>
@@ -48,7 +48,7 @@ Entity entity = (Entity)request.getAttribute("entity");
 			</tr>
 		</table>
 	<%
-	
+
 	} else if ((!isDefaultUser) && (courses == null)) {
 	%>
 		<!-- Logged in, but cannot determine affiliation -->
@@ -63,7 +63,7 @@ Entity entity = (Entity)request.getAttribute("entity");
 			</tr>
 		</table>
 	<%
-	
+
 	} else {
 	%>
 		<!-- Logged in and affiliation determined OR preferred entity chosen-->
@@ -80,10 +80,10 @@ Entity entity = (Entity)request.getAttribute("entity");
 			</tr>
 		</table>
 	<%
-	
+
 		if (!courses.isEmpty()) {
 			int i = 0;
-			
+
 			for (Course course : courses)
 			{
 				if (course.getEntityId() == entity.getEntityId()) {
@@ -91,27 +91,27 @@ Entity entity = (Entity)request.getAttribute("entity");
 					<a href='<%=entity.getUrl().toString() %>/course/view.php?id=<%=course.getCourseId() %>' target='_blank' class='courseName'><%=course.getName().toString() %></a>
 			<%
 				i++;
-			
+
 				}
-			
+
 			}
-			
+
 			if (i == 0) {
 				%>
 				<span>You are not enrolled in any classes at <%=entity.getEntityName() %></span>
 				<%
-			
+
 			}
-		
+
 		} else {
 			%>
 			<span>You are not enrolled in any classes at <%=entity.getEntityName() %></span>
 			<%
-			
+
 		}
-	
-	} 	
-	
+
+	}
+
 	if (!isDefaultUser) {
 	%>
 		<!-- Logged in;  Display Change School option -->
@@ -120,12 +120,12 @@ Entity entity = (Entity)request.getAttribute("entity");
 			<table>
 			<tr><td>
 				<aui:button-row>
-					<aui:button 
-						type="button" 
-						value="Change School" 
+					<aui:button
+						type="button"
+						value="Change School"
 						onClick="<%=changeEntityURL %>"
 					/>
-					
+
 				</aui:button-row>
 			</td><td>
 				<aui:a href="javascript:void();" cssClass="change-entity-help aui-icon aui-icon-help" />
@@ -133,8 +133,8 @@ Entity entity = (Entity)request.getAttribute("entity");
 			</table>
 		</div>
 	<%
-	
+
 	}
  	%>
-	
+
 </div>

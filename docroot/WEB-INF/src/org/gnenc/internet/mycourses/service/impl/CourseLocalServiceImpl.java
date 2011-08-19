@@ -27,15 +27,21 @@ import org.gnenc.internet.mycourses.service.base.CourseLocalServiceBaseImpl;
  * The implementation of the course local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link org.gnenc.internet.mycourses.service.CourseLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link org.gnenc.internet.mycourses.service.CourseLocalService} interface.
  * </p>
  *
  * <p>
- * Never reference this interface directly. Always use {@link org.gnenc.internet.mycourses.service.CourseLocalServiceUtil} to access the course local service.
+ * Never reference this interface directly. Always use
+ * {@link org.gnenc.internet.mycourses.service.CourseLocalServiceUtil} to access
+ * the course local service.
  * </p>
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author Drew Blessing/Stephen Hunter
@@ -44,7 +50,8 @@ import org.gnenc.internet.mycourses.service.base.CourseLocalServiceBaseImpl;
  */
 public class CourseLocalServiceImpl extends CourseLocalServiceBaseImpl {
 
-	public Course getCourseByEntity(long courseId, long entityId) throws NoSuchCourseException, SystemException {
+	public Course getCourseByEntity(long courseId, long entityId)
+			throws NoSuchCourseException, SystemException {
 
 		List<Course> course = coursePersistence.findByC_E(courseId, entityId);
 
@@ -58,9 +65,9 @@ public class CourseLocalServiceImpl extends CourseLocalServiceBaseImpl {
 		} else if (course.size() == 0) {
 			c = null;
 		}
-		//if (course.getEntityId() != entityId) {
-		//	course = null;
-		//}
+		// if (course.getEntityId() != entityId) {
+		// course = null;
+		// }
 		return c;
 	}
 }

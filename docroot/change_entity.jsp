@@ -32,7 +32,7 @@ List<Entity> entities = EntityLocalServiceUtil.getEntities(QueryUtil.ALL_POS,Que
 
 <aui:form name="form" action="<%=changeEntityURL.toString() %>" method="post">
 	<aui:fieldset>
-		<aui:select name="entityId" label="Choose a School" >
+		<aui:select name="entityId" label="Choose a School">
 			<%
 			for (Entity entity : entities) {
 				%>
@@ -43,7 +43,7 @@ List<Entity> entities = EntityLocalServiceUtil.getEntities(QueryUtil.ALL_POS,Que
 			}
 			%>
 		</aui:select>
-		
+
 	<aui:button-row>
 		<aui:button type="submit" />
 			<aui:button

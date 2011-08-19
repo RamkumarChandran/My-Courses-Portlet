@@ -26,23 +26,30 @@ import org.gnenc.internet.mycourses.service.base.UserEnrollmentLocalServiceBaseI
  * The implementation of the user enrollment local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link org.gnenc.internet.mycourses.service.UserEnrollmentLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link org.gnenc.internet.mycourses.service.UserEnrollmentLocalService}
+ * interface.
  * </p>
  *
  * <p>
- * Never reference this interface directly. Always use {@link org.gnenc.internet.mycourses.service.UserEnrollmentLocalServiceUtil} to access the user enrollment local service.
+ * Never reference this interface directly. Always use
+ * {@link org.gnenc.internet.mycourses.service.UserEnrollmentLocalServiceUtil}
+ * to access the user enrollment local service.
  * </p>
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author Drew Blessing/Stephen Hunter
  * @see org.gnenc.internet.mycourses.service.base.UserEnrollmentLocalServiceBaseImpl
  * @see org.gnenc.internet.mycourses.service.UserEnrollmentLocalServiceUtil
  */
-public class UserEnrollmentLocalServiceImpl
-	extends UserEnrollmentLocalServiceBaseImpl {
+public class UserEnrollmentLocalServiceImpl extends
+		UserEnrollmentLocalServiceBaseImpl {
 
 	public List<UserEnrollment> getUserEnrollmentsByUserId(long userId) {
 		List<UserEnrollment> enrollments = null;
@@ -58,9 +65,11 @@ public class UserEnrollmentLocalServiceImpl
 		return enrollments;
 	}
 
-	public UserEnrollment getByUid_CourseId(long userId, long courseId) throws SystemException {
+	public UserEnrollment getByUid_CourseId(long userId, long courseId)
+			throws SystemException {
 
-		List<UserEnrollment> enrollment = userEnrollmentPersistence.findByUserId_CourseId(userId,courseId);
+		List<UserEnrollment> enrollment = userEnrollmentPersistence
+				.findByUserId_CourseId(userId, courseId);
 
 		UserEnrollment u = new UserEnrollmentImpl();
 

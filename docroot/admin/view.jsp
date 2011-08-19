@@ -13,7 +13,7 @@
  * details.
  */
 %>
-  
+
 <%@include file="/init.jsp" %>
 <%--<jsp:useBean id="addEntity" type="org.gnenc.internet.mycourses.model.Entity" scope="request" /> --%>
 
@@ -41,16 +41,16 @@ if (addEntity == null) {
 			<aui:a href="javascript:void();" cssClass="help aui-icon aui-icon-help" />
 		</span>
 	</div>
-	
+
 	<div id="addEntityForm">
-			
+
 		<portlet:actionURL name="addEntity" var="addEntityURL" />
-	
+
 		<aui:form name="form" action="<%=addEntityURL.toString() %>" method="post">
 			<aui:fieldset>
-				<table class="form"> 
+				<table class="form">
 					<tr><td>
-						<aui:input name="entityName" size="60" 
+						<aui:input name="entityName" size="60"
 							value="<%=addEntity.getEntityName() %>" />
 					</td>
 					<td>
@@ -59,7 +59,7 @@ if (addEntity == null) {
         				message="entity-name-required" />
         			</td></tr>
         			<tr><td>
-						<aui:input name="entityUrl" size="60" 
+						<aui:input name="entityUrl" size="60"
 							value="<%=addEntity.getUrl() %>" />
 					</td><td>
 						<liferay-ui:error
@@ -70,7 +70,7 @@ if (addEntity == null) {
         				message="entity-invalid-url" />
         			</td></tr>
         			<tr><td>
-						<aui:input name="entityEmailDomain" size="60" 
+						<aui:input name="entityEmailDomain" size="60"
 							value="<%=addEntity.getEmailDomains() %>" />
 					</td><td>
 						<liferay-ui:error
@@ -81,7 +81,7 @@ if (addEntity == null) {
         				message="entity-invalid-email-domain" />
         			</td></tr>
         			<tr><td>
-						<aui:input name="entityDbServer" size="60" 
+						<aui:input name="entityDbServer" size="60"
 							value="<%=addEntity.getDbServer() %>" />
 					</td><td>
 						<liferay-ui:error
@@ -89,7 +89,7 @@ if (addEntity == null) {
         				message="entity-db-server-required" />
 					</td></tr>
         			<tr><td>
-						<aui:input name="entityDbName" size="60" 
+						<aui:input name="entityDbName" size="60"
 							value="<%=addEntity.getDbName() %>" />
 					</td><td>
 						<liferay-ui:error
@@ -97,7 +97,7 @@ if (addEntity == null) {
         				message="entity-db-name-required"  />
 					</td></tr>
         			<tr><td>
-						<aui:input name="entityDbUser" size="60" 
+						<aui:input name="entityDbUser" size="60"
 							value="<%=addEntity.getDbUser() %>" />
 					</td><td>
 						<liferay-ui:error
@@ -105,7 +105,7 @@ if (addEntity == null) {
         				message="entity-db-user-required" />
 					</td></tr>
         			<tr><td>
-						<aui:input name="entityDbPass" size="60" type="password" 
+						<aui:input name="entityDbPass" size="60" type="password"
 							value="<%=addEntity.getDbPass() %>" />
 					</td><td>
 						<liferay-ui:error
@@ -120,15 +120,15 @@ if (addEntity == null) {
 			</aui:fieldset>
 		</aui:form>
 	</div>
-	
+
 	<liferay-ui:search-container emptyResultsMessage="there-are-no-entities" delta="5">
     	<liferay-ui:search-container-results>
     	<%
 		    List<Entity> tempResults = MyCoursesAdminPortlet.getEntities(renderRequest);
-		
+
 		    results = ListUtil.subList(tempResults, searchContainer.getStart(), searchContainer.getEnd());
 		    total = tempResults.size();
-		
+
 		    pageContext.setAttribute("results", results);
 		    pageContext.setAttribute("total", total);
 	    %>
@@ -143,30 +143,30 @@ if (addEntity == null) {
 		        name="entity-name"
 		        property="entityName"
 		        />
-		        
+
 		    <liferay-ui:search-container-column-text
 		        name="entity-url"
 		        property="url"
 		        />
-		       
+
 		    <liferay-ui:search-container-column-text
 		        name="entity-db-server"
 		        property="dbServer"
 		        />
-		        
+
 		    <liferay-ui:search-container-column-text
 		        name="entity-db-name"
 		        property="dbName"
 		        />
-		       
+
 			<liferay-ui:search-container-column-jsp
         		path="/admin/admin_actions.jsp"
         		align="right"
 	        />
-		        
+
 	      </liferay-ui:search-container-row>
-	
+
 	      <liferay-ui:search-iterator />
-	
+
 	</liferay-ui:search-container>
 </div>

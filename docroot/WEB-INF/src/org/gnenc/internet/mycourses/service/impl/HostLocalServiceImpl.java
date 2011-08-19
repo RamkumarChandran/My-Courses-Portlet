@@ -25,15 +25,21 @@ import org.gnenc.internet.mycourses.service.base.HostLocalServiceBaseImpl;
  * The implementation of the host local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link org.gnenc.internet.mycourses.service.HostLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link org.gnenc.internet.mycourses.service.HostLocalService} interface.
  * </p>
  *
  * <p>
- * Never reference this interface directly. Always use {@link org.gnenc.internet.mycourses.service.HostLocalServiceUtil} to access the host local service.
+ * Never reference this interface directly. Always use
+ * {@link org.gnenc.internet.mycourses.service.HostLocalServiceUtil} to access
+ * the host local service.
  * </p>
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author Drew Blessing/Stephen Hunter
@@ -42,8 +48,10 @@ import org.gnenc.internet.mycourses.service.base.HostLocalServiceBaseImpl;
  */
 public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 
-	public List<Host> findByLR(long localEntityId, long remoteEntityId) throws SystemException {
-		List<Host> host = hostPersistence.findByLRentity(localEntityId, remoteEntityId);
+	public List<Host> findByLR(long localEntityId, long remoteEntityId)
+			throws SystemException {
+		List<Host> host = hostPersistence.findByLRentity(localEntityId,
+				remoteEntityId);
 
 		return host;
 	}

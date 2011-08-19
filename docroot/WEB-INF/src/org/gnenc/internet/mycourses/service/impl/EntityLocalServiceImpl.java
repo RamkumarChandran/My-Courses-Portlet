@@ -26,15 +26,21 @@ import org.gnenc.internet.mycourses.service.base.EntityLocalServiceBaseImpl;
  * The implementation of the entity local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link org.gnenc.internet.mycourses.service.EntityLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link org.gnenc.internet.mycourses.service.EntityLocalService} interface.
  * </p>
  *
  * <p>
- * Never reference this interface directly. Always use {@link org.gnenc.internet.mycourses.service.EntityLocalServiceUtil} to access the entity local service.
+ * Never reference this interface directly. Always use
+ * {@link org.gnenc.internet.mycourses.service.EntityLocalServiceUtil} to access
+ * the entity local service.
  * </p>
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author Drew Blessing/Stephen Hunter
@@ -44,26 +50,32 @@ import org.gnenc.internet.mycourses.service.base.EntityLocalServiceBaseImpl;
 public class EntityLocalServiceImpl extends EntityLocalServiceBaseImpl {
 
 	/**
-	* Returns entity from the database. Also notifies the appropriate model listeners.
-	*
-	* @param emailDomain the email domain to find by
-	* @return the entity that was found
-	* @throws SystemException if a system exception occurred
-	*/
-	public List<Entity> getEntityByDomain(String emailDomain) throws SystemException {
+	 * Returns entity from the database. Also notifies the appropriate model
+	 * listeners.
+	 *
+	 * @param emailDomain
+	 *            the email domain to find by
+	 * @return the entity that was found
+	 * @throws SystemException
+	 *             if a system exception occurred
+	 */
+	public List<Entity> getEntityByDomain(String emailDomain)
+			throws SystemException {
 		List<Entity> entity = entityPersistence.findByEmailDomain(emailDomain);
 
 		return entity;
 	}
 
-	public String getEntityUrl(long entityId) throws NoSuchEntityException, SystemException {
+	public String getEntityUrl(long entityId) throws NoSuchEntityException,
+			SystemException {
 		Entity entity = entityPersistence.findByPrimaryKey(entityId);
 		String url = entity.getUrl();
 
 		return url;
 	}
 
-	public String getEntityName(long entityId) throws NoSuchEntityException, SystemException {
+	public String getEntityName(long entityId) throws NoSuchEntityException,
+			SystemException {
 		Entity entity = entityPersistence.findByPrimaryKey(entityId);
 		String name = entity.getEntityName();
 

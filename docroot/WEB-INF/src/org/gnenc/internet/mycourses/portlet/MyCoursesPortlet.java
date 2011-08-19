@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package org.gnenc.internet.mycourses.portlet;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
@@ -26,108 +40,105 @@ import org.gnenc.internet.mycourses.model.impl.UserEnrollmentImpl;
 import org.gnenc.internet.mycourses.service.CourseLocalServiceUtil;
 import org.gnenc.internet.mycourses.service.EntityLocalServiceUtil;
 import org.gnenc.internet.mycourses.service.UserEnrollmentLocalServiceUtil;
-
 public class MyCoursesPortlet extends MVCPortlet {
-
-	public static List<Course> getAllEnrollments(RenderRequest request) 
+	public static List<Course> getAllEnrollments(RenderRequest request)
 			throws SystemException, PortalException {
 		List<Course> courseInfo = new ArrayList<Course>();
 		long entityId = -1;
 		Entity entity = new EntityImpl();
 		entity.setEntityId(-1);
-		
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay) request
+				.getAttribute(WebKeys.THEME_DISPLAY);
 		long userId = themeDisplay.getUser().getUserId();
 		String userEmail = themeDisplay.getUser().getEmailAddress();
-		Boolean isDefaultUser = themeDisplay.getUser().isDefaultUser(); 
-		
-		PortletPreferences prefs = request.getPreferences();
-		String preferredEntity = prefs.getValue("entity","no");
+		Boolean isDefaultUser = themeDisplay.getUser().isDefaultUser();
 
-		if ((preferredEntity == "no") && (!isDefaultUser)) {	
-			
+		PortletPreferences prefs = request.getPreferences();
+		String preferredEntity = prefs.getValue("entity", "no");
+
+		if ((preferredEntity == "no") && (!isDefaultUser)) {
+
 			// Logged in and no preferred entity set
-			
+
 			String[] tokens = userEmail.split("@");
 			String domain = tokens[1];
-	
-			List<Entity> entities = EntityLocalServiceUtil.getEntityByDomain(
-					domain);
+
+			List<Entity> entities = EntityLocalServiceUtil
+					.getEntityByDomain(domain);
 			if (!entities.isEmpty()) {
-				
+
 				// User-Entity affiliation found
-				
+
 				entityId = entities.get(0).getEntityId();
 				entity = EntityLocalServiceUtil.getEntity(entityId);
-				
+
 			}
-			
+
 		} else {
-			
+
 			// Logged in and preferred entity set
-			
+
 			entityId = Long.valueOf(preferredEntity);
 			entity = EntityLocalServiceUtil.getEntity(entityId);
-			
+
 		}
-	
+
 		if (entityId != -1) {
-			
+
 			// User affiliation found or preferred entity set
-			
-			checkCourses(userEmail,entityId,userId);
-	
-			List<UserEnrollment> enrollments = 
-				UserEnrollmentLocalServiceUtil.getUserEnrollmentsByUserId(userId);
-	
+
+			checkCourses(userEmail, entityId, userId);
+
+			List<UserEnrollment> enrollments = UserEnrollmentLocalServiceUtil
+					.getUserEnrollmentsByUserId(userId);
+
 			for (UserEnrollment enrollment : enrollments) {
-				Course course = CourseLocalServiceUtil.getCourse(
-						enrollment.getCourseId());
-	
+				Course course = CourseLocalServiceUtil.getCourse(enrollment
+						.getCourseId());
+
 				if (course != null) {
 					courseInfo.add(course);
-					
+
 				}
 
 			}
 
 		} else {
 			courseInfo = null;
-			
+
 		}
 		request.setAttribute("isDefaultUser", isDefaultUser);
 		request.setAttribute("entity", entity);
 		return courseInfo;
-	
+
 	}
-	
+
 	public void changeEntity(ActionRequest request, ActionResponse response)
-    		throws Exception {
+			throws Exception {
 		PortletPreferences prefs = request.getPreferences();
 		prefs.setValue("entity", ParamUtil.getString(request, "entityId"));
 		prefs.store();
-		
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay) request
+				.getAttribute(WebKeys.THEME_DISPLAY);
 		long userId = themeDisplay.getUser().getUserId();
 		String userEmail = themeDisplay.getUser().getEmailAddress();
 		long entityId = Long.valueOf(ParamUtil.getString(request, "entityId"));
-		
-		updateCourses(userEmail,entityId,userId);
-	
+
+		updateCourses(userEmail, entityId, userId);
+
 	}
 
-	private static void checkCourses(String userEmail, long entityId, long userId) 
-			throws PortalException, SystemException {
+	private static void checkCourses(String userEmail, long entityId,
+			long userId) throws PortalException, SystemException {
 
-		List<UserEnrollment> enrollments = 
-			UserEnrollmentLocalServiceUtil.getUserEnrollmentsByUserId(userId);
+		List<UserEnrollment> enrollments = UserEnrollmentLocalServiceUtil
+				.getUserEnrollmentsByUserId(userId);
 
-		if (enrollments.size() == 0)
-		{
-			updateCourses(userEmail,entityId,userId);
-		
+		if (enrollments.size() == 0) {
+			updateCourses(userEmail, entityId, userId);
+
 		}
 
 		for (UserEnrollment enrollment : enrollments) {
@@ -135,22 +146,22 @@ public class MyCoursesPortlet extends MVCPortlet {
 			long oneWeek = 604800000;
 			Date lastRefresh = enrollment.getLastRefresh();
 
-			if ((today.getTime()-lastRefresh.getTime()) > oneWeek) {
+			if ((today.getTime() - lastRefresh.getTime()) > oneWeek) {
 
-				//Update Course Enrollments
+				// Update Course Enrollments
 
-				updateCourses(userEmail,entityId,userId);
+				updateCourses(userEmail, entityId, userId);
 				break;
-			
+
 			}
-		
+
 		}
-	
+
 	}
 
 	@SuppressWarnings("rawtypes")
-	private static void updateCourses (String userEmail, long entityId, long userId) 
-			throws PortalException, SystemException	{
+	private static void updateCourses(String userEmail, long entityId,
+			long userId) throws PortalException, SystemException {
 		Entity entity = EntityLocalServiceUtil.getEntity(entityId);
 		String dbName = entity.getDbName();
 		String dbServer = entity.getDbServer();
@@ -158,20 +169,20 @@ public class MyCoursesPortlet extends MVCPortlet {
 		String dbUser = entity.getDbUser();
 		String dbPass = entity.getDbPass();
 
-		ArrayList mCourses = MoodleJdbc.findCoursesByEmail(
-				userEmail, dbUrl, dbUser, dbPass);
+		ArrayList mCourses = MoodleJdbc.findCoursesByEmail(userEmail, dbUrl,
+				dbUser, dbPass);
 
-		ArrayList courseName = ((ArrayList)mCourses.get(0));
-		ArrayList courseId = ((ArrayList)mCourses.get(1));
+		ArrayList courseName = ((ArrayList) mCourses.get(0));
+		ArrayList courseId = ((ArrayList) mCourses.get(1));
 
-		for (int i = courseName.size()-1;i>=0;i--)
-		{
+		for (int i = courseName.size() - 1; i >= 0; i--) {
 			String str = courseId.get(i).toString();
 			String name = courseName.get(i).toString();
 			long id = Long.valueOf(str);
 			Course course = new CourseImpl();
 
-			if (CourseLocalServiceUtil.getCourseByEntity(id, entityId) == null) {
+			if (CourseLocalServiceUtil.getCourseByEntity(
+					id, entityId) == null) {
 
 				// Insert new course
 
@@ -180,24 +191,26 @@ public class MyCoursesPortlet extends MVCPortlet {
 				c.setName(name);
 				c.setCourseId(id);
 				c.setEntityId(entityId);
-				c.setId(CounterLocalServiceUtil.increment(Course.class.getName()));
+				c.setId(CounterLocalServiceUtil.increment(Course.class
+						.getName()));
 
 				course = CourseLocalServiceUtil.addCourse(c);
-			
+
 			} else {
 
 				// Update existing course
 
-				Course c = CourseLocalServiceUtil.getCourseByEntity(id, entityId);
+				Course c = CourseLocalServiceUtil.getCourseByEntity(id,
+						entityId);
 				c.setName(name);
 				c.setNew(false);
 
 				course = CourseLocalServiceUtil.updateCourse(c);
-			
+
 			}
 
-			UserEnrollment u = UserEnrollmentLocalServiceUtil.getByUid_CourseId(
-					userId,course.getId());
+			UserEnrollment u = UserEnrollmentLocalServiceUtil
+					.getByUid_CourseId(userId, course.getId());
 			if (u == null) {
 
 				// Insert new user enrollment
@@ -206,12 +219,12 @@ public class MyCoursesPortlet extends MVCPortlet {
 
 				u.setUserId(userId);
 				u.setCourseId(course.getId());
-				u.setId(CounterLocalServiceUtil.increment(
-						UserEnrollment.class.getName()));
+				u.setId(CounterLocalServiceUtil.increment(UserEnrollment.class
+						.getName()));
 				u.setLastRefresh(new Date());
 
 				UserEnrollmentLocalServiceUtil.addUserEnrollment(u);
-			
+
 			} else {
 
 				// Update existing user enrollment
@@ -220,11 +233,11 @@ public class MyCoursesPortlet extends MVCPortlet {
 				u.setNew(false);
 
 				UserEnrollmentLocalServiceUtil.updateUserEnrollment(u);
-		
+
 			}
-	
+
 		}
-	
+
 	}
-	
+
 }
