@@ -75,7 +75,7 @@ public class MyCoursesPortlet extends MVCPortlet {
 
 			}
 
-		} else {
+		} else if (preferredEntity != "no") {
 
 			// Logged in and preferred entity set
 
