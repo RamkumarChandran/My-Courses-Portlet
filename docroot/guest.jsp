@@ -1,4 +1,5 @@
-<%/**
+<%
+/**
  *  Copyright (c) 2010-2011 Educational Service Unit 10. 
 *
 *  This file is part of the My Courses portlet.
@@ -17,6 +18,7 @@
 * along with the My Courses portlet.  If not, see <http://www.gnu.org/licenses/>.
 **/
 %>
+
 <%@include file="/init.jsp" %>
 
 <%
