@@ -45,6 +45,7 @@ import org.gnenc.internet.mycourses.model.impl.UserEnrollmentImpl;
 import org.gnenc.internet.mycourses.service.CourseLocalServiceUtil;
 import org.gnenc.internet.mycourses.service.EntityLocalServiceUtil;
 import org.gnenc.internet.mycourses.service.UserEnrollmentLocalServiceUtil;
+
 public class MyCoursesPortlet extends MVCPortlet {
 	public static List<Course> getAllEnrollments(RenderRequest request)
 			throws SystemException, PortalException {
