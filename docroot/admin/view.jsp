@@ -41,7 +41,7 @@ if (addSite == null) {
 <div id="mycoursesadmin">
 	<div>
 		<img id='schoolhouse' src='<%=renderRequest.getContextPath() %>/images/schoolhouse-med.png' alt='schoolhouse' />
-		<p id="headline_main">Manage School Site Connections</p>
+		<p id="headline_main">Manage Site Connections</p>
 		<span id="tip">
 			<aui:a href="javascript:void();" cssClass="help aui-icon aui-icon-help" />
 		</span>
