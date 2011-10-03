@@ -23,17 +23,17 @@
 
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-Entity entity = (Entity)row.getObject();
+Site site = (Site)row.getObject();
 //long groupId = themeDisplay.getLayout().getGroupId();
-String name = Entity.class.getName();
-String primKey = String.valueOf(entity.getPrimaryKey());
+String name = Site.class.getName();
+String primKey = String.valueOf(site.getPrimaryKey());
 %>
 
 
 <liferay-ui:icon-menu>
 
   <%--<c:if test="<%= permissionChecker.hasPermission(groupId, name, primKey, ActionKeys.UPDATE) %>"> --%>
-    <portlet:actionURL name="editEntity" var="editURL">
+    <portlet:actionURL name="editSite" var="editURL">
       <portlet:param name="resourcePrimKey" value="<%=primKey %>" />
     </portlet:actionURL>
 
@@ -41,7 +41,7 @@ String primKey = String.valueOf(entity.getPrimaryKey());
   <%--</c:if> --%>
 
   <%--<c:if test="<%= permissionChecker.hasPermission(groupId, name, primKey, ActionKeys.DELETE) %>"> --%>
-    <portlet:actionURL name="deleteEntity" var="deleteURL">
+    <portlet:actionURL name="deleteSite" var="deleteURL">
       <portlet:param name="resourcePrimKey" value="<%= primKey %>" />
     </portlet:actionURL>
 

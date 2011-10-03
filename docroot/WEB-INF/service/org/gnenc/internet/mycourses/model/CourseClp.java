@@ -65,12 +65,12 @@ public class CourseClp extends BaseModelImpl<Course> implements Course {
 		_name = name;
 	}
 
-	public long getEntityId() {
-		return _entityId;
+	public long getSiteId() {
+		return _siteId;
 	}
 
-	public void setEntityId(long entityId) {
-		_entityId = entityId;
+	public void setSiteId(long siteId) {
+		_siteId = siteId;
 	}
 
 	public Course toEscapedModel() {
@@ -89,7 +89,7 @@ public class CourseClp extends BaseModelImpl<Course> implements Course {
 		clone.setId(getId());
 		clone.setCourseId(getCourseId());
 		clone.setName(getName());
-		clone.setEntityId(getEntityId());
+		clone.setSiteId(getSiteId());
 
 		return clone;
 	}
@@ -143,8 +143,8 @@ public class CourseClp extends BaseModelImpl<Course> implements Course {
 		sb.append(getCourseId());
 		sb.append(", name=");
 		sb.append(getName());
-		sb.append(", entityId=");
-		sb.append(getEntityId());
+		sb.append(", siteId=");
+		sb.append(getSiteId());
 		sb.append("}");
 
 		return sb.toString();
@@ -170,8 +170,8 @@ public class CourseClp extends BaseModelImpl<Course> implements Course {
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>entityId</column-name><column-value><![CDATA[");
-		sb.append(getEntityId());
+			"<column><column-name>siteId</column-name><column-value><![CDATA[");
+		sb.append(getSiteId());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -182,5 +182,5 @@ public class CourseClp extends BaseModelImpl<Course> implements Course {
 	private long _id;
 	private long _courseId;
 	private String _name;
-	private long _entityId;
+	private long _siteId;
 }

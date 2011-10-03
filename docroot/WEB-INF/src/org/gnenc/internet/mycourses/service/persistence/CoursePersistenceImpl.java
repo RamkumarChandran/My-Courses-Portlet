@@ -71,18 +71,18 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 	public static final String FINDER_CLASS_NAME_ENTITY = CourseImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
-	public static final FinderPath FINDER_PATH_FIND_BY_ENTITYID = new FinderPath(CourseModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FIND_BY_SITEID = new FinderPath(CourseModelImpl.ENTITY_CACHE_ENABLED,
 			CourseModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByentityId",
+			"findBysiteId",
 			new String[] {
 				Long.class.getName(),
 				
 			"java.lang.Integer", "java.lang.Integer",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
-	public static final FinderPath FINDER_PATH_COUNT_BY_ENTITYID = new FinderPath(CourseModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_SITEID = new FinderPath(CourseModelImpl.ENTITY_CACHE_ENABLED,
 			CourseModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByentityId", new String[] { Long.class.getName() });
+			"countBysiteId", new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_C_E = new FinderPath(CourseModelImpl.ENTITY_CACHE_ENABLED,
 			CourseModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
 			"findByC_E",
@@ -286,7 +286,7 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 		courseImpl.setId(course.getId());
 		courseImpl.setCourseId(course.getCourseId());
 		courseImpl.setName(course.getName());
-		courseImpl.setEntityId(course.getEntityId());
+		courseImpl.setSiteId(course.getSiteId());
 
 		return courseImpl;
 	}
@@ -375,59 +375,58 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 	}
 
 	/**
-	 * Finds all the courses where entityId = &#63;.
+	 * Finds all the courses where siteId = &#63;.
 	 *
-	 * @param entityId the entity id to search with
+	 * @param siteId the site id to search with
 	 * @return the matching courses
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Course> findByentityId(long entityId) throws SystemException {
-		return findByentityId(entityId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+	public List<Course> findBysiteId(long siteId) throws SystemException {
+		return findBysiteId(siteId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Finds a range of all the courses where entityId = &#63;.
+	 * Finds a range of all the courses where siteId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param entityId the entity id to search with
+	 * @param siteId the site id to search with
 	 * @param start the lower bound of the range of courses to return
 	 * @param end the upper bound of the range of courses to return (not inclusive)
 	 * @return the range of matching courses
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Course> findByentityId(long entityId, int start, int end)
+	public List<Course> findBysiteId(long siteId, int start, int end)
 		throws SystemException {
-		return findByentityId(entityId, start, end, null);
+		return findBysiteId(siteId, start, end, null);
 	}
 
 	/**
-	 * Finds an ordered range of all the courses where entityId = &#63;.
+	 * Finds an ordered range of all the courses where siteId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param entityId the entity id to search with
+	 * @param siteId the site id to search with
 	 * @param start the lower bound of the range of courses to return
 	 * @param end the upper bound of the range of courses to return (not inclusive)
 	 * @param orderByComparator the comparator to order the results by
 	 * @return the ordered range of matching courses
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Course> findByentityId(long entityId, int start, int end,
+	public List<Course> findBysiteId(long siteId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
 		Object[] finderArgs = new Object[] {
-				entityId,
+				siteId,
 				
 				String.valueOf(start), String.valueOf(end),
 				String.valueOf(orderByComparator)
 			};
 
-		List<Course> list = (List<Course>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_ENTITYID,
+		List<Course> list = (List<Course>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_SITEID,
 				finderArgs, this);
 
 		if (list == null) {
@@ -443,7 +442,7 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 
 			query.append(_SQL_SELECT_COURSE_WHERE);
 
-			query.append(_FINDER_COLUMN_ENTITYID_ENTITYID_2);
+			query.append(_FINDER_COLUMN_SITEID_SITEID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -465,7 +464,7 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(entityId);
+				qPos.add(siteId);
 
 				list = (List<Course>)QueryUtil.list(q, getDialect(), start, end);
 			}
@@ -474,13 +473,13 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_ENTITYID,
+					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_SITEID,
 						finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_ENTITYID,
+					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_SITEID,
 						finderArgs, list);
 				}
 
@@ -492,30 +491,30 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 	}
 
 	/**
-	 * Finds the first course in the ordered set where entityId = &#63;.
+	 * Finds the first course in the ordered set where siteId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param entityId the entity id to search with
+	 * @param siteId the site id to search with
 	 * @param orderByComparator the comparator to order the set by
 	 * @return the first matching course
 	 * @throws org.gnenc.internet.mycourses.NoSuchCourseException if a matching course could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Course findByentityId_First(long entityId,
+	public Course findBysiteId_First(long siteId,
 		OrderByComparator orderByComparator)
 		throws NoSuchCourseException, SystemException {
-		List<Course> list = findByentityId(entityId, 0, 1, orderByComparator);
+		List<Course> list = findBysiteId(siteId, 0, 1, orderByComparator);
 
 		if (list.isEmpty()) {
 			StringBundler msg = new StringBundler(4);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("entityId=");
-			msg.append(entityId);
+			msg.append("siteId=");
+			msg.append(siteId);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -527,24 +526,24 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 	}
 
 	/**
-	 * Finds the last course in the ordered set where entityId = &#63;.
+	 * Finds the last course in the ordered set where siteId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param entityId the entity id to search with
+	 * @param siteId the site id to search with
 	 * @param orderByComparator the comparator to order the set by
 	 * @return the last matching course
 	 * @throws org.gnenc.internet.mycourses.NoSuchCourseException if a matching course could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Course findByentityId_Last(long entityId,
+	public Course findBysiteId_Last(long siteId,
 		OrderByComparator orderByComparator)
 		throws NoSuchCourseException, SystemException {
-		int count = countByentityId(entityId);
+		int count = countBysiteId(siteId);
 
-		List<Course> list = findByentityId(entityId, count - 1, count,
+		List<Course> list = findBysiteId(siteId, count - 1, count,
 				orderByComparator);
 
 		if (list.isEmpty()) {
@@ -552,8 +551,8 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("entityId=");
-			msg.append(entityId);
+			msg.append("siteId=");
+			msg.append(siteId);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -565,20 +564,20 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 	}
 
 	/**
-	 * Finds the courses before and after the current course in the ordered set where entityId = &#63;.
+	 * Finds the courses before and after the current course in the ordered set where siteId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param id the primary key of the current course
-	 * @param entityId the entity id to search with
+	 * @param siteId the site id to search with
 	 * @param orderByComparator the comparator to order the set by
 	 * @return the previous, current, and next course
 	 * @throws org.gnenc.internet.mycourses.NoSuchCourseException if a course with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Course[] findByentityId_PrevAndNext(long id, long entityId,
+	public Course[] findBysiteId_PrevAndNext(long id, long siteId,
 		OrderByComparator orderByComparator)
 		throws NoSuchCourseException, SystemException {
 		Course course = findByPrimaryKey(id);
@@ -590,12 +589,12 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 
 			Course[] array = new CourseImpl[3];
 
-			array[0] = getByentityId_PrevAndNext(session, course, entityId,
+			array[0] = getBysiteId_PrevAndNext(session, course, siteId,
 					orderByComparator, true);
 
 			array[1] = course;
 
-			array[2] = getByentityId_PrevAndNext(session, course, entityId,
+			array[2] = getBysiteId_PrevAndNext(session, course, siteId,
 					orderByComparator, false);
 
 			return array;
@@ -608,8 +607,8 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 		}
 	}
 
-	protected Course getByentityId_PrevAndNext(Session session, Course course,
-		long entityId, OrderByComparator orderByComparator, boolean previous) {
+	protected Course getBysiteId_PrevAndNext(Session session, Course course,
+		long siteId, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -622,7 +621,7 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 
 		query.append(_SQL_SELECT_COURSE_WHERE);
 
-		query.append(_FINDER_COLUMN_ENTITYID_ENTITYID_2);
+		query.append(_FINDER_COLUMN_SITEID_SITEID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -691,7 +690,7 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(entityId);
+		qPos.add(siteId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByValues(course);
@@ -712,57 +711,57 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 	}
 
 	/**
-	 * Finds all the courses where courseId = &#63; and entityId = &#63;.
+	 * Finds all the courses where courseId = &#63; and siteId = &#63;.
 	 *
 	 * @param courseId the course id to search with
-	 * @param entityId the entity id to search with
+	 * @param siteId the site id to search with
 	 * @return the matching courses
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Course> findByC_E(long courseId, long entityId)
+	public List<Course> findByC_E(long courseId, long siteId)
 		throws SystemException {
-		return findByC_E(courseId, entityId, QueryUtil.ALL_POS,
+		return findByC_E(courseId, siteId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Finds a range of all the courses where courseId = &#63; and entityId = &#63;.
+	 * Finds a range of all the courses where courseId = &#63; and siteId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param courseId the course id to search with
-	 * @param entityId the entity id to search with
+	 * @param siteId the site id to search with
 	 * @param start the lower bound of the range of courses to return
 	 * @param end the upper bound of the range of courses to return (not inclusive)
 	 * @return the range of matching courses
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Course> findByC_E(long courseId, long entityId, int start,
-		int end) throws SystemException {
-		return findByC_E(courseId, entityId, start, end, null);
+	public List<Course> findByC_E(long courseId, long siteId, int start, int end)
+		throws SystemException {
+		return findByC_E(courseId, siteId, start, end, null);
 	}
 
 	/**
-	 * Finds an ordered range of all the courses where courseId = &#63; and entityId = &#63;.
+	 * Finds an ordered range of all the courses where courseId = &#63; and siteId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param courseId the course id to search with
-	 * @param entityId the entity id to search with
+	 * @param siteId the site id to search with
 	 * @param start the lower bound of the range of courses to return
 	 * @param end the upper bound of the range of courses to return (not inclusive)
 	 * @param orderByComparator the comparator to order the results by
 	 * @return the ordered range of matching courses
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Course> findByC_E(long courseId, long entityId, int start,
+	public List<Course> findByC_E(long courseId, long siteId, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
 		Object[] finderArgs = new Object[] {
-				courseId, entityId,
+				courseId, siteId,
 				
 				String.valueOf(start), String.valueOf(end),
 				String.valueOf(orderByComparator)
@@ -786,7 +785,7 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 
 			query.append(_FINDER_COLUMN_C_E_COURSEID_2);
 
-			query.append(_FINDER_COLUMN_C_E_ENTITYID_2);
+			query.append(_FINDER_COLUMN_C_E_SITEID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -810,7 +809,7 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 
 				qPos.add(courseId);
 
-				qPos.add(entityId);
+				qPos.add(siteId);
 
 				list = (List<Course>)QueryUtil.list(q, getDialect(), start, end);
 			}
@@ -837,24 +836,23 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 	}
 
 	/**
-	 * Finds the first course in the ordered set where courseId = &#63; and entityId = &#63;.
+	 * Finds the first course in the ordered set where courseId = &#63; and siteId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param courseId the course id to search with
-	 * @param entityId the entity id to search with
+	 * @param siteId the site id to search with
 	 * @param orderByComparator the comparator to order the set by
 	 * @return the first matching course
 	 * @throws org.gnenc.internet.mycourses.NoSuchCourseException if a matching course could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Course findByC_E_First(long courseId, long entityId,
+	public Course findByC_E_First(long courseId, long siteId,
 		OrderByComparator orderByComparator)
 		throws NoSuchCourseException, SystemException {
-		List<Course> list = findByC_E(courseId, entityId, 0, 1,
-				orderByComparator);
+		List<Course> list = findByC_E(courseId, siteId, 0, 1, orderByComparator);
 
 		if (list.isEmpty()) {
 			StringBundler msg = new StringBundler(6);
@@ -864,8 +862,8 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 			msg.append("courseId=");
 			msg.append(courseId);
 
-			msg.append(", entityId=");
-			msg.append(entityId);
+			msg.append(", siteId=");
+			msg.append(siteId);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -877,25 +875,25 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 	}
 
 	/**
-	 * Finds the last course in the ordered set where courseId = &#63; and entityId = &#63;.
+	 * Finds the last course in the ordered set where courseId = &#63; and siteId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param courseId the course id to search with
-	 * @param entityId the entity id to search with
+	 * @param siteId the site id to search with
 	 * @param orderByComparator the comparator to order the set by
 	 * @return the last matching course
 	 * @throws org.gnenc.internet.mycourses.NoSuchCourseException if a matching course could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Course findByC_E_Last(long courseId, long entityId,
+	public Course findByC_E_Last(long courseId, long siteId,
 		OrderByComparator orderByComparator)
 		throws NoSuchCourseException, SystemException {
-		int count = countByC_E(courseId, entityId);
+		int count = countByC_E(courseId, siteId);
 
-		List<Course> list = findByC_E(courseId, entityId, count - 1, count,
+		List<Course> list = findByC_E(courseId, siteId, count - 1, count,
 				orderByComparator);
 
 		if (list.isEmpty()) {
@@ -906,8 +904,8 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 			msg.append("courseId=");
 			msg.append(courseId);
 
-			msg.append(", entityId=");
-			msg.append(entityId);
+			msg.append(", siteId=");
+			msg.append(siteId);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -919,7 +917,7 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 	}
 
 	/**
-	 * Finds the courses before and after the current course in the ordered set where courseId = &#63; and entityId = &#63;.
+	 * Finds the courses before and after the current course in the ordered set where courseId = &#63; and siteId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -927,14 +925,14 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 	 *
 	 * @param id the primary key of the current course
 	 * @param courseId the course id to search with
-	 * @param entityId the entity id to search with
+	 * @param siteId the site id to search with
 	 * @param orderByComparator the comparator to order the set by
 	 * @return the previous, current, and next course
 	 * @throws org.gnenc.internet.mycourses.NoSuchCourseException if a course with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Course[] findByC_E_PrevAndNext(long id, long courseId,
-		long entityId, OrderByComparator orderByComparator)
+	public Course[] findByC_E_PrevAndNext(long id, long courseId, long siteId,
+		OrderByComparator orderByComparator)
 		throws NoSuchCourseException, SystemException {
 		Course course = findByPrimaryKey(id);
 
@@ -945,13 +943,13 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 
 			Course[] array = new CourseImpl[3];
 
-			array[0] = getByC_E_PrevAndNext(session, course, courseId,
-					entityId, orderByComparator, true);
+			array[0] = getByC_E_PrevAndNext(session, course, courseId, siteId,
+					orderByComparator, true);
 
 			array[1] = course;
 
-			array[2] = getByC_E_PrevAndNext(session, course, courseId,
-					entityId, orderByComparator, false);
+			array[2] = getByC_E_PrevAndNext(session, course, courseId, siteId,
+					orderByComparator, false);
 
 			return array;
 		}
@@ -964,7 +962,7 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 	}
 
 	protected Course getByC_E_PrevAndNext(Session session, Course course,
-		long courseId, long entityId, OrderByComparator orderByComparator,
+		long courseId, long siteId, OrderByComparator orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -980,7 +978,7 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 
 		query.append(_FINDER_COLUMN_C_E_COURSEID_2);
 
-		query.append(_FINDER_COLUMN_C_E_ENTITYID_2);
+		query.append(_FINDER_COLUMN_C_E_SITEID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1051,7 +1049,7 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 
 		qPos.add(courseId);
 
-		qPos.add(entityId);
+		qPos.add(siteId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByValues(course);
@@ -1180,27 +1178,27 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 	}
 
 	/**
-	 * Removes all the courses where entityId = &#63; from the database.
+	 * Removes all the courses where siteId = &#63; from the database.
 	 *
-	 * @param entityId the entity id to search with
+	 * @param siteId the site id to search with
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByentityId(long entityId) throws SystemException {
-		for (Course course : findByentityId(entityId)) {
+	public void removeBysiteId(long siteId) throws SystemException {
+		for (Course course : findBysiteId(siteId)) {
 			remove(course);
 		}
 	}
 
 	/**
-	 * Removes all the courses where courseId = &#63; and entityId = &#63; from the database.
+	 * Removes all the courses where courseId = &#63; and siteId = &#63; from the database.
 	 *
 	 * @param courseId the course id to search with
-	 * @param entityId the entity id to search with
+	 * @param siteId the site id to search with
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_E(long courseId, long entityId)
+	public void removeByC_E(long courseId, long siteId)
 		throws SystemException {
-		for (Course course : findByC_E(courseId, entityId)) {
+		for (Course course : findByC_E(courseId, siteId)) {
 			remove(course);
 		}
 	}
@@ -1217,16 +1215,16 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 	}
 
 	/**
-	 * Counts all the courses where entityId = &#63;.
+	 * Counts all the courses where siteId = &#63;.
 	 *
-	 * @param entityId the entity id to search with
+	 * @param siteId the site id to search with
 	 * @return the number of matching courses
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int countByentityId(long entityId) throws SystemException {
-		Object[] finderArgs = new Object[] { entityId };
+	public int countBysiteId(long siteId) throws SystemException {
+		Object[] finderArgs = new Object[] { siteId };
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_ENTITYID,
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_SITEID,
 				finderArgs, this);
 
 		if (count == null) {
@@ -1234,7 +1232,7 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 
 			query.append(_SQL_COUNT_COURSE_WHERE);
 
-			query.append(_FINDER_COLUMN_ENTITYID_ENTITYID_2);
+			query.append(_FINDER_COLUMN_SITEID_SITEID_2);
 
 			String sql = query.toString();
 
@@ -1247,7 +1245,7 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(entityId);
+				qPos.add(siteId);
 
 				count = (Long)q.uniqueResult();
 			}
@@ -1259,7 +1257,7 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_ENTITYID,
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_SITEID,
 					finderArgs, count);
 
 				closeSession(session);
@@ -1270,16 +1268,15 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 	}
 
 	/**
-	 * Counts all the courses where courseId = &#63; and entityId = &#63;.
+	 * Counts all the courses where courseId = &#63; and siteId = &#63;.
 	 *
 	 * @param courseId the course id to search with
-	 * @param entityId the entity id to search with
+	 * @param siteId the site id to search with
 	 * @return the number of matching courses
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int countByC_E(long courseId, long entityId)
-		throws SystemException {
-		Object[] finderArgs = new Object[] { courseId, entityId };
+	public int countByC_E(long courseId, long siteId) throws SystemException {
+		Object[] finderArgs = new Object[] { courseId, siteId };
 
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_C_E,
 				finderArgs, this);
@@ -1291,7 +1288,7 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 
 			query.append(_FINDER_COLUMN_C_E_COURSEID_2);
 
-			query.append(_FINDER_COLUMN_C_E_ENTITYID_2);
+			query.append(_FINDER_COLUMN_C_E_SITEID_2);
 
 			String sql = query.toString();
 
@@ -1306,7 +1303,7 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 
 				qPos.add(courseId);
 
-				qPos.add(entityId);
+				qPos.add(siteId);
 
 				count = (Long)q.uniqueResult();
 			}
@@ -1401,8 +1398,8 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 
 	@BeanReference(type = CoursePersistence.class)
 	protected CoursePersistence coursePersistence;
-	@BeanReference(type = EntityPersistence.class)
-	protected EntityPersistence entityPersistence;
+	@BeanReference(type = SitePersistence.class)
+	protected SitePersistence sitePersistence;
 	@BeanReference(type = UserEnrollmentPersistence.class)
 	protected UserEnrollmentPersistence userEnrollmentPersistence;
 	@BeanReference(type = HostPersistence.class)
@@ -1415,9 +1412,9 @@ public class CoursePersistenceImpl extends BasePersistenceImpl<Course>
 	private static final String _SQL_SELECT_COURSE_WHERE = "SELECT course FROM Course course WHERE ";
 	private static final String _SQL_COUNT_COURSE = "SELECT COUNT(course) FROM Course course";
 	private static final String _SQL_COUNT_COURSE_WHERE = "SELECT COUNT(course) FROM Course course WHERE ";
-	private static final String _FINDER_COLUMN_ENTITYID_ENTITYID_2 = "course.entityId = ?";
+	private static final String _FINDER_COLUMN_SITEID_SITEID_2 = "course.siteId = ?";
 	private static final String _FINDER_COLUMN_C_E_COURSEID_2 = "course.courseId = ? AND ";
-	private static final String _FINDER_COLUMN_C_E_ENTITYID_2 = "course.entityId = ?";
+	private static final String _FINDER_COLUMN_C_E_SITEID_2 = "course.siteId = ?";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "course.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Course exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Course exists with the key {";

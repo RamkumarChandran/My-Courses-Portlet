@@ -50,10 +50,10 @@ import org.gnenc.internet.mycourses.service.base.CourseLocalServiceBaseImpl;
  */
 public class CourseLocalServiceImpl extends CourseLocalServiceBaseImpl {
 
-	public Course getCourseByEntity(long courseId, long entityId)
+	public Course getCourseBySite(long courseId, long siteId)
 			throws NoSuchCourseException, SystemException {
 
-		List<Course> course = coursePersistence.findByC_E(courseId, entityId);
+		List<Course> course = coursePersistence.findByC_E(courseId, siteId);
 
 		Course c = new CourseImpl();
 
@@ -61,11 +61,11 @@ public class CourseLocalServiceImpl extends CourseLocalServiceBaseImpl {
 			c.setId(course.get(0).getId());
 			c.setCourseId(course.get(0).getCourseId());
 			c.setName(course.get(0).getName());
-			c.setEntityId(course.get(0).getEntityId());
+			c.setSiteId(course.get(0).getSiteId());
 		} else if (course.size() == 0) {
 			c = null;
 		}
-		// if (course.getEntityId() != entityId) {
+		// if (course.getSiteId() != siteId) {
 		// course = null;
 		// }
 		return c;

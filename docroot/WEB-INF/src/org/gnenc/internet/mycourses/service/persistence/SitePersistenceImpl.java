@@ -43,10 +43,10 @@ import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import org.gnenc.internet.mycourses.NoSuchEntityException;
-import org.gnenc.internet.mycourses.model.Entity;
-import org.gnenc.internet.mycourses.model.impl.EntityImpl;
-import org.gnenc.internet.mycourses.model.impl.EntityModelImpl;
+import org.gnenc.internet.mycourses.NoSuchSiteException;
+import org.gnenc.internet.mycourses.model.Site;
+import org.gnenc.internet.mycourses.model.impl.SiteImpl;
+import org.gnenc.internet.mycourses.model.impl.SiteModelImpl;
 
 import java.io.Serializable;
 
@@ -55,10 +55,10 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * The persistence implementation for the entity service.
+ * The persistence implementation for the site service.
  *
  * <p>
- * Never modify or reference this class directly. Always use {@link EntityUtil} to access the entity persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+ * Never modify or reference this class directly. Always use {@link SiteUtil} to access the site persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
  * </p>
  *
  * <p>
@@ -66,17 +66,29 @@ import java.util.List;
  * </p>
  *
  * @author Drew Blessing/Stephen Hunter
- * @see EntityPersistence
- * @see EntityUtil
+ * @see SitePersistence
+ * @see SiteUtil
  * @generated
  */
-public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
-	implements EntityPersistence {
-	public static final String FINDER_CLASS_NAME_ENTITY = EntityImpl.class.getName();
+public class SitePersistenceImpl extends BasePersistenceImpl<Site>
+	implements SitePersistence {
+	public static final String FINDER_CLASS_NAME_ENTITY = SiteImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
-	public static final FinderPath FINDER_PATH_FIND_BY_EMAILDOMAIN = new FinderPath(EntityModelImpl.ENTITY_CACHE_ENABLED,
-			EntityModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
+	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID = new FinderPath(SiteModelImpl.ENTITY_CACHE_ENABLED,
+			SiteModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
+			"findByCompanyId",
+			new String[] {
+				Long.class.getName(),
+				
+			"java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(SiteModelImpl.ENTITY_CACHE_ENABLED,
+			SiteModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
+			"countByCompanyId", new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_EMAILDOMAIN = new FinderPath(SiteModelImpl.ENTITY_CACHE_ENABLED,
+			SiteModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
 			"findByEmailDomain",
 			new String[] {
 				String.class.getName(),
@@ -84,11 +96,11 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 			"java.lang.Integer", "java.lang.Integer",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
-	public static final FinderPath FINDER_PATH_COUNT_BY_EMAILDOMAIN = new FinderPath(EntityModelImpl.ENTITY_CACHE_ENABLED,
-			EntityModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
+	public static final FinderPath FINDER_PATH_COUNT_BY_EMAILDOMAIN = new FinderPath(SiteModelImpl.ENTITY_CACHE_ENABLED,
+			SiteModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
 			"countByEmailDomain", new String[] { String.class.getName() });
-	public static final FinderPath FINDER_PATH_FIND_BY_URL = new FinderPath(EntityModelImpl.ENTITY_CACHE_ENABLED,
-			EntityModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
+	public static final FinderPath FINDER_PATH_FIND_BY_URL = new FinderPath(SiteModelImpl.ENTITY_CACHE_ENABLED,
+			SiteModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
 			"findByUrl",
 			new String[] {
 				String.class.getName(),
@@ -96,125 +108,122 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 			"java.lang.Integer", "java.lang.Integer",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
-	public static final FinderPath FINDER_PATH_COUNT_BY_URL = new FinderPath(EntityModelImpl.ENTITY_CACHE_ENABLED,
-			EntityModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
+	public static final FinderPath FINDER_PATH_COUNT_BY_URL = new FinderPath(SiteModelImpl.ENTITY_CACHE_ENABLED,
+			SiteModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
 			"countByUrl", new String[] { String.class.getName() });
-	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(EntityModelImpl.ENTITY_CACHE_ENABLED,
-			EntityModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
+	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(SiteModelImpl.ENTITY_CACHE_ENABLED,
+			SiteModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
 			"findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(EntityModelImpl.ENTITY_CACHE_ENABLED,
-			EntityModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
+	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(SiteModelImpl.ENTITY_CACHE_ENABLED,
+			SiteModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
 			"countAll", new String[0]);
 
 	/**
-	 * Caches the entity in the entity cache if it is enabled.
+	 * Caches the site in the entity cache if it is enabled.
 	 *
-	 * @param entity the entity to cache
+	 * @param site the site to cache
 	 */
-	public void cacheResult(Entity entity) {
-		EntityCacheUtil.putResult(EntityModelImpl.ENTITY_CACHE_ENABLED,
-			EntityImpl.class, entity.getPrimaryKey(), entity);
+	public void cacheResult(Site site) {
+		EntityCacheUtil.putResult(SiteModelImpl.ENTITY_CACHE_ENABLED,
+			SiteImpl.class, site.getPrimaryKey(), site);
 	}
 
 	/**
-	 * Caches the entities in the entity cache if it is enabled.
+	 * Caches the sites in the entity cache if it is enabled.
 	 *
-	 * @param entities the entities to cache
+	 * @param sites the sites to cache
 	 */
-	public void cacheResult(List<Entity> entities) {
-		for (Entity entity : entities) {
-			if (EntityCacheUtil.getResult(
-						EntityModelImpl.ENTITY_CACHE_ENABLED, EntityImpl.class,
-						entity.getPrimaryKey(), this) == null) {
-				cacheResult(entity);
+	public void cacheResult(List<Site> sites) {
+		for (Site site : sites) {
+			if (EntityCacheUtil.getResult(SiteModelImpl.ENTITY_CACHE_ENABLED,
+						SiteImpl.class, site.getPrimaryKey(), this) == null) {
+				cacheResult(site);
 			}
 		}
 	}
 
 	/**
-	 * Clears the cache for all entities.
+	 * Clears the cache for all sites.
 	 *
 	 * <p>
 	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	public void clearCache() {
-		CacheRegistryUtil.clear(EntityImpl.class.getName());
-		EntityCacheUtil.clearCache(EntityImpl.class.getName());
+		CacheRegistryUtil.clear(SiteImpl.class.getName());
+		EntityCacheUtil.clearCache(SiteImpl.class.getName());
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 	}
 
 	/**
-	 * Clears the cache for the entity.
+	 * Clears the cache for the site.
 	 *
 	 * <p>
 	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
-	public void clearCache(Entity entity) {
-		EntityCacheUtil.removeResult(EntityModelImpl.ENTITY_CACHE_ENABLED,
-			EntityImpl.class, entity.getPrimaryKey());
+	public void clearCache(Site site) {
+		EntityCacheUtil.removeResult(SiteModelImpl.ENTITY_CACHE_ENABLED,
+			SiteImpl.class, site.getPrimaryKey());
 	}
 
 	/**
-	 * Creates a new entity with the primary key. Does not add the entity to the database.
+	 * Creates a new site with the primary key. Does not add the site to the database.
 	 *
-	 * @param entityId the primary key for the new entity
-	 * @return the new entity
+	 * @param siteId the primary key for the new site
+	 * @return the new site
 	 */
-	public Entity create(long entityId) {
-		Entity entity = new EntityImpl();
+	public Site create(long siteId) {
+		Site site = new SiteImpl();
 
-		entity.setNew(true);
-		entity.setPrimaryKey(entityId);
+		site.setNew(true);
+		site.setPrimaryKey(siteId);
 
-		return entity;
+		return site;
 	}
 
 	/**
-	 * Removes the entity with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the site with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param primaryKey the primary key of the entity to remove
-	 * @return the entity that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a entity with the primary key could not be found
+	 * @param primaryKey the primary key of the site to remove
+	 * @return the site that was removed
+	 * @throws com.liferay.portal.NoSuchModelException if a site with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Entity remove(Serializable primaryKey)
+	public Site remove(Serializable primaryKey)
 		throws NoSuchModelException, SystemException {
 		return remove(((Long)primaryKey).longValue());
 	}
 
 	/**
-	 * Removes the entity with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the site with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param entityId the primary key of the entity to remove
-	 * @return the entity that was removed
-	 * @throws org.gnenc.internet.mycourses.NoSuchEntityException if a entity with the primary key could not be found
+	 * @param siteId the primary key of the site to remove
+	 * @return the site that was removed
+	 * @throws org.gnenc.internet.mycourses.NoSuchSiteException if a site with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Entity remove(long entityId)
-		throws NoSuchEntityException, SystemException {
+	public Site remove(long siteId) throws NoSuchSiteException, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Entity entity = (Entity)session.get(EntityImpl.class,
-					new Long(entityId));
+			Site site = (Site)session.get(SiteImpl.class, new Long(siteId));
 
-			if (entity == null) {
+			if (site == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + entityId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + siteId);
 				}
 
-				throw new NoSuchEntityException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					entityId);
+				throw new NoSuchSiteException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+					siteId);
 			}
 
-			return remove(entity);
+			return remove(site);
 		}
-		catch (NoSuchEntityException nsee) {
+		catch (NoSuchSiteException nsee) {
 			throw nsee;
 		}
 		catch (Exception e) {
@@ -225,15 +234,15 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 		}
 	}
 
-	protected Entity removeImpl(Entity entity) throws SystemException {
-		entity = toUnwrappedModel(entity);
+	protected Site removeImpl(Site site) throws SystemException {
+		site = toUnwrappedModel(site);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, entity);
+			BatchSessionUtil.delete(session, site);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -244,24 +253,24 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		EntityCacheUtil.removeResult(EntityModelImpl.ENTITY_CACHE_ENABLED,
-			EntityImpl.class, entity.getPrimaryKey());
+		EntityCacheUtil.removeResult(SiteModelImpl.ENTITY_CACHE_ENABLED,
+			SiteImpl.class, site.getPrimaryKey());
 
-		return entity;
+		return site;
 	}
 
-	public Entity updateImpl(org.gnenc.internet.mycourses.model.Entity entity,
+	public Site updateImpl(org.gnenc.internet.mycourses.model.Site site,
 		boolean merge) throws SystemException {
-		entity = toUnwrappedModel(entity);
+		site = toUnwrappedModel(site);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, entity, merge);
+			BatchSessionUtil.update(session, site, merge);
 
-			entity.setNew(false);
+			site.setNew(false);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -272,173 +281,172 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		EntityCacheUtil.putResult(EntityModelImpl.ENTITY_CACHE_ENABLED,
-			EntityImpl.class, entity.getPrimaryKey(), entity);
+		EntityCacheUtil.putResult(SiteModelImpl.ENTITY_CACHE_ENABLED,
+			SiteImpl.class, site.getPrimaryKey(), site);
 
-		return entity;
+		return site;
 	}
 
-	protected Entity toUnwrappedModel(Entity entity) {
-		if (entity instanceof EntityImpl) {
-			return entity;
+	protected Site toUnwrappedModel(Site site) {
+		if (site instanceof SiteImpl) {
+			return site;
 		}
 
-		EntityImpl entityImpl = new EntityImpl();
+		SiteImpl siteImpl = new SiteImpl();
 
-		entityImpl.setNew(entity.isNew());
-		entityImpl.setPrimaryKey(entity.getPrimaryKey());
+		siteImpl.setNew(site.isNew());
+		siteImpl.setPrimaryKey(site.getPrimaryKey());
 
-		entityImpl.setEntityId(entity.getEntityId());
-		entityImpl.setEntityName(entity.getEntityName());
-		entityImpl.setUrl(entity.getUrl());
-		entityImpl.setEmailDomains(entity.getEmailDomains());
-		entityImpl.setDbServer(entity.getDbServer());
-		entityImpl.setDbName(entity.getDbName());
-		entityImpl.setDbUser(entity.getDbUser());
-		entityImpl.setDbPass(entity.getDbPass());
+		siteImpl.setSiteId(site.getSiteId());
+		siteImpl.setSiteName(site.getSiteName());
+		siteImpl.setUrl(site.getUrl());
+		siteImpl.setEmailDomain(site.getEmailDomain());
+		siteImpl.setDbServer(site.getDbServer());
+		siteImpl.setDbName(site.getDbName());
+		siteImpl.setDbUser(site.getDbUser());
+		siteImpl.setDbPass(site.getDbPass());
+		siteImpl.setCompanyId(site.getCompanyId());
 
-		return entityImpl;
+		return siteImpl;
 	}
 
 	/**
-	 * Finds the entity with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Finds the site with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the entity to find
-	 * @return the entity
-	 * @throws com.liferay.portal.NoSuchModelException if a entity with the primary key could not be found
+	 * @param primaryKey the primary key of the site to find
+	 * @return the site
+	 * @throws com.liferay.portal.NoSuchModelException if a site with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Entity findByPrimaryKey(Serializable primaryKey)
+	public Site findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchModelException, SystemException {
 		return findByPrimaryKey(((Long)primaryKey).longValue());
 	}
 
 	/**
-	 * Finds the entity with the primary key or throws a {@link org.gnenc.internet.mycourses.NoSuchEntityException} if it could not be found.
+	 * Finds the site with the primary key or throws a {@link org.gnenc.internet.mycourses.NoSuchSiteException} if it could not be found.
 	 *
-	 * @param entityId the primary key of the entity to find
-	 * @return the entity
-	 * @throws org.gnenc.internet.mycourses.NoSuchEntityException if a entity with the primary key could not be found
+	 * @param siteId the primary key of the site to find
+	 * @return the site
+	 * @throws org.gnenc.internet.mycourses.NoSuchSiteException if a site with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Entity findByPrimaryKey(long entityId)
-		throws NoSuchEntityException, SystemException {
-		Entity entity = fetchByPrimaryKey(entityId);
+	public Site findByPrimaryKey(long siteId)
+		throws NoSuchSiteException, SystemException {
+		Site site = fetchByPrimaryKey(siteId);
 
-		if (entity == null) {
+		if (site == null) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + entityId);
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + siteId);
 			}
 
-			throw new NoSuchEntityException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				entityId);
+			throw new NoSuchSiteException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				siteId);
 		}
 
-		return entity;
+		return site;
 	}
 
 	/**
-	 * Finds the entity with the primary key or returns <code>null</code> if it could not be found.
+	 * Finds the site with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the entity to find
-	 * @return the entity, or <code>null</code> if a entity with the primary key could not be found
+	 * @param primaryKey the primary key of the site to find
+	 * @return the site, or <code>null</code> if a site with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Entity fetchByPrimaryKey(Serializable primaryKey)
+	public Site fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
 		return fetchByPrimaryKey(((Long)primaryKey).longValue());
 	}
 
 	/**
-	 * Finds the entity with the primary key or returns <code>null</code> if it could not be found.
+	 * Finds the site with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param entityId the primary key of the entity to find
-	 * @return the entity, or <code>null</code> if a entity with the primary key could not be found
+	 * @param siteId the primary key of the site to find
+	 * @return the site, or <code>null</code> if a site with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Entity fetchByPrimaryKey(long entityId) throws SystemException {
-		Entity entity = (Entity)EntityCacheUtil.getResult(EntityModelImpl.ENTITY_CACHE_ENABLED,
-				EntityImpl.class, entityId, this);
+	public Site fetchByPrimaryKey(long siteId) throws SystemException {
+		Site site = (Site)EntityCacheUtil.getResult(SiteModelImpl.ENTITY_CACHE_ENABLED,
+				SiteImpl.class, siteId, this);
 
-		if (entity == null) {
+		if (site == null) {
 			Session session = null;
 
 			try {
 				session = openSession();
 
-				entity = (Entity)session.get(EntityImpl.class,
-						new Long(entityId));
+				site = (Site)session.get(SiteImpl.class, new Long(siteId));
 			}
 			catch (Exception e) {
 				throw processException(e);
 			}
 			finally {
-				if (entity != null) {
-					cacheResult(entity);
+				if (site != null) {
+					cacheResult(site);
 				}
 
 				closeSession(session);
 			}
 		}
 
-		return entity;
+		return site;
 	}
 
 	/**
-	 * Finds all the entities where emailDomains = &#63;.
+	 * Finds all the sites where companyId = &#63;.
 	 *
-	 * @param emailDomains the email domains to search with
-	 * @return the matching entities
+	 * @param companyId the company id to search with
+	 * @return the matching sites
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Entity> findByEmailDomain(String emailDomains)
+	public List<Site> findByCompanyId(long companyId) throws SystemException {
+		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Finds a range of all the sites where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company id to search with
+	 * @param start the lower bound of the range of sites to return
+	 * @param end the upper bound of the range of sites to return (not inclusive)
+	 * @return the range of matching sites
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Site> findByCompanyId(long companyId, int start, int end)
 		throws SystemException {
-		return findByEmailDomain(emailDomains, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByCompanyId(companyId, start, end, null);
 	}
 
 	/**
-	 * Finds a range of all the entities where emailDomains = &#63;.
+	 * Finds an ordered range of all the sites where companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param emailDomains the email domains to search with
-	 * @param start the lower bound of the range of entities to return
-	 * @param end the upper bound of the range of entities to return (not inclusive)
-	 * @return the range of matching entities
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<Entity> findByEmailDomain(String emailDomains, int start,
-		int end) throws SystemException {
-		return findByEmailDomain(emailDomains, start, end, null);
-	}
-
-	/**
-	 * Finds an ordered range of all the entities where emailDomains = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param emailDomains the email domains to search with
-	 * @param start the lower bound of the range of entities to return
-	 * @param end the upper bound of the range of entities to return (not inclusive)
+	 * @param companyId the company id to search with
+	 * @param start the lower bound of the range of sites to return
+	 * @param end the upper bound of the range of sites to return (not inclusive)
 	 * @param orderByComparator the comparator to order the results by
-	 * @return the ordered range of matching entities
+	 * @return the ordered range of matching sites
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Entity> findByEmailDomain(String emailDomains, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+	public List<Site> findByCompanyId(long companyId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
 		Object[] finderArgs = new Object[] {
-				emailDomains,
+				companyId,
 				
 				String.valueOf(start), String.valueOf(end),
 				String.valueOf(orderByComparator)
 			};
 
-		List<Entity> list = (List<Entity>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_EMAILDOMAIN,
+		List<Site> list = (List<Site>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_COMPANYID,
 				finderArgs, this);
 
 		if (list == null) {
@@ -452,19 +460,9 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 				query = new StringBundler(3);
 			}
 
-			query.append(_SQL_SELECT_ENTITY_WHERE);
+			query.append(_SQL_SELECT_SITE_WHERE);
 
-			if (emailDomains == null) {
-				query.append(_FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAINS_1);
-			}
-			else {
-				if (emailDomains.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAINS_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAINS_2);
-				}
-			}
+			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -472,7 +470,7 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 			}
 
 			else {
-				query.append(EntityModelImpl.ORDER_BY_JPQL);
+				query.append(SiteModelImpl.ORDER_BY_JPQL);
 			}
 
 			String sql = query.toString();
@@ -486,11 +484,359 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (emailDomains != null) {
-					qPos.add(emailDomains);
+				qPos.add(companyId);
+
+				list = (List<Site>)QueryUtil.list(q, getDialect(), start, end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COMPANYID,
+						finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_COMPANYID,
+						finderArgs, list);
 				}
 
-				list = (List<Entity>)QueryUtil.list(q, getDialect(), start, end);
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Finds the first site in the ordered set where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company id to search with
+	 * @param orderByComparator the comparator to order the set by
+	 * @return the first matching site
+	 * @throws org.gnenc.internet.mycourses.NoSuchSiteException if a matching site could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Site findByCompanyId_First(long companyId,
+		OrderByComparator orderByComparator)
+		throws NoSuchSiteException, SystemException {
+		List<Site> list = findByCompanyId(companyId, 0, 1, orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchSiteException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Finds the last site in the ordered set where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company id to search with
+	 * @param orderByComparator the comparator to order the set by
+	 * @return the last matching site
+	 * @throws org.gnenc.internet.mycourses.NoSuchSiteException if a matching site could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Site findByCompanyId_Last(long companyId,
+		OrderByComparator orderByComparator)
+		throws NoSuchSiteException, SystemException {
+		int count = countByCompanyId(companyId);
+
+		List<Site> list = findByCompanyId(companyId, count - 1, count,
+				orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchSiteException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Finds the sites before and after the current site in the ordered set where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param siteId the primary key of the current site
+	 * @param companyId the company id to search with
+	 * @param orderByComparator the comparator to order the set by
+	 * @return the previous, current, and next site
+	 * @throws org.gnenc.internet.mycourses.NoSuchSiteException if a site with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Site[] findByCompanyId_PrevAndNext(long siteId, long companyId,
+		OrderByComparator orderByComparator)
+		throws NoSuchSiteException, SystemException {
+		Site site = findByPrimaryKey(siteId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Site[] array = new SiteImpl[3];
+
+			array[0] = getByCompanyId_PrevAndNext(session, site, companyId,
+					orderByComparator, true);
+
+			array[1] = site;
+
+			array[2] = getByCompanyId_PrevAndNext(session, site, companyId,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Site getByCompanyId_PrevAndNext(Session session, Site site,
+		long companyId, OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_SITE_WHERE);
+
+		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			if (orderByFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		else {
+			query.append(SiteModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByValues(site);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Site> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Finds all the sites where emailDomain = &#63;.
+	 *
+	 * @param emailDomain the email domain to search with
+	 * @return the matching sites
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Site> findByEmailDomain(String emailDomain)
+		throws SystemException {
+		return findByEmailDomain(emailDomain, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Finds a range of all the sites where emailDomain = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param emailDomain the email domain to search with
+	 * @param start the lower bound of the range of sites to return
+	 * @param end the upper bound of the range of sites to return (not inclusive)
+	 * @return the range of matching sites
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Site> findByEmailDomain(String emailDomain, int start, int end)
+		throws SystemException {
+		return findByEmailDomain(emailDomain, start, end, null);
+	}
+
+	/**
+	 * Finds an ordered range of all the sites where emailDomain = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param emailDomain the email domain to search with
+	 * @param start the lower bound of the range of sites to return
+	 * @param end the upper bound of the range of sites to return (not inclusive)
+	 * @param orderByComparator the comparator to order the results by
+	 * @return the ordered range of matching sites
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Site> findByEmailDomain(String emailDomain, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		Object[] finderArgs = new Object[] {
+				emailDomain,
+				
+				String.valueOf(start), String.valueOf(end),
+				String.valueOf(orderByComparator)
+			};
+
+		List<Site> list = (List<Site>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_EMAILDOMAIN,
+				finderArgs, this);
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_SITE_WHERE);
+
+			if (emailDomain == null) {
+				query.append(_FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAIN_1);
+			}
+			else {
+				if (emailDomain.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAIN_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAIN_2);
+				}
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			else {
+				query.append(SiteModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (emailDomain != null) {
+					qPos.add(emailDomain);
+				}
+
+				list = (List<Site>)QueryUtil.list(q, getDialect(), start, end);
 			}
 			catch (Exception e) {
 				throw processException(e);
@@ -515,35 +861,34 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	}
 
 	/**
-	 * Finds the first entity in the ordered set where emailDomains = &#63;.
+	 * Finds the first site in the ordered set where emailDomain = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param emailDomains the email domains to search with
+	 * @param emailDomain the email domain to search with
 	 * @param orderByComparator the comparator to order the set by
-	 * @return the first matching entity
-	 * @throws org.gnenc.internet.mycourses.NoSuchEntityException if a matching entity could not be found
+	 * @return the first matching site
+	 * @throws org.gnenc.internet.mycourses.NoSuchSiteException if a matching site could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Entity findByEmailDomain_First(String emailDomains,
+	public Site findByEmailDomain_First(String emailDomain,
 		OrderByComparator orderByComparator)
-		throws NoSuchEntityException, SystemException {
-		List<Entity> list = findByEmailDomain(emailDomains, 0, 1,
-				orderByComparator);
+		throws NoSuchSiteException, SystemException {
+		List<Site> list = findByEmailDomain(emailDomain, 0, 1, orderByComparator);
 
 		if (list.isEmpty()) {
 			StringBundler msg = new StringBundler(4);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("emailDomains=");
-			msg.append(emailDomains);
+			msg.append("emailDomain=");
+			msg.append(emailDomain);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-			throw new NoSuchEntityException(msg.toString());
+			throw new NoSuchSiteException(msg.toString());
 		}
 		else {
 			return list.get(0);
@@ -551,24 +896,24 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	}
 
 	/**
-	 * Finds the last entity in the ordered set where emailDomains = &#63;.
+	 * Finds the last site in the ordered set where emailDomain = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param emailDomains the email domains to search with
+	 * @param emailDomain the email domain to search with
 	 * @param orderByComparator the comparator to order the set by
-	 * @return the last matching entity
-	 * @throws org.gnenc.internet.mycourses.NoSuchEntityException if a matching entity could not be found
+	 * @return the last matching site
+	 * @throws org.gnenc.internet.mycourses.NoSuchSiteException if a matching site could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Entity findByEmailDomain_Last(String emailDomains,
+	public Site findByEmailDomain_Last(String emailDomain,
 		OrderByComparator orderByComparator)
-		throws NoSuchEntityException, SystemException {
-		int count = countByEmailDomain(emailDomains);
+		throws NoSuchSiteException, SystemException {
+		int count = countByEmailDomain(emailDomain);
 
-		List<Entity> list = findByEmailDomain(emailDomains, count - 1, count,
+		List<Site> list = findByEmailDomain(emailDomain, count - 1, count,
 				orderByComparator);
 
 		if (list.isEmpty()) {
@@ -576,12 +921,12 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("emailDomains=");
-			msg.append(emailDomains);
+			msg.append("emailDomain=");
+			msg.append(emailDomain);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-			throw new NoSuchEntityException(msg.toString());
+			throw new NoSuchSiteException(msg.toString());
 		}
 		else {
 			return list.get(0);
@@ -589,38 +934,38 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	}
 
 	/**
-	 * Finds the entities before and after the current entity in the ordered set where emailDomains = &#63;.
+	 * Finds the sites before and after the current site in the ordered set where emailDomain = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param entityId the primary key of the current entity
-	 * @param emailDomains the email domains to search with
+	 * @param siteId the primary key of the current site
+	 * @param emailDomain the email domain to search with
 	 * @param orderByComparator the comparator to order the set by
-	 * @return the previous, current, and next entity
-	 * @throws org.gnenc.internet.mycourses.NoSuchEntityException if a entity with the primary key could not be found
+	 * @return the previous, current, and next site
+	 * @throws org.gnenc.internet.mycourses.NoSuchSiteException if a site with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Entity[] findByEmailDomain_PrevAndNext(long entityId,
-		String emailDomains, OrderByComparator orderByComparator)
-		throws NoSuchEntityException, SystemException {
-		Entity entity = findByPrimaryKey(entityId);
+	public Site[] findByEmailDomain_PrevAndNext(long siteId,
+		String emailDomain, OrderByComparator orderByComparator)
+		throws NoSuchSiteException, SystemException {
+		Site site = findByPrimaryKey(siteId);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Entity[] array = new EntityImpl[3];
+			Site[] array = new SiteImpl[3];
 
-			array[0] = getByEmailDomain_PrevAndNext(session, entity,
-					emailDomains, orderByComparator, true);
+			array[0] = getByEmailDomain_PrevAndNext(session, site, emailDomain,
+					orderByComparator, true);
 
-			array[1] = entity;
+			array[1] = site;
 
-			array[2] = getByEmailDomain_PrevAndNext(session, entity,
-					emailDomains, orderByComparator, false);
+			array[2] = getByEmailDomain_PrevAndNext(session, site, emailDomain,
+					orderByComparator, false);
 
 			return array;
 		}
@@ -632,9 +977,9 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 		}
 	}
 
-	protected Entity getByEmailDomain_PrevAndNext(Session session,
-		Entity entity, String emailDomains,
-		OrderByComparator orderByComparator, boolean previous) {
+	protected Site getByEmailDomain_PrevAndNext(Session session, Site site,
+		String emailDomain, OrderByComparator orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -645,17 +990,17 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 			query = new StringBundler(3);
 		}
 
-		query.append(_SQL_SELECT_ENTITY_WHERE);
+		query.append(_SQL_SELECT_SITE_WHERE);
 
-		if (emailDomains == null) {
-			query.append(_FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAINS_1);
+		if (emailDomain == null) {
+			query.append(_FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAIN_1);
 		}
 		else {
-			if (emailDomains.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAINS_3);
+			if (emailDomain.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAIN_3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAINS_2);
+				query.append(_FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAIN_2);
 			}
 		}
 
@@ -714,7 +1059,7 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 		}
 
 		else {
-			query.append(EntityModelImpl.ORDER_BY_JPQL);
+			query.append(SiteModelImpl.ORDER_BY_JPQL);
 		}
 
 		String sql = query.toString();
@@ -726,19 +1071,19 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (emailDomains != null) {
-			qPos.add(emailDomains);
+		if (emailDomain != null) {
+			qPos.add(emailDomain);
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(entity);
+			Object[] values = orderByComparator.getOrderByValues(site);
 
 			for (Object value : values) {
 				qPos.add(value);
 			}
 		}
 
-		List<Entity> list = q.list();
+		List<Site> list = q.list();
 
 		if (list.size() == 2) {
 			return list.get(1);
@@ -749,49 +1094,49 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	}
 
 	/**
-	 * Finds all the entities where url = &#63;.
+	 * Finds all the sites where url = &#63;.
 	 *
 	 * @param url the url to search with
-	 * @return the matching entities
+	 * @return the matching sites
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Entity> findByUrl(String url) throws SystemException {
+	public List<Site> findByUrl(String url) throws SystemException {
 		return findByUrl(url, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Finds a range of all the entities where url = &#63;.
+	 * Finds a range of all the sites where url = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param url the url to search with
-	 * @param start the lower bound of the range of entities to return
-	 * @param end the upper bound of the range of entities to return (not inclusive)
-	 * @return the range of matching entities
+	 * @param start the lower bound of the range of sites to return
+	 * @param end the upper bound of the range of sites to return (not inclusive)
+	 * @return the range of matching sites
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Entity> findByUrl(String url, int start, int end)
+	public List<Site> findByUrl(String url, int start, int end)
 		throws SystemException {
 		return findByUrl(url, start, end, null);
 	}
 
 	/**
-	 * Finds an ordered range of all the entities where url = &#63;.
+	 * Finds an ordered range of all the sites where url = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param url the url to search with
-	 * @param start the lower bound of the range of entities to return
-	 * @param end the upper bound of the range of entities to return (not inclusive)
+	 * @param start the lower bound of the range of sites to return
+	 * @param end the upper bound of the range of sites to return (not inclusive)
 	 * @param orderByComparator the comparator to order the results by
-	 * @return the ordered range of matching entities
+	 * @return the ordered range of matching sites
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Entity> findByUrl(String url, int start, int end,
+	public List<Site> findByUrl(String url, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
 		Object[] finderArgs = new Object[] {
 				url,
@@ -800,7 +1145,7 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 				String.valueOf(orderByComparator)
 			};
 
-		List<Entity> list = (List<Entity>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_URL,
+		List<Site> list = (List<Site>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_URL,
 				finderArgs, this);
 
 		if (list == null) {
@@ -814,7 +1159,7 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 				query = new StringBundler(3);
 			}
 
-			query.append(_SQL_SELECT_ENTITY_WHERE);
+			query.append(_SQL_SELECT_SITE_WHERE);
 
 			if (url == null) {
 				query.append(_FINDER_COLUMN_URL_URL_1);
@@ -834,7 +1179,7 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 			}
 
 			else {
-				query.append(EntityModelImpl.ORDER_BY_JPQL);
+				query.append(SiteModelImpl.ORDER_BY_JPQL);
 			}
 
 			String sql = query.toString();
@@ -852,7 +1197,7 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 					qPos.add(url);
 				}
 
-				list = (List<Entity>)QueryUtil.list(q, getDialect(), start, end);
+				list = (List<Site>)QueryUtil.list(q, getDialect(), start, end);
 			}
 			catch (Exception e) {
 				throw processException(e);
@@ -877,7 +1222,7 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	}
 
 	/**
-	 * Finds the first entity in the ordered set where url = &#63;.
+	 * Finds the first site in the ordered set where url = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -885,14 +1230,13 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	 *
 	 * @param url the url to search with
 	 * @param orderByComparator the comparator to order the set by
-	 * @return the first matching entity
-	 * @throws org.gnenc.internet.mycourses.NoSuchEntityException if a matching entity could not be found
+	 * @return the first matching site
+	 * @throws org.gnenc.internet.mycourses.NoSuchSiteException if a matching site could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Entity findByUrl_First(String url,
-		OrderByComparator orderByComparator)
-		throws NoSuchEntityException, SystemException {
-		List<Entity> list = findByUrl(url, 0, 1, orderByComparator);
+	public Site findByUrl_First(String url, OrderByComparator orderByComparator)
+		throws NoSuchSiteException, SystemException {
+		List<Site> list = findByUrl(url, 0, 1, orderByComparator);
 
 		if (list.isEmpty()) {
 			StringBundler msg = new StringBundler(4);
@@ -904,7 +1248,7 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-			throw new NoSuchEntityException(msg.toString());
+			throw new NoSuchSiteException(msg.toString());
 		}
 		else {
 			return list.get(0);
@@ -912,7 +1256,7 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	}
 
 	/**
-	 * Finds the last entity in the ordered set where url = &#63;.
+	 * Finds the last site in the ordered set where url = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -920,15 +1264,15 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	 *
 	 * @param url the url to search with
 	 * @param orderByComparator the comparator to order the set by
-	 * @return the last matching entity
-	 * @throws org.gnenc.internet.mycourses.NoSuchEntityException if a matching entity could not be found
+	 * @return the last matching site
+	 * @throws org.gnenc.internet.mycourses.NoSuchSiteException if a matching site could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Entity findByUrl_Last(String url, OrderByComparator orderByComparator)
-		throws NoSuchEntityException, SystemException {
+	public Site findByUrl_Last(String url, OrderByComparator orderByComparator)
+		throws NoSuchSiteException, SystemException {
 		int count = countByUrl(url);
 
-		List<Entity> list = findByUrl(url, count - 1, count, orderByComparator);
+		List<Site> list = findByUrl(url, count - 1, count, orderByComparator);
 
 		if (list.isEmpty()) {
 			StringBundler msg = new StringBundler(4);
@@ -940,7 +1284,7 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-			throw new NoSuchEntityException(msg.toString());
+			throw new NoSuchSiteException(msg.toString());
 		}
 		else {
 			return list.get(0);
@@ -948,37 +1292,37 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	}
 
 	/**
-	 * Finds the entities before and after the current entity in the ordered set where url = &#63;.
+	 * Finds the sites before and after the current site in the ordered set where url = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param entityId the primary key of the current entity
+	 * @param siteId the primary key of the current site
 	 * @param url the url to search with
 	 * @param orderByComparator the comparator to order the set by
-	 * @return the previous, current, and next entity
-	 * @throws org.gnenc.internet.mycourses.NoSuchEntityException if a entity with the primary key could not be found
+	 * @return the previous, current, and next site
+	 * @throws org.gnenc.internet.mycourses.NoSuchSiteException if a site with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Entity[] findByUrl_PrevAndNext(long entityId, String url,
+	public Site[] findByUrl_PrevAndNext(long siteId, String url,
 		OrderByComparator orderByComparator)
-		throws NoSuchEntityException, SystemException {
-		Entity entity = findByPrimaryKey(entityId);
+		throws NoSuchSiteException, SystemException {
+		Site site = findByPrimaryKey(siteId);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Entity[] array = new EntityImpl[3];
+			Site[] array = new SiteImpl[3];
 
-			array[0] = getByUrl_PrevAndNext(session, entity, url,
+			array[0] = getByUrl_PrevAndNext(session, site, url,
 					orderByComparator, true);
 
-			array[1] = entity;
+			array[1] = site;
 
-			array[2] = getByUrl_PrevAndNext(session, entity, url,
+			array[2] = getByUrl_PrevAndNext(session, site, url,
 					orderByComparator, false);
 
 			return array;
@@ -991,8 +1335,8 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 		}
 	}
 
-	protected Entity getByUrl_PrevAndNext(Session session, Entity entity,
-		String url, OrderByComparator orderByComparator, boolean previous) {
+	protected Site getByUrl_PrevAndNext(Session session, Site site, String url,
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1003,7 +1347,7 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 			query = new StringBundler(3);
 		}
 
-		query.append(_SQL_SELECT_ENTITY_WHERE);
+		query.append(_SQL_SELECT_SITE_WHERE);
 
 		if (url == null) {
 			query.append(_FINDER_COLUMN_URL_URL_1);
@@ -1072,7 +1416,7 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 		}
 
 		else {
-			query.append(EntityModelImpl.ORDER_BY_JPQL);
+			query.append(SiteModelImpl.ORDER_BY_JPQL);
 		}
 
 		String sql = query.toString();
@@ -1089,14 +1433,14 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(entity);
+			Object[] values = orderByComparator.getOrderByValues(site);
 
 			for (Object value : values) {
 				qPos.add(value);
 			}
 		}
 
-		List<Entity> list = q.list();
+		List<Site> list = q.list();
 
 		if (list.size() == 2) {
 			return list.get(1);
@@ -1107,52 +1451,52 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	}
 
 	/**
-	 * Finds all the entities.
+	 * Finds all the sites.
 	 *
-	 * @return the entities
+	 * @return the sites
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Entity> findAll() throws SystemException {
+	public List<Site> findAll() throws SystemException {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Finds a range of all the entities.
+	 * Finds a range of all the sites.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of entities to return
-	 * @param end the upper bound of the range of entities to return (not inclusive)
-	 * @return the range of entities
+	 * @param start the lower bound of the range of sites to return
+	 * @param end the upper bound of the range of sites to return (not inclusive)
+	 * @return the range of sites
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Entity> findAll(int start, int end) throws SystemException {
+	public List<Site> findAll(int start, int end) throws SystemException {
 		return findAll(start, end, null);
 	}
 
 	/**
-	 * Finds an ordered range of all the entities.
+	 * Finds an ordered range of all the sites.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of entities to return
-	 * @param end the upper bound of the range of entities to return (not inclusive)
+	 * @param start the lower bound of the range of sites to return
+	 * @param end the upper bound of the range of sites to return (not inclusive)
 	 * @param orderByComparator the comparator to order the results by
-	 * @return the ordered range of entities
+	 * @return the ordered range of sites
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Entity> findAll(int start, int end,
+	public List<Site> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
 		Object[] finderArgs = new Object[] {
 				String.valueOf(start), String.valueOf(end),
 				String.valueOf(orderByComparator)
 			};
 
-		List<Entity> list = (List<Entity>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		List<Site> list = (List<Site>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1163,7 +1507,7 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 				query = new StringBundler(2 +
 						(orderByComparator.getOrderByFields().length * 3));
 
-				query.append(_SQL_SELECT_ENTITY);
+				query.append(_SQL_SELECT_SITE);
 
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
 					orderByComparator);
@@ -1171,7 +1515,7 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 				sql = query.toString();
 			}
 			else {
-				sql = _SQL_SELECT_ENTITY.concat(EntityModelImpl.ORDER_BY_JPQL);
+				sql = _SQL_SELECT_SITE.concat(SiteModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -1182,13 +1526,13 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 				Query q = session.createQuery(sql);
 
 				if (orderByComparator == null) {
-					list = (List<Entity>)QueryUtil.list(q, getDialect(), start,
+					list = (List<Site>)QueryUtil.list(q, getDialect(), start,
 							end, false);
 
 					Collections.sort(list);
 				}
 				else {
-					list = (List<Entity>)QueryUtil.list(q, getDialect(), start,
+					list = (List<Site>)QueryUtil.list(q, getDialect(), start,
 							end);
 				}
 			}
@@ -1215,51 +1559,115 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	}
 
 	/**
-	 * Removes all the entities where emailDomains = &#63; from the database.
+	 * Removes all the sites where companyId = &#63; from the database.
 	 *
-	 * @param emailDomains the email domains to search with
+	 * @param companyId the company id to search with
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByEmailDomain(String emailDomains)
-		throws SystemException {
-		for (Entity entity : findByEmailDomain(emailDomains)) {
-			remove(entity);
+	public void removeByCompanyId(long companyId) throws SystemException {
+		for (Site site : findByCompanyId(companyId)) {
+			remove(site);
 		}
 	}
 
 	/**
-	 * Removes all the entities where url = &#63; from the database.
+	 * Removes all the sites where emailDomain = &#63; from the database.
+	 *
+	 * @param emailDomain the email domain to search with
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByEmailDomain(String emailDomain)
+		throws SystemException {
+		for (Site site : findByEmailDomain(emailDomain)) {
+			remove(site);
+		}
+	}
+
+	/**
+	 * Removes all the sites where url = &#63; from the database.
 	 *
 	 * @param url the url to search with
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void removeByUrl(String url) throws SystemException {
-		for (Entity entity : findByUrl(url)) {
-			remove(entity);
+		for (Site site : findByUrl(url)) {
+			remove(site);
 		}
 	}
 
 	/**
-	 * Removes all the entities from the database.
+	 * Removes all the sites from the database.
 	 *
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void removeAll() throws SystemException {
-		for (Entity entity : findAll()) {
-			remove(entity);
+		for (Site site : findAll()) {
+			remove(site);
 		}
 	}
 
 	/**
-	 * Counts all the entities where emailDomains = &#63;.
+	 * Counts all the sites where companyId = &#63;.
 	 *
-	 * @param emailDomains the email domains to search with
-	 * @return the number of matching entities
+	 * @param companyId the company id to search with
+	 * @return the number of matching sites
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int countByEmailDomain(String emailDomains)
-		throws SystemException {
-		Object[] finderArgs = new Object[] { emailDomains };
+	public int countByCompanyId(long companyId) throws SystemException {
+		Object[] finderArgs = new Object[] { companyId };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_COMPANYID,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_SITE_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Counts all the sites where emailDomain = &#63;.
+	 *
+	 * @param emailDomain the email domain to search with
+	 * @return the number of matching sites
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByEmailDomain(String emailDomain) throws SystemException {
+		Object[] finderArgs = new Object[] { emailDomain };
 
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_EMAILDOMAIN,
 				finderArgs, this);
@@ -1267,17 +1675,17 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
 
-			query.append(_SQL_COUNT_ENTITY_WHERE);
+			query.append(_SQL_COUNT_SITE_WHERE);
 
-			if (emailDomains == null) {
-				query.append(_FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAINS_1);
+			if (emailDomain == null) {
+				query.append(_FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAIN_1);
 			}
 			else {
-				if (emailDomains.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAINS_3);
+				if (emailDomain.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAIN_3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAINS_2);
+					query.append(_FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAIN_2);
 				}
 			}
 
@@ -1292,8 +1700,8 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (emailDomains != null) {
-					qPos.add(emailDomains);
+				if (emailDomain != null) {
+					qPos.add(emailDomain);
 				}
 
 				count = (Long)q.uniqueResult();
@@ -1317,10 +1725,10 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	}
 
 	/**
-	 * Counts all the entities where url = &#63;.
+	 * Counts all the sites where url = &#63;.
 	 *
 	 * @param url the url to search with
-	 * @return the number of matching entities
+	 * @return the number of matching sites
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByUrl(String url) throws SystemException {
@@ -1332,7 +1740,7 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
 
-			query.append(_SQL_COUNT_ENTITY_WHERE);
+			query.append(_SQL_COUNT_SITE_WHERE);
 
 			if (url == null) {
 				query.append(_FINDER_COLUMN_URL_URL_1);
@@ -1382,9 +1790,9 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	}
 
 	/**
-	 * Counts all the entities.
+	 * Counts all the sites.
 	 *
-	 * @return the number of entities
+	 * @return the number of sites
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
@@ -1399,7 +1807,7 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(_SQL_COUNT_ENTITY);
+				Query q = session.createQuery(_SQL_COUNT_SITE);
 
 				count = (Long)q.uniqueResult();
 			}
@@ -1422,10 +1830,10 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	}
 
 	/**
-	 * Gets all the courses associated with the entity.
+	 * Gets all the courses associated with the site.
 	 *
-	 * @param pk the primary key of the entity to get the associated courses for
-	 * @return the courses associated with the entity
+	 * @param pk the primary key of the site to get the associated courses for
+	 * @return the courses associated with the site
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<org.gnenc.internet.mycourses.model.Course> getCourses(long pk)
@@ -1434,16 +1842,16 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	}
 
 	/**
-	 * Gets a range of all the courses associated with the entity.
+	 * Gets a range of all the courses associated with the site.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param pk the primary key of the entity to get the associated courses for
-	 * @param start the lower bound of the range of entities to return
-	 * @param end the upper bound of the range of entities to return (not inclusive)
-	 * @return the range of courses associated with the entity
+	 * @param pk the primary key of the site to get the associated courses for
+	 * @param start the lower bound of the range of sites to return
+	 * @param end the upper bound of the range of sites to return (not inclusive)
+	 * @return the range of courses associated with the site
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<org.gnenc.internet.mycourses.model.Course> getCourses(long pk,
@@ -1461,17 +1869,17 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 			});
 
 	/**
-	 * Gets an ordered range of all the courses associated with the entity.
+	 * Gets an ordered range of all the courses associated with the site.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param pk the primary key of the entity to get the associated courses for
-	 * @param start the lower bound of the range of entities to return
-	 * @param end the upper bound of the range of entities to return (not inclusive)
+	 * @param pk the primary key of the site to get the associated courses for
+	 * @param start the lower bound of the range of sites to return
+	 * @param end the upper bound of the range of sites to return (not inclusive)
 	 * @param orderByComparator the comparator to order the results by
-	 * @return the ordered range of courses associated with the entity
+	 * @return the ordered range of courses associated with the site
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<org.gnenc.internet.mycourses.model.Course> getCourses(long pk,
@@ -1541,10 +1949,10 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 			"getCoursesSize", new String[] { Long.class.getName() });
 
 	/**
-	 * Gets the number of courses associated with the entity.
+	 * Gets the number of courses associated with the site.
 	 *
-	 * @param pk the primary key of the entity to get the number of associated courses for
-	 * @return the number of courses associated with the entity
+	 * @param pk the primary key of the site to get the number of associated courses for
+	 * @return the number of courses associated with the site
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getCoursesSize(long pk) throws SystemException {
@@ -1595,11 +2003,11 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Determines if the course is associated with the entity.
+	 * Determines if the course is associated with the site.
 	 *
-	 * @param pk the primary key of the entity
+	 * @param pk the primary key of the site
 	 * @param coursePK the primary key of the course
-	 * @return <code>true</code> if the course is associated with the entity; <code>false</code> otherwise
+	 * @return <code>true</code> if the course is associated with the site; <code>false</code> otherwise
 	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean containsCourse(long pk, long coursePK)
@@ -1630,10 +2038,10 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	}
 
 	/**
-	 * Determines if the entity has any courses associated with it.
+	 * Determines if the site has any courses associated with it.
 	 *
-	 * @param pk the primary key of the entity to check for associations with courses
-	 * @return <code>true</code> if the entity has any courses associated with it; <code>false</code> otherwise
+	 * @param pk the primary key of the site to check for associations with courses
+	 * @return <code>true</code> if the site has any courses associated with it; <code>false</code> otherwise
 	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean containsCourses(long pk) throws SystemException {
@@ -1646,10 +2054,10 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	}
 
 	/**
-	 * Gets all the hosts associated with the entity.
+	 * Gets all the hosts associated with the site.
 	 *
-	 * @param pk the primary key of the entity to get the associated hosts for
-	 * @return the hosts associated with the entity
+	 * @param pk the primary key of the site to get the associated hosts for
+	 * @return the hosts associated with the site
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<org.gnenc.internet.mycourses.model.Host> getHosts(long pk)
@@ -1658,16 +2066,16 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	}
 
 	/**
-	 * Gets a range of all the hosts associated with the entity.
+	 * Gets a range of all the hosts associated with the site.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param pk the primary key of the entity to get the associated hosts for
-	 * @param start the lower bound of the range of entities to return
-	 * @param end the upper bound of the range of entities to return (not inclusive)
-	 * @return the range of hosts associated with the entity
+	 * @param pk the primary key of the site to get the associated hosts for
+	 * @param start the lower bound of the range of sites to return
+	 * @param end the upper bound of the range of sites to return (not inclusive)
+	 * @return the range of hosts associated with the site
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<org.gnenc.internet.mycourses.model.Host> getHosts(long pk,
@@ -1685,17 +2093,17 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 			});
 
 	/**
-	 * Gets an ordered range of all the hosts associated with the entity.
+	 * Gets an ordered range of all the hosts associated with the site.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param pk the primary key of the entity to get the associated hosts for
-	 * @param start the lower bound of the range of entities to return
-	 * @param end the upper bound of the range of entities to return (not inclusive)
+	 * @param pk the primary key of the site to get the associated hosts for
+	 * @param start the lower bound of the range of sites to return
+	 * @param end the upper bound of the range of sites to return (not inclusive)
 	 * @param orderByComparator the comparator to order the results by
-	 * @return the ordered range of hosts associated with the entity
+	 * @return the ordered range of hosts associated with the site
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<org.gnenc.internet.mycourses.model.Host> getHosts(long pk,
@@ -1765,10 +2173,10 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 			"getHostsSize", new String[] { Long.class.getName() });
 
 	/**
-	 * Gets the number of hosts associated with the entity.
+	 * Gets the number of hosts associated with the site.
 	 *
-	 * @param pk the primary key of the entity to get the number of associated hosts for
-	 * @return the number of hosts associated with the entity
+	 * @param pk the primary key of the site to get the number of associated hosts for
+	 * @return the number of hosts associated with the site
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getHostsSize(long pk) throws SystemException {
@@ -1819,11 +2227,11 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Determines if the host is associated with the entity.
+	 * Determines if the host is associated with the site.
 	 *
-	 * @param pk the primary key of the entity
+	 * @param pk the primary key of the site
 	 * @param hostPK the primary key of the host
-	 * @return <code>true</code> if the host is associated with the entity; <code>false</code> otherwise
+	 * @return <code>true</code> if the host is associated with the site; <code>false</code> otherwise
 	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean containsHost(long pk, long hostPK) throws SystemException {
@@ -1853,10 +2261,10 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	}
 
 	/**
-	 * Determines if the entity has any hosts associated with it.
+	 * Determines if the site has any hosts associated with it.
 	 *
-	 * @param pk the primary key of the entity to check for associations with hosts
-	 * @return <code>true</code> if the entity has any hosts associated with it; <code>false</code> otherwise
+	 * @param pk the primary key of the site to check for associations with hosts
+	 * @return <code>true</code> if the site has any hosts associated with it; <code>false</code> otherwise
 	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean containsHosts(long pk) throws SystemException {
@@ -1869,19 +2277,19 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	}
 
 	/**
-	 * Initializes the entity persistence.
+	 * Initializes the site persistence.
 	 */
 	public void afterPropertiesSet() {
 		String[] listenerClassNames = StringUtil.split(GetterUtil.getString(
 					com.liferay.util.service.ServiceProps.get(
-						"value.object.listener.org.gnenc.internet.mycourses.model.Entity")));
+						"value.object.listener.org.gnenc.internet.mycourses.model.Site")));
 
 		if (listenerClassNames.length > 0) {
 			try {
-				List<ModelListener<Entity>> listenersList = new ArrayList<ModelListener<Entity>>();
+				List<ModelListener<Site>> listenersList = new ArrayList<ModelListener<Site>>();
 
 				for (String listenerClassName : listenerClassNames) {
-					listenersList.add((ModelListener<Entity>)InstanceFactory.newInstance(
+					listenersList.add((ModelListener<Site>)InstanceFactory.newInstance(
 							listenerClassName));
 				}
 
@@ -1898,15 +2306,15 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(EntityImpl.class.getName());
+		EntityCacheUtil.removeCache(SiteImpl.class.getName());
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST);
 	}
 
 	@BeanReference(type = CoursePersistence.class)
 	protected CoursePersistence coursePersistence;
-	@BeanReference(type = EntityPersistence.class)
-	protected EntityPersistence entityPersistence;
+	@BeanReference(type = SitePersistence.class)
+	protected SitePersistence sitePersistence;
 	@BeanReference(type = UserEnrollmentPersistence.class)
 	protected UserEnrollmentPersistence userEnrollmentPersistence;
 	@BeanReference(type = HostPersistence.class)
@@ -1919,7 +2327,7 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	protected ContainsHost containsHost;
 
 	protected class ContainsCourse {
-		protected ContainsCourse(EntityPersistenceImpl persistenceImpl) {
+		protected ContainsCourse(SitePersistenceImpl persistenceImpl) {
 			super();
 
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
@@ -1928,9 +2336,9 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 					RowMapper.COUNT);
 		}
 
-		protected boolean contains(long entityId, long id) {
+		protected boolean contains(long siteId, long id) {
 			List<Integer> results = _mappingSqlQuery.execute(new Object[] {
-						new Long(entityId), new Long(id)
+						new Long(siteId), new Long(id)
 					});
 
 			if (results.size() > 0) {
@@ -1948,7 +2356,7 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 	}
 
 	protected class ContainsHost {
-		protected ContainsHost(EntityPersistenceImpl persistenceImpl) {
+		protected ContainsHost(SitePersistenceImpl persistenceImpl) {
 			super();
 
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
@@ -1957,9 +2365,9 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 					RowMapper.COUNT);
 		}
 
-		protected boolean contains(long entityId, long hostId) {
+		protected boolean contains(long siteId, long hostId) {
 			List<Integer> results = _mappingSqlQuery.execute(new Object[] {
-						new Long(entityId), new Long(hostId)
+						new Long(siteId), new Long(hostId)
 					});
 
 			if (results.size() > 0) {
@@ -1976,24 +2384,25 @@ public class EntityPersistenceImpl extends BasePersistenceImpl<Entity>
 		private MappingSqlQuery<Integer> _mappingSqlQuery;
 	}
 
-	private static final String _SQL_SELECT_ENTITY = "SELECT entity FROM Entity entity";
-	private static final String _SQL_SELECT_ENTITY_WHERE = "SELECT entity FROM Entity entity WHERE ";
-	private static final String _SQL_COUNT_ENTITY = "SELECT COUNT(entity) FROM Entity entity";
-	private static final String _SQL_COUNT_ENTITY_WHERE = "SELECT COUNT(entity) FROM Entity entity WHERE ";
-	private static final String _SQL_GETCOURSES = "SELECT {MC_Course.*} FROM MC_Course INNER JOIN MC_Entity ON (MC_Entity.entityId = MC_Course.entityId) WHERE (MC_Entity.entityId = ?)";
-	private static final String _SQL_GETCOURSESSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM MC_Course WHERE entityId = ?";
-	private static final String _SQL_CONTAINSCOURSE = "SELECT COUNT(*) AS COUNT_VALUE FROM MC_Course WHERE entityId = ? AND id_ = ?";
-	private static final String _SQL_GETHOSTS = "SELECT {MC_Host.*} FROM MC_Host INNER JOIN MC_Entity ON (MC_Entity.entityId = MC_Host.entityId) WHERE (MC_Entity.entityId = ?)";
-	private static final String _SQL_GETHOSTSSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM MC_Host WHERE entityId = ?";
-	private static final String _SQL_CONTAINSHOST = "SELECT COUNT(*) AS COUNT_VALUE FROM MC_Host WHERE entityId = ? AND hostId = ?";
-	private static final String _FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAINS_1 = "entity.emailDomains IS NULL";
-	private static final String _FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAINS_2 = "entity.emailDomains = ?";
-	private static final String _FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAINS_3 = "(entity.emailDomains IS NULL OR entity.emailDomains = ?)";
-	private static final String _FINDER_COLUMN_URL_URL_1 = "entity.url IS NULL";
-	private static final String _FINDER_COLUMN_URL_URL_2 = "entity.url = ?";
-	private static final String _FINDER_COLUMN_URL_URL_3 = "(entity.url IS NULL OR entity.url = ?)";
-	private static final String _ORDER_BY_ENTITY_ALIAS = "entity.";
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Entity exists with the primary key ";
-	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Entity exists with the key {";
-	private static Log _log = LogFactoryUtil.getLog(EntityPersistenceImpl.class);
+	private static final String _SQL_SELECT_SITE = "SELECT site FROM Site site";
+	private static final String _SQL_SELECT_SITE_WHERE = "SELECT site FROM Site site WHERE ";
+	private static final String _SQL_COUNT_SITE = "SELECT COUNT(site) FROM Site site";
+	private static final String _SQL_COUNT_SITE_WHERE = "SELECT COUNT(site) FROM Site site WHERE ";
+	private static final String _SQL_GETCOURSES = "SELECT {MC_Course.*} FROM MC_Course INNER JOIN MC_Site ON (MC_Site.siteId = MC_Course.siteId) WHERE (MC_Site.siteId = ?)";
+	private static final String _SQL_GETCOURSESSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM MC_Course WHERE siteId = ?";
+	private static final String _SQL_CONTAINSCOURSE = "SELECT COUNT(*) AS COUNT_VALUE FROM MC_Course WHERE siteId = ? AND id_ = ?";
+	private static final String _SQL_GETHOSTS = "SELECT {MC_Host.*} FROM MC_Host INNER JOIN MC_Site ON (MC_Site.siteId = MC_Host.siteId) WHERE (MC_Site.siteId = ?)";
+	private static final String _SQL_GETHOSTSSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM MC_Host WHERE siteId = ?";
+	private static final String _SQL_CONTAINSHOST = "SELECT COUNT(*) AS COUNT_VALUE FROM MC_Host WHERE siteId = ? AND hostId = ?";
+	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "site.companyId = ?";
+	private static final String _FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAIN_1 = "site.emailDomain IS NULL";
+	private static final String _FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAIN_2 = "site.emailDomain = ?";
+	private static final String _FINDER_COLUMN_EMAILDOMAIN_EMAILDOMAIN_3 = "(site.emailDomain IS NULL OR site.emailDomain = ?)";
+	private static final String _FINDER_COLUMN_URL_URL_1 = "site.url IS NULL";
+	private static final String _FINDER_COLUMN_URL_URL_2 = "site.url = ?";
+	private static final String _FINDER_COLUMN_URL_URL_3 = "(site.url IS NULL OR site.url = ?)";
+	private static final String _ORDER_BY_ENTITY_ALIAS = "site.";
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Site exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Site exists with the key {";
+	private static Log _log = LogFactoryUtil.getLog(SitePersistenceImpl.class);
 }

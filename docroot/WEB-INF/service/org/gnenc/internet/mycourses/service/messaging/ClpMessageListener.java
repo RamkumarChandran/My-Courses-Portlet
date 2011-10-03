@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 
 import org.gnenc.internet.mycourses.service.ClpSerializer;
 import org.gnenc.internet.mycourses.service.CourseLocalServiceUtil;
-import org.gnenc.internet.mycourses.service.EntityLocalServiceUtil;
 import org.gnenc.internet.mycourses.service.HostLocalServiceUtil;
+import org.gnenc.internet.mycourses.service.SiteLocalServiceUtil;
 import org.gnenc.internet.mycourses.service.UserEnrollmentLocalServiceUtil;
 
 /**
@@ -48,7 +48,7 @@ public class ClpMessageListener implements MessageListener {
 				servletContextName.equals(SERVLET_CONTEXT_NAME)) {
 			CourseLocalServiceUtil.clearService();
 
-			EntityLocalServiceUtil.clearService();
+			SiteLocalServiceUtil.clearService();
 
 			UserEnrollmentLocalServiceUtil.clearService();
 

@@ -98,18 +98,18 @@ public interface CourseModel extends BaseModel<Course> {
 	public void setName(String name);
 
 	/**
-	 * Gets the entity id of this course.
+	 * Gets the site id of this course.
 	 *
-	 * @return the entity id of this course
+	 * @return the site id of this course
 	 */
-	public long getEntityId();
+	public long getSiteId();
 
 	/**
-	 * Sets the entity id of this course.
+	 * Sets the site id of this course.
 	 *
-	 * @param entityId the entity id of this course
+	 * @param siteId the site id of this course
 	 */
-	public void setEntityId(long entityId);
+	public void setSiteId(long siteId);
 
 	/**
 	 * Gets a copy of this course as an escaped model instance by wrapping it with an {@link com.liferay.portal.kernel.bean.AutoEscapeBeanHandler}.

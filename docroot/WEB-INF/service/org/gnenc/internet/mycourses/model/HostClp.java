@@ -49,20 +49,20 @@ public class HostClp extends BaseModelImpl<Host> implements Host {
 		_hostId = hostId;
 	}
 
-	public long getEntityId() {
-		return _entityId;
+	public long getSiteId() {
+		return _siteId;
 	}
 
-	public void setEntityId(long entityId) {
-		_entityId = entityId;
+	public void setSiteId(long siteId) {
+		_siteId = siteId;
 	}
 
-	public long getRemoteEntityId() {
-		return _remoteEntityId;
+	public long getRemoteSiteId() {
+		return _remoteSiteId;
 	}
 
-	public void setRemoteEntityId(long remoteEntityId) {
-		_remoteEntityId = remoteEntityId;
+	public void setRemoteSiteId(long remoteSiteId) {
+		_remoteSiteId = remoteSiteId;
 	}
 
 	public long getPeerId() {
@@ -87,8 +87,8 @@ public class HostClp extends BaseModelImpl<Host> implements Host {
 		HostClp clone = new HostClp();
 
 		clone.setHostId(getHostId());
-		clone.setEntityId(getEntityId());
-		clone.setRemoteEntityId(getRemoteEntityId());
+		clone.setSiteId(getSiteId());
+		clone.setRemoteSiteId(getRemoteSiteId());
 		clone.setPeerId(getPeerId());
 
 		return clone;
@@ -147,10 +147,10 @@ public class HostClp extends BaseModelImpl<Host> implements Host {
 
 		sb.append("{hostId=");
 		sb.append(getHostId());
-		sb.append(", entityId=");
-		sb.append(getEntityId());
-		sb.append(", remoteEntityId=");
-		sb.append(getRemoteEntityId());
+		sb.append(", siteId=");
+		sb.append(getSiteId());
+		sb.append(", remoteSiteId=");
+		sb.append(getRemoteSiteId());
 		sb.append(", peerId=");
 		sb.append(getPeerId());
 		sb.append("}");
@@ -170,12 +170,12 @@ public class HostClp extends BaseModelImpl<Host> implements Host {
 		sb.append(getHostId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>entityId</column-name><column-value><![CDATA[");
-		sb.append(getEntityId());
+			"<column><column-name>siteId</column-name><column-value><![CDATA[");
+		sb.append(getSiteId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>remoteEntityId</column-name><column-value><![CDATA[");
-		sb.append(getRemoteEntityId());
+			"<column><column-name>remoteSiteId</column-name><column-value><![CDATA[");
+		sb.append(getRemoteSiteId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>peerId</column-name><column-value><![CDATA[");
@@ -188,7 +188,7 @@ public class HostClp extends BaseModelImpl<Host> implements Host {
 	}
 
 	private long _hostId;
-	private long _entityId;
-	private long _remoteEntityId;
+	private long _siteId;
+	private long _remoteSiteId;
 	private long _peerId;
 }

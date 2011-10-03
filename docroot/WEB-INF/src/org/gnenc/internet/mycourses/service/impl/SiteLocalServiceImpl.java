@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.List;
 
-import org.gnenc.internet.mycourses.NoSuchEntityException;
-import org.gnenc.internet.mycourses.model.Entity;
-import org.gnenc.internet.mycourses.service.base.EntityLocalServiceBaseImpl;
+import org.gnenc.internet.mycourses.NoSuchSiteException;
+import org.gnenc.internet.mycourses.model.Site;
+import org.gnenc.internet.mycourses.service.base.SiteLocalServiceBaseImpl;
 
 /**
  * The implementation of the entity local service.
@@ -47,7 +47,7 @@ import org.gnenc.internet.mycourses.service.base.EntityLocalServiceBaseImpl;
  * @see org.gnenc.internet.mycourses.service.base.EntityLocalServiceBaseImpl
  * @see org.gnenc.internet.mycourses.service.EntityLocalServiceUtil
  */
-public class EntityLocalServiceImpl extends EntityLocalServiceBaseImpl {
+public class SiteLocalServiceImpl extends SiteLocalServiceBaseImpl {
 
 	/**
 	 * Returns entity from the database. Also notifies the appropriate model
@@ -59,25 +59,25 @@ public class EntityLocalServiceImpl extends EntityLocalServiceBaseImpl {
 	 * @throws SystemException
 	 *             if a system exception occurred
 	 */
-	public List<Entity> getEntityByDomain(String emailDomain)
+	public List<Site> getSiteByDomain(String emailDomain)
 			throws SystemException {
-		List<Entity> entity = entityPersistence.findByEmailDomain(emailDomain);
+		List<Site> site = sitePersistence.findByEmailDomain(emailDomain);
 
-		return entity;
+		return site;
 	}
 
-	public String getEntityUrl(long entityId) throws NoSuchEntityException,
+	public String getSiteUrl(long siteId) throws NoSuchSiteException,
 			SystemException {
-		Entity entity = entityPersistence.findByPrimaryKey(entityId);
-		String url = entity.getUrl();
+		Site site = sitePersistence.findByPrimaryKey(siteId);
+		String url = site.getUrl();
 
 		return url;
 	}
 
-	public String getEntityName(long entityId) throws NoSuchEntityException,
+	public String getSiteName(long siteId) throws NoSuchSiteException,
 			SystemException {
-		Entity entity = entityPersistence.findByPrimaryKey(entityId);
-		String name = entity.getEntityName();
+		Site site = sitePersistence.findByPrimaryKey(siteId);
+		String name = site.getSiteName();
 
 		return name;
 	}

@@ -22,28 +22,28 @@
 <%@include file="/init.jsp" %>
 
 <%
-List<Entity> entities = EntityLocalServiceUtil.getEntities(QueryUtil.ALL_POS,QueryUtil.ALL_POS);;
+List<Site> sites = SiteLocalServiceUtil.getSites(QueryUtil.ALL_POS,QueryUtil.ALL_POS);;
 %>
 
 <portlet:renderURL var="cancelURL"><portlet:param name="jspPage" value="/view.jsp" /></portlet:renderURL>
 
-<portlet:actionURL name="changeEntity" var="changeEntityURL" />
+<portlet:actionURL name="changeSite" var="changeSiteURL" />
 
 <div id="mycourses">
 	<div>
 		<img id='schoolhouse' src='<%=renderRequest.getContextPath() %>/images/schoolhouse-sm.png' alt='schoolhouse' />
 
-		<p id="headline_main">Change School</p>
+		<p id="headline_main">Change Site</p>
 	</div>
 
-<aui:form name="form" action="<%=changeEntityURL.toString() %>" method="post">
+<aui:form name="form" action="<%=changeSiteURL.toString() %>" method="post">
 	<aui:fieldset>
-		<aui:select name="entityId" label="Choose a School">
+		<aui:select name="siteId" label="Choose a Site">
 			<%
-			for (Entity entity : entities) {
+			for (Site site : sites) {
 				%>
-				<aui:option value="<%=entity.getEntityId() %>">
-					<%=entity.getEntityName() %>
+				<aui:option value="<%=site.getSiteId() %>">
+					<%=site.getSiteName() %>
 				</aui:option>
 				<%
 			}

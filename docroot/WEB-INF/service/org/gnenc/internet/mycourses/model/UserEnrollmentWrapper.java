@@ -77,7 +77,7 @@ public class UserEnrollmentWrapper implements UserEnrollment {
 		_userEnrollment.setLastRefresh(lastRefresh);
 	}
 
-	public org.gnenc.internet.mycourses.model.UserEnrollment toEscapedModel() {
+	public UserEnrollment toEscapedModel() {
 		return _userEnrollment.toEscapedModel();
 	}
 
@@ -122,8 +122,7 @@ public class UserEnrollmentWrapper implements UserEnrollment {
 		return _userEnrollment.clone();
 	}
 
-	public int compareTo(
-		org.gnenc.internet.mycourses.model.UserEnrollment userEnrollment) {
+	public int compareTo(UserEnrollment userEnrollment) {
 		return _userEnrollment.compareTo(userEnrollment);
 	}
 

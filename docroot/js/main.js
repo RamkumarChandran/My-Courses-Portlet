@@ -23,21 +23,21 @@ AUI().use('aui-tooltip', function(A) {
 		align: { points: [ 'tl', 'bc' ] },
 		bodyContent: "<b>Help</b><br /><br />" +
 				"Click on a course name to open the course in a new window<br /><br />" +
-				"<span class='aui-icon aui-icon-home'></span>Click the house icon next to a school name to open the main online learning page for the school<br /><br />"
+				"<span class='aui-icon aui-icon-home'></span>Click the house icon next to a site name to open the main online learning page for the site<br /><br />"
 	}).render();
 	
 	var entity_link_tooltip = new A.Tooltip({
-		trigger: '#entity_link_tooltip',
+		trigger: '#site_link_tooltip',
 		align: { points: [ 'bl', 'tl' ] },
 		title: true
 	}).render();
 	
 	var help = new A.Tooltip({
-		trigger: '.change-entity-help',
+		trigger: '.change-site-help',
 		align: { points: [ 'tl', 'bc' ] },
-		bodyContent: "<b>Change School</b><br /><br />" +
-				"Do you see the wrong school listed above?<br /><br />" +
-				"Use the Change School feature to select a different school.  From then on you will see course enrollments for the school you chose.<br /><br />"
+		bodyContent: "<b>Change Site</b><br /><br />" +
+				"Do you see the wrong site listed above?<br /><br />" +
+				"Use the Change Site feature to select a different site.  From then on you will see course enrollments for the site you chose.<br /><br />"
 	}).render();
 });
 

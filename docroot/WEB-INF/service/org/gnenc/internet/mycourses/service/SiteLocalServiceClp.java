@@ -21,18 +21,17 @@ import com.liferay.portal.kernel.util.MethodKey;
 /**
  * @author Drew Blessing/Stephen Hunter
  */
-public class EntityLocalServiceClp implements EntityLocalService {
-	public EntityLocalServiceClp(ClassLoaderProxy classLoaderProxy) {
+public class SiteLocalServiceClp implements SiteLocalService {
+	public SiteLocalServiceClp(ClassLoaderProxy classLoaderProxy) {
 		_classLoaderProxy = classLoaderProxy;
 	}
 
-	public org.gnenc.internet.mycourses.model.Entity addEntity(
-		org.gnenc.internet.mycourses.model.Entity entity)
+	public org.gnenc.internet.mycourses.model.Site addSite(
+		org.gnenc.internet.mycourses.model.Site site)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
-		MethodHandler methodHandler = new MethodHandler(_addEntityMethodKey0,
-				entity);
+		MethodHandler methodHandler = new MethodHandler(_addSiteMethodKey0, site);
 
 		try {
 			returnObj = _classLoaderProxy.invoke(methodHandler);
@@ -51,14 +50,14 @@ public class EntityLocalServiceClp implements EntityLocalService {
 			}
 		}
 
-		return (org.gnenc.internet.mycourses.model.Entity)ClpSerializer.translateOutput(returnObj);
+		return (org.gnenc.internet.mycourses.model.Site)ClpSerializer.translateOutput(returnObj);
 	}
 
-	public org.gnenc.internet.mycourses.model.Entity createEntity(long entityId) {
+	public org.gnenc.internet.mycourses.model.Site createSite(long siteId) {
 		Object returnObj = null;
 
-		MethodHandler methodHandler = new MethodHandler(_createEntityMethodKey1,
-				entityId);
+		MethodHandler methodHandler = new MethodHandler(_createSiteMethodKey1,
+				siteId);
 
 		try {
 			returnObj = _classLoaderProxy.invoke(methodHandler);
@@ -73,14 +72,14 @@ public class EntityLocalServiceClp implements EntityLocalService {
 			}
 		}
 
-		return (org.gnenc.internet.mycourses.model.Entity)ClpSerializer.translateOutput(returnObj);
+		return (org.gnenc.internet.mycourses.model.Site)ClpSerializer.translateOutput(returnObj);
 	}
 
-	public void deleteEntity(long entityId)
+	public void deleteSite(long siteId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		MethodHandler methodHandler = new MethodHandler(_deleteEntityMethodKey2,
-				entityId);
+		MethodHandler methodHandler = new MethodHandler(_deleteSiteMethodKey2,
+				siteId);
 
 		try {
 			_classLoaderProxy.invoke(methodHandler);
@@ -104,10 +103,10 @@ public class EntityLocalServiceClp implements EntityLocalService {
 		}
 	}
 
-	public void deleteEntity(org.gnenc.internet.mycourses.model.Entity entity)
+	public void deleteSite(org.gnenc.internet.mycourses.model.Site site)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		MethodHandler methodHandler = new MethodHandler(_deleteEntityMethodKey3,
-				entity);
+		MethodHandler methodHandler = new MethodHandler(_deleteSiteMethodKey3,
+				site);
 
 		try {
 			_classLoaderProxy.invoke(methodHandler);
@@ -244,13 +243,13 @@ public class EntityLocalServiceClp implements EntityLocalService {
 		return ((Long)returnObj).longValue();
 	}
 
-	public org.gnenc.internet.mycourses.model.Entity getEntity(long entityId)
+	public org.gnenc.internet.mycourses.model.Site getSite(long siteId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
-		MethodHandler methodHandler = new MethodHandler(_getEntityMethodKey8,
-				entityId);
+		MethodHandler methodHandler = new MethodHandler(_getSiteMethodKey8,
+				siteId);
 
 		try {
 			returnObj = _classLoaderProxy.invoke(methodHandler);
@@ -273,15 +272,15 @@ public class EntityLocalServiceClp implements EntityLocalService {
 			}
 		}
 
-		return (org.gnenc.internet.mycourses.model.Entity)ClpSerializer.translateOutput(returnObj);
+		return (org.gnenc.internet.mycourses.model.Site)ClpSerializer.translateOutput(returnObj);
 	}
 
-	public java.util.List<org.gnenc.internet.mycourses.model.Entity> getEntities(
+	public java.util.List<org.gnenc.internet.mycourses.model.Site> getSites(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
-		MethodHandler methodHandler = new MethodHandler(_getEntitiesMethodKey9,
+		MethodHandler methodHandler = new MethodHandler(_getSitesMethodKey9,
 				start, end);
 
 		try {
@@ -301,14 +300,14 @@ public class EntityLocalServiceClp implements EntityLocalService {
 			}
 		}
 
-		return (java.util.List<org.gnenc.internet.mycourses.model.Entity>)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List<org.gnenc.internet.mycourses.model.Site>)ClpSerializer.translateOutput(returnObj);
 	}
 
-	public int getEntitiesCount()
+	public int getSitesCount()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
-		MethodHandler methodHandler = new MethodHandler(_getEntitiesCountMethodKey10);
+		MethodHandler methodHandler = new MethodHandler(_getSitesCountMethodKey10);
 
 		try {
 			returnObj = _classLoaderProxy.invoke(methodHandler);
@@ -330,13 +329,13 @@ public class EntityLocalServiceClp implements EntityLocalService {
 		return ((Integer)returnObj).intValue();
 	}
 
-	public org.gnenc.internet.mycourses.model.Entity updateEntity(
-		org.gnenc.internet.mycourses.model.Entity entity)
+	public org.gnenc.internet.mycourses.model.Site updateSite(
+		org.gnenc.internet.mycourses.model.Site site)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
-		MethodHandler methodHandler = new MethodHandler(_updateEntityMethodKey11,
-				entity);
+		MethodHandler methodHandler = new MethodHandler(_updateSiteMethodKey11,
+				site);
 
 		try {
 			returnObj = _classLoaderProxy.invoke(methodHandler);
@@ -355,16 +354,16 @@ public class EntityLocalServiceClp implements EntityLocalService {
 			}
 		}
 
-		return (org.gnenc.internet.mycourses.model.Entity)ClpSerializer.translateOutput(returnObj);
+		return (org.gnenc.internet.mycourses.model.Site)ClpSerializer.translateOutput(returnObj);
 	}
 
-	public org.gnenc.internet.mycourses.model.Entity updateEntity(
-		org.gnenc.internet.mycourses.model.Entity entity, boolean merge)
+	public org.gnenc.internet.mycourses.model.Site updateSite(
+		org.gnenc.internet.mycourses.model.Site site, boolean merge)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
-		MethodHandler methodHandler = new MethodHandler(_updateEntityMethodKey12,
-				entity, merge);
+		MethodHandler methodHandler = new MethodHandler(_updateSiteMethodKey12,
+				site, merge);
 
 		try {
 			returnObj = _classLoaderProxy.invoke(methodHandler);
@@ -383,15 +382,15 @@ public class EntityLocalServiceClp implements EntityLocalService {
 			}
 		}
 
-		return (org.gnenc.internet.mycourses.model.Entity)ClpSerializer.translateOutput(returnObj);
+		return (org.gnenc.internet.mycourses.model.Site)ClpSerializer.translateOutput(returnObj);
 	}
 
-	public java.util.List<org.gnenc.internet.mycourses.model.Entity> getEntityByDomain(
+	public java.util.List<org.gnenc.internet.mycourses.model.Site> getSiteByDomain(
 		java.lang.String emailDomain)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
-		MethodHandler methodHandler = new MethodHandler(_getEntityByDomainMethodKey13,
+		MethodHandler methodHandler = new MethodHandler(_getSiteByDomainMethodKey13,
 				emailDomain);
 
 		try {
@@ -411,16 +410,16 @@ public class EntityLocalServiceClp implements EntityLocalService {
 			}
 		}
 
-		return (java.util.List<org.gnenc.internet.mycourses.model.Entity>)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List<org.gnenc.internet.mycourses.model.Site>)ClpSerializer.translateOutput(returnObj);
 	}
 
-	public java.lang.String getEntityUrl(long entityId)
+	public java.lang.String getSiteUrl(long siteId)
 		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gnenc.internet.mycourses.NoSuchEntityException {
+			org.gnenc.internet.mycourses.NoSuchSiteException {
 		Object returnObj = null;
 
-		MethodHandler methodHandler = new MethodHandler(_getEntityUrlMethodKey14,
-				entityId);
+		MethodHandler methodHandler = new MethodHandler(_getSiteUrlMethodKey14,
+				siteId);
 
 		try {
 			returnObj = _classLoaderProxy.invoke(methodHandler);
@@ -430,8 +429,8 @@ public class EntityLocalServiceClp implements EntityLocalService {
 				throw (com.liferay.portal.kernel.exception.SystemException)t;
 			}
 
-			if (t instanceof org.gnenc.internet.mycourses.NoSuchEntityException) {
-				throw (org.gnenc.internet.mycourses.NoSuchEntityException)t;
+			if (t instanceof org.gnenc.internet.mycourses.NoSuchSiteException) {
+				throw (org.gnenc.internet.mycourses.NoSuchSiteException)t;
 			}
 
 			if (t instanceof RuntimeException) {
@@ -446,13 +445,13 @@ public class EntityLocalServiceClp implements EntityLocalService {
 		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
 	}
 
-	public java.lang.String getEntityName(long entityId)
+	public java.lang.String getSiteName(long siteId)
 		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gnenc.internet.mycourses.NoSuchEntityException {
+			org.gnenc.internet.mycourses.NoSuchSiteException {
 		Object returnObj = null;
 
-		MethodHandler methodHandler = new MethodHandler(_getEntityNameMethodKey15,
-				entityId);
+		MethodHandler methodHandler = new MethodHandler(_getSiteNameMethodKey15,
+				siteId);
 
 		try {
 			returnObj = _classLoaderProxy.invoke(methodHandler);
@@ -462,8 +461,8 @@ public class EntityLocalServiceClp implements EntityLocalService {
 				throw (com.liferay.portal.kernel.exception.SystemException)t;
 			}
 
-			if (t instanceof org.gnenc.internet.mycourses.NoSuchEntityException) {
-				throw (org.gnenc.internet.mycourses.NoSuchEntityException)t;
+			if (t instanceof org.gnenc.internet.mycourses.NoSuchSiteException) {
+				throw (org.gnenc.internet.mycourses.NoSuchSiteException)t;
 			}
 
 			if (t instanceof RuntimeException) {
@@ -483,14 +482,14 @@ public class EntityLocalServiceClp implements EntityLocalService {
 	}
 
 	private ClassLoaderProxy _classLoaderProxy;
-	private MethodKey _addEntityMethodKey0 = new MethodKey(_classLoaderProxy.getClassName(),
-			"addEntity", org.gnenc.internet.mycourses.model.Entity.class);
-	private MethodKey _createEntityMethodKey1 = new MethodKey(_classLoaderProxy.getClassName(),
-			"createEntity", long.class);
-	private MethodKey _deleteEntityMethodKey2 = new MethodKey(_classLoaderProxy.getClassName(),
-			"deleteEntity", long.class);
-	private MethodKey _deleteEntityMethodKey3 = new MethodKey(_classLoaderProxy.getClassName(),
-			"deleteEntity", org.gnenc.internet.mycourses.model.Entity.class);
+	private MethodKey _addSiteMethodKey0 = new MethodKey(_classLoaderProxy.getClassName(),
+			"addSite", org.gnenc.internet.mycourses.model.Site.class);
+	private MethodKey _createSiteMethodKey1 = new MethodKey(_classLoaderProxy.getClassName(),
+			"createSite", long.class);
+	private MethodKey _deleteSiteMethodKey2 = new MethodKey(_classLoaderProxy.getClassName(),
+			"deleteSite", long.class);
+	private MethodKey _deleteSiteMethodKey3 = new MethodKey(_classLoaderProxy.getClassName(),
+			"deleteSite", org.gnenc.internet.mycourses.model.Site.class);
 	private MethodKey _dynamicQueryMethodKey4 = new MethodKey(_classLoaderProxy.getClassName(),
 			"dynamicQuery", com.liferay.portal.kernel.dao.orm.DynamicQuery.class);
 	private MethodKey _dynamicQueryMethodKey5 = new MethodKey(_classLoaderProxy.getClassName(),
@@ -504,21 +503,21 @@ public class EntityLocalServiceClp implements EntityLocalService {
 	private MethodKey _dynamicQueryCountMethodKey7 = new MethodKey(_classLoaderProxy.getClassName(),
 			"dynamicQueryCount",
 			com.liferay.portal.kernel.dao.orm.DynamicQuery.class);
-	private MethodKey _getEntityMethodKey8 = new MethodKey(_classLoaderProxy.getClassName(),
-			"getEntity", long.class);
-	private MethodKey _getEntitiesMethodKey9 = new MethodKey(_classLoaderProxy.getClassName(),
-			"getEntities", int.class, int.class);
-	private MethodKey _getEntitiesCountMethodKey10 = new MethodKey(_classLoaderProxy.getClassName(),
-			"getEntitiesCount");
-	private MethodKey _updateEntityMethodKey11 = new MethodKey(_classLoaderProxy.getClassName(),
-			"updateEntity", org.gnenc.internet.mycourses.model.Entity.class);
-	private MethodKey _updateEntityMethodKey12 = new MethodKey(_classLoaderProxy.getClassName(),
-			"updateEntity", org.gnenc.internet.mycourses.model.Entity.class,
+	private MethodKey _getSiteMethodKey8 = new MethodKey(_classLoaderProxy.getClassName(),
+			"getSite", long.class);
+	private MethodKey _getSitesMethodKey9 = new MethodKey(_classLoaderProxy.getClassName(),
+			"getSites", int.class, int.class);
+	private MethodKey _getSitesCountMethodKey10 = new MethodKey(_classLoaderProxy.getClassName(),
+			"getSitesCount");
+	private MethodKey _updateSiteMethodKey11 = new MethodKey(_classLoaderProxy.getClassName(),
+			"updateSite", org.gnenc.internet.mycourses.model.Site.class);
+	private MethodKey _updateSiteMethodKey12 = new MethodKey(_classLoaderProxy.getClassName(),
+			"updateSite", org.gnenc.internet.mycourses.model.Site.class,
 			boolean.class);
-	private MethodKey _getEntityByDomainMethodKey13 = new MethodKey(_classLoaderProxy.getClassName(),
-			"getEntityByDomain", java.lang.String.class);
-	private MethodKey _getEntityUrlMethodKey14 = new MethodKey(_classLoaderProxy.getClassName(),
-			"getEntityUrl", long.class);
-	private MethodKey _getEntityNameMethodKey15 = new MethodKey(_classLoaderProxy.getClassName(),
-			"getEntityName", long.class);
+	private MethodKey _getSiteByDomainMethodKey13 = new MethodKey(_classLoaderProxy.getClassName(),
+			"getSiteByDomain", java.lang.String.class);
+	private MethodKey _getSiteUrlMethodKey14 = new MethodKey(_classLoaderProxy.getClassName(),
+			"getSiteUrl", long.class);
+	private MethodKey _getSiteNameMethodKey15 = new MethodKey(_classLoaderProxy.getClassName(),
+			"getSiteName", long.class);
 }

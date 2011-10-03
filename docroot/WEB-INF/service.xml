@@ -14,45 +14,52 @@
 		
 		<column name="name" type="String" />
 		
-		<column name="entityId" type="long" />
+		<column name="siteId" type="long" />
 		
 		<order by="asc">
 			<order-column name="name" case-sensitive="false" />
 		</order>
 		
-		<finder name="entityId" return-type="Collection" >
-			<finder-column name="entityId" />
+		<finder name="siteId" return-type="Collection" >
+			<finder-column name="siteId" />
 		</finder>
 		
 		<finder name="C_E" return-type="Collection" >
 			<finder-column name="courseId" />
-			<finder-column name="entityId" />
+			<finder-column name="siteId" />
 		</finder>
 		
 	</entity>
 	
-	<entity name="Entity" local-service="true" remote-service="false">
+	<entity name="Site" local-service="true" remote-service="false">
 	
-		<column name="entityId" type="long" primary ="true" />
+		<column name="siteId" type="long" primary ="true" />
 		
-		<column name="entityName" type="String" />
+		<column name="siteName" type="String" />
 		<column name="url" type="String" />
-		<column name="emailDomains" type="String"/>
+		<column name="emailDomain" type="String"/>
 		<column name="dbServer" type="String" />
 		<column name="dbName" type="String" />
 		<column name="dbUser" type="String" />
 		<column name="dbPass" type="String" />
 		
-		<column name="courses" type="Collection" entity="Course" mapping-key="entityId" />
+		<column name="companyId" type="long" />
 		
-		<column name="hosts" type="Collection" entity="Host" mapping-key="entityId" />
+		<column name="courses" type="Collection" entity="Course" mapping-key="siteId" />
+		
+		<column name="hosts" type="Collection" entity="Host" mapping-key="siteId" />
 		
 		<order by="asc">
-			<order-column name="entityName" case-sensitive="false" />
+			<order-column name="siteName" case-sensitive="false" />
 		</order>
 		
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		
+		
 		<finder name="EmailDomain" return-type="Collection">
-			<finder-column name="emailDomains" />
+			<finder-column name="emailDomain" />
 		</finder>
 		
 		<finder name="Url" return-type="Collection">
@@ -97,8 +104,8 @@
 		
 		<column name="hostId" type="long" primary="true"/>
 		
-		<column name="entityId" type="long"/>
-		<column name="remoteEntityId" type="long"/>
+		<column name="siteId" type="long"/>
+		<column name="remoteSiteId" type="long"/>
 		
 		<column name="peerId" type="long"/>
 		
@@ -106,9 +113,9 @@
 			<order-column name="hostId" case-sensitive="false"/>
 		</order>
 		
-		<finder name="LRentity" return-type="Collection">
-			<finder-column name="entityId"/>
-			<finder-column name="remoteEntityId"/>
+		<finder name="LRsite" return-type="Collection">
+			<finder-column name="siteId"/>
+			<finder-column name="remoteSiteId"/>
 		</finder>
 		
 	</entity>

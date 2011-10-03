@@ -25,36 +25,36 @@ import java.lang.reflect.Proxy;
 /**
  * @author Drew Blessing/Stephen Hunter
  */
-public class EntityClp extends BaseModelImpl<Entity> implements Entity {
-	public EntityClp() {
+public class SiteClp extends BaseModelImpl<Site> implements Site {
+	public SiteClp() {
 	}
 
 	public long getPrimaryKey() {
-		return _entityId;
+		return _siteId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setEntityId(pk);
+		setSiteId(pk);
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_entityId);
+		return new Long(_siteId);
 	}
 
-	public long getEntityId() {
-		return _entityId;
+	public long getSiteId() {
+		return _siteId;
 	}
 
-	public void setEntityId(long entityId) {
-		_entityId = entityId;
+	public void setSiteId(long siteId) {
+		_siteId = siteId;
 	}
 
-	public String getEntityName() {
-		return _entityName;
+	public String getSiteName() {
+		return _siteName;
 	}
 
-	public void setEntityName(String entityName) {
-		_entityName = entityName;
+	public void setSiteName(String siteName) {
+		_siteName = siteName;
 	}
 
 	public String getUrl() {
@@ -65,12 +65,12 @@ public class EntityClp extends BaseModelImpl<Entity> implements Entity {
 		_url = url;
 	}
 
-	public String getEmailDomains() {
-		return _emailDomains;
+	public String getEmailDomain() {
+		return _emailDomain;
 	}
 
-	public void setEmailDomains(String emailDomains) {
-		_emailDomains = emailDomains;
+	public void setEmailDomain(String emailDomain) {
+		_emailDomain = emailDomain;
 	}
 
 	public String getDbServer() {
@@ -105,36 +105,45 @@ public class EntityClp extends BaseModelImpl<Entity> implements Entity {
 		_dbPass = dbPass;
 	}
 
-	public Entity toEscapedModel() {
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	public Site toEscapedModel() {
 		if (isEscapedModel()) {
 			return this;
 		}
 		else {
-			return (Entity)Proxy.newProxyInstance(Entity.class.getClassLoader(),
-				new Class[] { Entity.class }, new AutoEscapeBeanHandler(this));
+			return (Site)Proxy.newProxyInstance(Site.class.getClassLoader(),
+				new Class[] { Site.class }, new AutoEscapeBeanHandler(this));
 		}
 	}
 
 	public Object clone() {
-		EntityClp clone = new EntityClp();
+		SiteClp clone = new SiteClp();
 
-		clone.setEntityId(getEntityId());
-		clone.setEntityName(getEntityName());
+		clone.setSiteId(getSiteId());
+		clone.setSiteName(getSiteName());
 		clone.setUrl(getUrl());
-		clone.setEmailDomains(getEmailDomains());
+		clone.setEmailDomain(getEmailDomain());
 		clone.setDbServer(getDbServer());
 		clone.setDbName(getDbName());
 		clone.setDbUser(getDbUser());
 		clone.setDbPass(getDbPass());
+		clone.setCompanyId(getCompanyId());
 
 		return clone;
 	}
 
-	public int compareTo(Entity entity) {
+	public int compareTo(Site site) {
 		int value = 0;
 
-		value = getEntityName().toLowerCase()
-					.compareTo(entity.getEntityName().toLowerCase());
+		value = getSiteName().toLowerCase()
+					.compareTo(site.getSiteName().toLowerCase());
 
 		if (value != 0) {
 			return value;
@@ -148,16 +157,16 @@ public class EntityClp extends BaseModelImpl<Entity> implements Entity {
 			return false;
 		}
 
-		EntityClp entity = null;
+		SiteClp site = null;
 
 		try {
-			entity = (EntityClp)obj;
+			site = (SiteClp)obj;
 		}
 		catch (ClassCastException cce) {
 			return false;
 		}
 
-		long pk = entity.getPrimaryKey();
+		long pk = site.getPrimaryKey();
 
 		if (getPrimaryKey() == pk) {
 			return true;
@@ -172,16 +181,16 @@ public class EntityClp extends BaseModelImpl<Entity> implements Entity {
 	}
 
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
-		sb.append("{entityId=");
-		sb.append(getEntityId());
-		sb.append(", entityName=");
-		sb.append(getEntityName());
+		sb.append("{siteId=");
+		sb.append(getSiteId());
+		sb.append(", siteName=");
+		sb.append(getSiteName());
 		sb.append(", url=");
 		sb.append(getUrl());
-		sb.append(", emailDomains=");
-		sb.append(getEmailDomains());
+		sb.append(", emailDomain=");
+		sb.append(getEmailDomain());
 		sb.append(", dbServer=");
 		sb.append(getDbServer());
 		sb.append(", dbName=");
@@ -190,33 +199,35 @@ public class EntityClp extends BaseModelImpl<Entity> implements Entity {
 		sb.append(getDbUser());
 		sb.append(", dbPass=");
 		sb.append(getDbPass());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
-		sb.append("org.gnenc.internet.mycourses.model.Entity");
+		sb.append("org.gnenc.internet.mycourses.model.Site");
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>entityId</column-name><column-value><![CDATA[");
-		sb.append(getEntityId());
+			"<column><column-name>siteId</column-name><column-value><![CDATA[");
+		sb.append(getSiteId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>entityName</column-name><column-value><![CDATA[");
-		sb.append(getEntityName());
+			"<column><column-name>siteName</column-name><column-value><![CDATA[");
+		sb.append(getSiteName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>url</column-name><column-value><![CDATA[");
 		sb.append(getUrl());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>emailDomains</column-name><column-value><![CDATA[");
-		sb.append(getEmailDomains());
+			"<column><column-name>emailDomain</column-name><column-value><![CDATA[");
+		sb.append(getEmailDomain());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>dbServer</column-name><column-value><![CDATA[");
@@ -234,18 +245,23 @@ public class EntityClp extends BaseModelImpl<Entity> implements Entity {
 			"<column><column-name>dbPass</column-name><column-value><![CDATA[");
 		sb.append(getDbPass());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
 		return sb.toString();
 	}
 
-	private long _entityId;
-	private String _entityName;
+	private long _siteId;
+	private String _siteName;
 	private String _url;
-	private String _emailDomains;
+	private String _emailDomain;
 	private String _dbServer;
 	private String _dbName;
 	private String _dbUser;
 	private String _dbPass;
+	private long _companyId;
 }

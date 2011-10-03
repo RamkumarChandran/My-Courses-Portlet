@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ClassLoaderProxy;
 
 /**
- * The utility for the entity local service. This utility wraps {@link org.gnenc.internet.mycourses.service.impl.EntityLocalServiceImpl} and is the primary access point for service operations in application layer code running on the local server.
+ * The utility for the site local service. This utility wraps {@link org.gnenc.internet.mycourses.service.impl.SiteLocalServiceImpl} and is the primary access point for service operations in application layer code running on the local server.
  *
  * <p>
- * Never modify this class directly. Add custom service methods to {@link org.gnenc.internet.mycourses.service.impl.EntityLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
+ * Never modify this class directly. Add custom service methods to {@link org.gnenc.internet.mycourses.service.impl.SiteLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
  * </p>
  *
  * <p>
@@ -29,59 +29,58 @@ import com.liferay.portal.kernel.util.ClassLoaderProxy;
  * </p>
  *
  * @author Drew Blessing/Stephen Hunter
- * @see EntityLocalService
- * @see org.gnenc.internet.mycourses.service.base.EntityLocalServiceBaseImpl
- * @see org.gnenc.internet.mycourses.service.impl.EntityLocalServiceImpl
+ * @see SiteLocalService
+ * @see org.gnenc.internet.mycourses.service.base.SiteLocalServiceBaseImpl
+ * @see org.gnenc.internet.mycourses.service.impl.SiteLocalServiceImpl
  * @generated
  */
-public class EntityLocalServiceUtil {
+public class SiteLocalServiceUtil {
 	/**
-	* Adds the entity to the database. Also notifies the appropriate model listeners.
+	* Adds the site to the database. Also notifies the appropriate model listeners.
 	*
-	* @param entity the entity to add
-	* @return the entity that was added
+	* @param site the site to add
+	* @return the site that was added
 	* @throws SystemException if a system exception occurred
 	*/
-	public static org.gnenc.internet.mycourses.model.Entity addEntity(
-		org.gnenc.internet.mycourses.model.Entity entity)
+	public static org.gnenc.internet.mycourses.model.Site addSite(
+		org.gnenc.internet.mycourses.model.Site site)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().addEntity(entity);
+		return getService().addSite(site);
 	}
 
 	/**
-	* Creates a new entity with the primary key. Does not add the entity to the database.
+	* Creates a new site with the primary key. Does not add the site to the database.
 	*
-	* @param entityId the primary key for the new entity
-	* @return the new entity
+	* @param siteId the primary key for the new site
+	* @return the new site
 	*/
-	public static org.gnenc.internet.mycourses.model.Entity createEntity(
-		long entityId) {
-		return getService().createEntity(entityId);
+	public static org.gnenc.internet.mycourses.model.Site createSite(
+		long siteId) {
+		return getService().createSite(siteId);
 	}
 
 	/**
-	* Deletes the entity with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the site with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param entityId the primary key of the entity to delete
-	* @throws PortalException if a entity with the primary key could not be found
+	* @param siteId the primary key of the site to delete
+	* @throws PortalException if a site with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteEntity(long entityId)
+	public static void deleteSite(long siteId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteEntity(entityId);
+		getService().deleteSite(siteId);
 	}
 
 	/**
-	* Deletes the entity from the database. Also notifies the appropriate model listeners.
+	* Deletes the site from the database. Also notifies the appropriate model listeners.
 	*
-	* @param entity the entity to delete
+	* @param site the site to delete
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteEntity(
-		org.gnenc.internet.mycourses.model.Entity entity)
+	public static void deleteSite(org.gnenc.internet.mycourses.model.Site site)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteEntity(entity);
+		getService().deleteSite(site);
 	}
 
 	/**
@@ -156,116 +155,118 @@ public class EntityLocalServiceUtil {
 	}
 
 	/**
-	* Gets the entity with the primary key.
+	* Gets the site with the primary key.
 	*
-	* @param entityId the primary key of the entity to get
-	* @return the entity
-	* @throws PortalException if a entity with the primary key could not be found
+	* @param siteId the primary key of the site to get
+	* @return the site
+	* @throws PortalException if a site with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static org.gnenc.internet.mycourses.model.Entity getEntity(
-		long entityId)
+	public static org.gnenc.internet.mycourses.model.Site getSite(long siteId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getEntity(entityId);
+		return getService().getSite(siteId);
 	}
 
 	/**
-	* Gets a range of all the entities.
+	* Gets a range of all the sites.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param start the lower bound of the range of entities to return
-	* @param end the upper bound of the range of entities to return (not inclusive)
-	* @return the range of entities
+	* @param start the lower bound of the range of sites to return
+	* @param end the upper bound of the range of sites to return (not inclusive)
+	* @return the range of sites
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<org.gnenc.internet.mycourses.model.Entity> getEntities(
+	public static java.util.List<org.gnenc.internet.mycourses.model.Site> getSites(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getEntities(start, end);
+		return getService().getSites(start, end);
 	}
 
 	/**
-	* Gets the number of entities.
+	* Gets the number of sites.
 	*
-	* @return the number of entities
+	* @return the number of sites
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int getEntitiesCount()
+	public static int getSitesCount()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getEntitiesCount();
+		return getService().getSitesCount();
 	}
 
 	/**
-	* Updates the entity in the database. Also notifies the appropriate model listeners.
+	* Updates the site in the database. Also notifies the appropriate model listeners.
 	*
-	* @param entity the entity to update
-	* @return the entity that was updated
+	* @param site the site to update
+	* @return the site that was updated
 	* @throws SystemException if a system exception occurred
 	*/
-	public static org.gnenc.internet.mycourses.model.Entity updateEntity(
-		org.gnenc.internet.mycourses.model.Entity entity)
+	public static org.gnenc.internet.mycourses.model.Site updateSite(
+		org.gnenc.internet.mycourses.model.Site site)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateEntity(entity);
+		return getService().updateSite(site);
 	}
 
 	/**
-	* Updates the entity in the database. Also notifies the appropriate model listeners.
+	* Updates the site in the database. Also notifies the appropriate model listeners.
 	*
-	* @param entity the entity to update
-	* @param merge whether to merge the entity with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the entity that was updated
+	* @param site the site to update
+	* @param merge whether to merge the site with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
+	* @return the site that was updated
 	* @throws SystemException if a system exception occurred
 	*/
-	public static org.gnenc.internet.mycourses.model.Entity updateEntity(
-		org.gnenc.internet.mycourses.model.Entity entity, boolean merge)
+	public static org.gnenc.internet.mycourses.model.Site updateSite(
+		org.gnenc.internet.mycourses.model.Site site, boolean merge)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateEntity(entity, merge);
+		return getService().updateSite(site, merge);
 	}
 
 	/**
-	* Returns entity from the database. Also notifies the appropriate model listeners.
+	* Returns entity from the database. Also notifies the appropriate model
+	* listeners.
 	*
-	* @param emailDomain the email domain to find by
+	* @param emailDomain
+	the email domain to find by
 	* @return the entity that was found
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
+	if a system exception occurred
 	*/
-	public static java.util.List<org.gnenc.internet.mycourses.model.Entity> getEntityByDomain(
+	public static java.util.List<org.gnenc.internet.mycourses.model.Site> getSiteByDomain(
 		java.lang.String emailDomain)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getEntityByDomain(emailDomain);
+		return getService().getSiteByDomain(emailDomain);
 	}
 
-	public static java.lang.String getEntityUrl(long entityId)
+	public static java.lang.String getSiteUrl(long siteId)
 		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gnenc.internet.mycourses.NoSuchEntityException {
-		return getService().getEntityUrl(entityId);
+			org.gnenc.internet.mycourses.NoSuchSiteException {
+		return getService().getSiteUrl(siteId);
 	}
 
-	public static java.lang.String getEntityName(long entityId)
+	public static java.lang.String getSiteName(long siteId)
 		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gnenc.internet.mycourses.NoSuchEntityException {
-		return getService().getEntityName(entityId);
+			org.gnenc.internet.mycourses.NoSuchSiteException {
+		return getService().getSiteName(siteId);
 	}
 
 	public static void clearService() {
 		_service = null;
 	}
 
-	public static EntityLocalService getService() {
+	public static SiteLocalService getService() {
 		if (_service == null) {
 			Object obj = PortletBeanLocatorUtil.locate(ClpSerializer.SERVLET_CONTEXT_NAME,
-					EntityLocalService.class.getName());
+					SiteLocalService.class.getName());
 			ClassLoader portletClassLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.SERVLET_CONTEXT_NAME,
 					"portletClassLoader");
 
 			ClassLoaderProxy classLoaderProxy = new ClassLoaderProxy(obj,
 					portletClassLoader);
 
-			_service = new EntityLocalServiceClp(classLoaderProxy);
+			_service = new SiteLocalServiceClp(classLoaderProxy);
 
 			ClpSerializer.setClassLoader(portletClassLoader);
 		}
@@ -273,9 +274,9 @@ public class EntityLocalServiceUtil {
 		return _service;
 	}
 
-	public void setService(EntityLocalService service) {
+	public void setService(SiteLocalService service) {
 		_service = service;
 	}
 
-	private static EntityLocalService _service;
+	private static SiteLocalService _service;
 }

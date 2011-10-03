@@ -16,154 +16,162 @@ package org.gnenc.internet.mycourses.model;
 
 /**
  * <p>
- * This class is a wrapper for {@link Entity}.
+ * This class is a wrapper for {@link Site}.
  * </p>
  *
  * @author    Drew Blessing/Stephen Hunter
- * @see       Entity
+ * @see       Site
  * @generated
  */
-public class EntityWrapper implements Entity {
-	public EntityWrapper(Entity entity) {
-		_entity = entity;
+public class SiteWrapper implements Site {
+	public SiteWrapper(Site site) {
+		_site = site;
 	}
 
 	public long getPrimaryKey() {
-		return _entity.getPrimaryKey();
+		return _site.getPrimaryKey();
 	}
 
 	public void setPrimaryKey(long pk) {
-		_entity.setPrimaryKey(pk);
+		_site.setPrimaryKey(pk);
 	}
 
-	public long getEntityId() {
-		return _entity.getEntityId();
+	public long getSiteId() {
+		return _site.getSiteId();
 	}
 
-	public void setEntityId(long entityId) {
-		_entity.setEntityId(entityId);
+	public void setSiteId(long siteId) {
+		_site.setSiteId(siteId);
 	}
 
-	public java.lang.String getEntityName() {
-		return _entity.getEntityName();
+	public java.lang.String getSiteName() {
+		return _site.getSiteName();
 	}
 
-	public void setEntityName(java.lang.String entityName) {
-		_entity.setEntityName(entityName);
+	public void setSiteName(java.lang.String siteName) {
+		_site.setSiteName(siteName);
 	}
 
 	public java.lang.String getUrl() {
-		return _entity.getUrl();
+		return _site.getUrl();
 	}
 
 	public void setUrl(java.lang.String url) {
-		_entity.setUrl(url);
+		_site.setUrl(url);
 	}
 
-	public java.lang.String getEmailDomains() {
-		return _entity.getEmailDomains();
+	public java.lang.String getEmailDomain() {
+		return _site.getEmailDomain();
 	}
 
-	public void setEmailDomains(java.lang.String emailDomains) {
-		_entity.setEmailDomains(emailDomains);
+	public void setEmailDomain(java.lang.String emailDomain) {
+		_site.setEmailDomain(emailDomain);
 	}
 
 	public java.lang.String getDbServer() {
-		return _entity.getDbServer();
+		return _site.getDbServer();
 	}
 
 	public void setDbServer(java.lang.String dbServer) {
-		_entity.setDbServer(dbServer);
+		_site.setDbServer(dbServer);
 	}
 
 	public java.lang.String getDbName() {
-		return _entity.getDbName();
+		return _site.getDbName();
 	}
 
 	public void setDbName(java.lang.String dbName) {
-		_entity.setDbName(dbName);
+		_site.setDbName(dbName);
 	}
 
 	public java.lang.String getDbUser() {
-		return _entity.getDbUser();
+		return _site.getDbUser();
 	}
 
 	public void setDbUser(java.lang.String dbUser) {
-		_entity.setDbUser(dbUser);
+		_site.setDbUser(dbUser);
 	}
 
 	public java.lang.String getDbPass() {
-		return _entity.getDbPass();
+		return _site.getDbPass();
 	}
 
 	public void setDbPass(java.lang.String dbPass) {
-		_entity.setDbPass(dbPass);
+		_site.setDbPass(dbPass);
 	}
 
-	public org.gnenc.internet.mycourses.model.Entity toEscapedModel() {
-		return _entity.toEscapedModel();
+	public long getCompanyId() {
+		return _site.getCompanyId();
+	}
+
+	public void setCompanyId(long companyId) {
+		_site.setCompanyId(companyId);
+	}
+
+	public Site toEscapedModel() {
+		return _site.toEscapedModel();
 	}
 
 	public boolean isNew() {
-		return _entity.isNew();
+		return _site.isNew();
 	}
 
 	public void setNew(boolean n) {
-		_entity.setNew(n);
+		_site.setNew(n);
 	}
 
 	public boolean isCachedModel() {
-		return _entity.isCachedModel();
+		return _site.isCachedModel();
 	}
 
 	public void setCachedModel(boolean cachedModel) {
-		_entity.setCachedModel(cachedModel);
+		_site.setCachedModel(cachedModel);
 	}
 
 	public boolean isEscapedModel() {
-		return _entity.isEscapedModel();
+		return _site.isEscapedModel();
 	}
 
 	public void setEscapedModel(boolean escapedModel) {
-		_entity.setEscapedModel(escapedModel);
+		_site.setEscapedModel(escapedModel);
 	}
 
 	public java.io.Serializable getPrimaryKeyObj() {
-		return _entity.getPrimaryKeyObj();
+		return _site.getPrimaryKeyObj();
 	}
 
 	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _entity.getExpandoBridge();
+		return _site.getExpandoBridge();
 	}
 
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
-		_entity.setExpandoBridgeAttributes(serviceContext);
+		_site.setExpandoBridgeAttributes(serviceContext);
 	}
 
 	public java.lang.Object clone() {
-		return _entity.clone();
+		return _site.clone();
 	}
 
-	public int compareTo(org.gnenc.internet.mycourses.model.Entity entity) {
-		return _entity.compareTo(entity);
+	public int compareTo(Site site) {
+		return _site.compareTo(site);
 	}
 
 	public int hashCode() {
-		return _entity.hashCode();
+		return _site.hashCode();
 	}
 
 	public java.lang.String toString() {
-		return _entity.toString();
+		return _site.toString();
 	}
 
 	public java.lang.String toXmlString() {
-		return _entity.toXmlString();
+		return _site.toXmlString();
 	}
 
-	public Entity getWrappedEntity() {
-		return _entity;
+	public Site getWrappedSite() {
+		return _site;
 	}
 
-	private Entity _entity;
+	private Site _site;
 }

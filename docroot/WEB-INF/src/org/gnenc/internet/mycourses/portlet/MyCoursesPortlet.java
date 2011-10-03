@@ -37,22 +37,22 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 
 import org.gnenc.internet.mycourses.model.Course;
-import org.gnenc.internet.mycourses.model.Entity;
+import org.gnenc.internet.mycourses.model.Site;
 import org.gnenc.internet.mycourses.model.UserEnrollment;
 import org.gnenc.internet.mycourses.model.impl.CourseImpl;
-import org.gnenc.internet.mycourses.model.impl.EntityImpl;
+import org.gnenc.internet.mycourses.model.impl.SiteImpl;
 import org.gnenc.internet.mycourses.model.impl.UserEnrollmentImpl;
 import org.gnenc.internet.mycourses.service.CourseLocalServiceUtil;
-import org.gnenc.internet.mycourses.service.EntityLocalServiceUtil;
+import org.gnenc.internet.mycourses.service.SiteLocalServiceUtil;
 import org.gnenc.internet.mycourses.service.UserEnrollmentLocalServiceUtil;
 
 public class MyCoursesPortlet extends MVCPortlet {
 	public static List<Course> getAllEnrollments(RenderRequest request)
 			throws SystemException, PortalException {
 		List<Course> courseInfo = new ArrayList<Course>();
-		long entityId = -1;
-		Entity entity = new EntityImpl();
-		entity.setEntityId(-1);
+		long siteId = -1;
+		Site site = new SiteImpl();
+		site.setSiteId(-1);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request
 				.getAttribute(WebKeys.THEME_DISPLAY);
@@ -61,40 +61,40 @@ public class MyCoursesPortlet extends MVCPortlet {
 		Boolean isDefaultUser = themeDisplay.getUser().isDefaultUser();
 
 		PortletPreferences prefs = request.getPreferences();
-		String preferredEntity = prefs.getValue("entity", "no");
+		String preferredSite = prefs.getValue("site", "no");
 
-		if ((preferredEntity == "no") && (!isDefaultUser)) {
+		if ((preferredSite == "no") && (!isDefaultUser)) {
 
-			// Logged in and no preferred entity set
+			// Logged in and no preferred site set
 
 			String[] tokens = userEmail.split("@");
 			String domain = tokens[1];
 
-			List<Entity> entities = EntityLocalServiceUtil
-					.getEntityByDomain(domain);
-			if (!entities.isEmpty()) {
+			List<Site> sites = SiteLocalServiceUtil
+					.getSiteByDomain(domain);
+			if (!sites.isEmpty()) {
 
-				// User-Entity affiliation found
+				// User-Site affiliation found
 
-				entityId = entities.get(0).getEntityId();
-				entity = EntityLocalServiceUtil.getEntity(entityId);
+				siteId = sites.get(0).getSiteId();
+				site = SiteLocalServiceUtil.getSite(siteId);
 
 			}
 
-		} else if (preferredEntity != "no") {
+		} else if (preferredSite != "no") {
 
-			// Logged in and preferred entity set
+			// Logged in and preferred site set
 
-			entityId = Long.valueOf(preferredEntity);
-			entity = EntityLocalServiceUtil.getEntity(entityId);
+			siteId = Long.valueOf(preferredSite);
+			site = SiteLocalServiceUtil.getSite(siteId);
 
 		}
 
-		if (entityId != -1) {
+		if (siteId != -1) {
 
-			// User affiliation found or preferred entity set
+			// User affiliation found or preferred site set
 
-			checkCourses(userEmail, entityId, userId);
+			checkCourses(userEmail, siteId, userId);
 
 			List<UserEnrollment> enrollments = UserEnrollmentLocalServiceUtil
 					.getUserEnrollmentsByUserId(userId);
@@ -115,35 +115,35 @@ public class MyCoursesPortlet extends MVCPortlet {
 
 		}
 		request.setAttribute("isDefaultUser", isDefaultUser);
-		request.setAttribute("entity", entity);
+		request.setAttribute("site", site);
 		return courseInfo;
 
 	}
 
-	public void changeEntity(ActionRequest request, ActionResponse response)
+	public void changeSite(ActionRequest request, ActionResponse response)
 			throws Exception {
 		PortletPreferences prefs = request.getPreferences();
-		prefs.setValue("entity", ParamUtil.getString(request, "entityId"));
+		prefs.setValue("site", ParamUtil.getString(request, "siteId"));
 		prefs.store();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request
 				.getAttribute(WebKeys.THEME_DISPLAY);
 		long userId = themeDisplay.getUser().getUserId();
 		String userEmail = themeDisplay.getUser().getEmailAddress();
-		long entityId = Long.valueOf(ParamUtil.getString(request, "entityId"));
+		long siteId = Long.valueOf(ParamUtil.getString(request, "siteId"));
 
-		updateCourses(userEmail, entityId, userId);
+		updateCourses(userEmail, siteId, userId);
 
 	}
 
-	private static void checkCourses(String userEmail, long entityId,
+	private static void checkCourses(String userEmail, long siteId,
 			long userId) throws PortalException, SystemException {
 
 		List<UserEnrollment> enrollments = UserEnrollmentLocalServiceUtil
 				.getUserEnrollmentsByUserId(userId);
 
 		if (enrollments.size() == 0) {
-			updateCourses(userEmail, entityId, userId);
+			updateCourses(userEmail, siteId, userId);
 
 		}
 
@@ -156,7 +156,7 @@ public class MyCoursesPortlet extends MVCPortlet {
 
 				// Update Course Enrollments
 
-				updateCourses(userEmail, entityId, userId);
+				updateCourses(userEmail, siteId, userId);
 				break;
 
 			}
@@ -166,14 +166,14 @@ public class MyCoursesPortlet extends MVCPortlet {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private static void updateCourses(String userEmail, long entityId,
+	private static void updateCourses(String userEmail, long siteId,
 			long userId) throws PortalException, SystemException {
-		Entity entity = EntityLocalServiceUtil.getEntity(entityId);
-		String dbName = entity.getDbName();
-		String dbServer = entity.getDbServer();
+		Site site = SiteLocalServiceUtil.getSite(siteId);
+		String dbName = site.getDbName();
+		String dbServer = site.getDbServer();
 		String dbUrl = dbServer + "/" + dbName;
-		String dbUser = entity.getDbUser();
-		String dbPass = entity.getDbPass();
+		String dbUser = site.getDbUser();
+		String dbPass = site.getDbPass();
 
 		ArrayList mCourses = DBConn.findCoursesByEmail(userEmail, dbUrl,
 				dbUser, dbPass);
@@ -187,8 +187,8 @@ public class MyCoursesPortlet extends MVCPortlet {
 			long id = Long.valueOf(str);
 			Course course = new CourseImpl();
 
-			if (CourseLocalServiceUtil.getCourseByEntity(
-					id, entityId) == null) {
+			if (CourseLocalServiceUtil.getCourseBySite(
+					id, siteId) == null) {
 
 				// Insert new course
 
@@ -196,7 +196,7 @@ public class MyCoursesPortlet extends MVCPortlet {
 
 				c.setName(name);
 				c.setCourseId(id);
-				c.setEntityId(entityId);
+				c.setSiteId(siteId);
 				c.setId(CounterLocalServiceUtil.increment(Course.class
 						.getName()));
 
@@ -206,8 +206,8 @@ public class MyCoursesPortlet extends MVCPortlet {
 
 				// Update existing course
 
-				Course c = CourseLocalServiceUtil.getCourseByEntity(id,
-						entityId);
+				Course c = CourseLocalServiceUtil.getCourseBySite(id,
+						siteId);
 				c.setName(name);
 				c.setNew(false);
 

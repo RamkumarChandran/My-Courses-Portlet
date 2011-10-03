@@ -216,11 +216,11 @@ public class CourseLocalServiceWrapper implements CourseLocalService {
 		return _courseLocalService.updateCourse(course, merge);
 	}
 
-	public org.gnenc.internet.mycourses.model.Course getCourseByEntity(
-		long courseId, long entityId)
+	public org.gnenc.internet.mycourses.model.Course getCourseBySite(
+		long courseId, long siteId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gnenc.internet.mycourses.NoSuchCourseException {
-		return _courseLocalService.getCourseByEntity(courseId, entityId);
+		return _courseLocalService.getCourseBySite(courseId, siteId);
 	}
 
 	public CourseLocalService getWrappedCourseLocalService() {

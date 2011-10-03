@@ -20,86 +20,86 @@
 %>
 
 <%@include file="/init.jsp" %>
-<%--<jsp:useBean id="entity" type="org.gnenc.internet.mycourses.model.Entity" scope="request" /> --%>
+<%--<jsp:useBean id="site" type="org.gnenc.internet.mycourses.model.Site" scope="request" /> --%>
 
 <%
-Entity entity = (Entity)request.getAttribute("entity");
+Site site = (Site)request.getAttribute("site");
 %>
 
 <liferay-ui:error key="error-db-connect" message="error-db-connect" />
 
 <portlet:renderURL var="cancelURL"><portlet:param name="jspPage" value="/admin/view.jsp" /></portlet:renderURL>
 
-<portlet:actionURL name="updateEntity" var="updateEntityURL" />
+<portlet:actionURL name="updateSite" var="updateSiteURL" />
 
-<h2>Edit Entity</h2>
+<h2>Edit Site</h2>
 
-<aui:form name="form" action="<%=updateEntityURL.toString() %>" method="post">
+<aui:form name="form" action="<%=updateSiteURL.toString() %>" method="post">
 			<aui:fieldset>
-				<aui:input name="resourcePrimKey" value="<%=entity.getEntityId() %>" type="hidden" />
+				<aui:input name="resourcePrimKey" value="<%=site.getSiteId() %>" type="hidden" />
 				<table class="form">
 					<tr><td>
-						<aui:input name="entityName" size="60"
-							value="<%=entity.getEntityName() %>" />
+						<aui:input name="siteName" size="60"
+							value="<%=site.getSiteName() %>" />
 					</td>
 					<td>
 						<liferay-ui:error
-        				key="entity-name-required"
-        				message="entity-name-required" />
+        				key="site-name-required"
+        				message="site-name-required" />
         			</td></tr>
         			<tr><td>
-						<aui:input name="entityUrl" size="60"
-							value="<%=entity.getUrl() %>" />
+						<aui:input name="siteUrl" size="60"
+							value="<%=site.getUrl() %>" />
 					</td><td>
 						<liferay-ui:error
-        				key="entity-url-required"
-        				message="entity-url-required" />
+        				key="site-url-required"
+        				message="site-url-required" />
         				<liferay-ui:error
-        				key="entity-invalid-url"
-        				message="entity-invalid-url" />
+        				key="site-invalid-url"
+        				message="site-invalid-url" />
         			</td></tr>
         			<tr><td>
-						<aui:input name="entityEmailDomain" size="60"
-							value="<%=entity.getEmailDomains() %>" />
+						<aui:input name="siteEmailDomain" size="60"
+							value="<%=site.getEmailDomain() %>" />
 					</td><td>
 						<liferay-ui:error
-        				key="entity-email-domain-required"
-        				message="entity-email-domain-required" />
+        				key="site-email-domain-required"
+        				message="site-email-domain-required" />
         				<liferay-ui:error
-        				key="entity-invalid-email-domain"
-        				message="entity-invalid-email-domain" />
+        				key="site-invalid-email-domain"
+        				message="site-invalid-email-domain" />
         			</td></tr>
         			<tr><td>
-						<aui:input name="entityDbServer" size="60"
-							value="<%=entity.getDbServer() %>" />
+						<aui:input name="siteDbServer" size="60"
+							value="<%=site.getDbServer() %>" />
 					</td><td>
 						<liferay-ui:error
-        				key="entity-db-server-required"
-        				message="entity-db-server-required" />
+        				key="site-db-server-required"
+        				message="site-db-server-required" />
 					</td></tr>
         			<tr><td>
-						<aui:input name="entityDbName" size="60"
-							value="<%=entity.getDbName() %>" />
+						<aui:input name="siteDbName" size="60"
+							value="<%=site.getDbName() %>" />
 					</td><td>
 						<liferay-ui:error
-        				key="entity-db-name-required"
-        				message="entity-db-name-required"  />
+        				key="site-db-name-required"
+        				message="site-db-name-required"  />
 					</td></tr>
         			<tr><td>
-						<aui:input name="entityDbUser" size="60"
-							value="<%=entity.getDbUser() %>" />
+						<aui:input name="siteDbUser" size="60"
+							value="<%=site.getDbUser() %>" />
 					</td><td>
 						<liferay-ui:error
-        				key="entity-db-user-required"
-        				message="entity-db-user-required" />
+        				key="site-db-user-required"
+        				message="site-db-user-required" />
 					</td></tr>
         			<tr><td>
-						<aui:input name="entityDbPass" size="60" type="password"
-							value="<%=entity.getDbPass() %>" />
+						<aui:input name="siteDbPass" size="60" type="password"
+							value="<%=site.getDbPass() %>" />
 					</td><td>
 						<liferay-ui:error
-        				key="entity-db-pass-required"
-        				message="entity-db-pass-required" />
+        				key="site-db-pass-required"
+        				message="site-db-pass-required" />
 					</td></tr>
         			<tr><td>
 				</table>

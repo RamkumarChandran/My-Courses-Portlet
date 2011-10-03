@@ -26,6 +26,9 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import java.util.ArrayList;
@@ -36,40 +39,44 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
 
-import org.gnenc.internet.mycourses.model.Entity;
-import org.gnenc.internet.mycourses.model.impl.EntityImpl;
-import org.gnenc.internet.mycourses.service.EntityLocalServiceUtil;
+import org.gnenc.internet.mycourses.model.Site;
+import org.gnenc.internet.mycourses.model.impl.SiteImpl;
+import org.gnenc.internet.mycourses.service.SiteLocalServiceUtil;
 public class MyCoursesAdminPortlet extends MVCPortlet {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void addEntity(ActionRequest request, ActionResponse response)
+	public void addSite(ActionRequest request, ActionResponse response)
 			throws Exception {
-		Entity entity = new EntityImpl();
+		Site site = new SiteImpl();
+		
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		Company c = themeDisplay.getCompany();
 
-		entity.setEntityId(CounterLocalServiceUtil.increment(Entity.class
+		site.setSiteId(CounterLocalServiceUtil.increment(Site.class
 				.getName()));
-		entity.setEntityName(ParamUtil.getString(request, "entityName"));
-		entity.setUrl(ParamUtil.getString(request, "entityUrl"));
-		entity.setEmailDomains(ParamUtil
-				.getString(request, "entityEmailDomain"));
-		entity.setDbServer(ParamUtil.getString(request, "entityDbServer"));
-		entity.setDbName(ParamUtil.getString(request, "entityDbName"));
-		entity.setDbUser(ParamUtil.getString(request, "entityDbUser"));
-		entity.setDbPass(ParamUtil.getString(request, "entityDbPass"));
+		site.setSiteName(ParamUtil.getString(request, "siteName"));
+		site.setUrl(ParamUtil.getString(request, "siteUrl"));
+		site.setEmailDomain(ParamUtil
+				.getString(request, "siteEmailDomain"));
+		site.setDbServer(ParamUtil.getString(request, "siteDbServer"));
+		site.setDbName(ParamUtil.getString(request, "siteDbName"));
+		site.setDbUser(ParamUtil.getString(request, "siteDbUser"));
+		site.setDbPass(ParamUtil.getString(request, "siteDbPass"));
+		site.setCompanyId(c.getCompanyId());
 
 		ArrayList<String> errors = new ArrayList();
-		String dbUrl = entity.getDbServer() + "/" + entity.getDbName();
+		String dbUrl = site.getDbServer() + "/" + site.getDbName();
 
-		if (validateEntity(entity, errors)) {
+		if (validateSite(site, errors)) {
 
-			if (DBConn.connectToDB(dbUrl, entity.getDbUser(),
-					entity.getDbPass()) != null) {
-				EntityLocalServiceUtil.addEntity(entity);
-				SessionMessages.add(request, "entitySaved");
+			if (DBConn.connectToDB(dbUrl, site.getDbUser(),
+					site.getDbPass()) != null) {
+				SiteLocalServiceUtil.addSite(site);
+				SessionMessages.add(request, "siteSaved");
 
 			} else {
 				SessionErrors.add(request, "error-db-connect");
-				request.setAttribute("addEntity", entity);
+				request.setAttribute("addSite", site);
 
 			}
 
@@ -78,34 +85,34 @@ public class MyCoursesAdminPortlet extends MVCPortlet {
 				SessionErrors.add(request, error);
 
 			}
-			request.setAttribute("addEntity", entity);
+			request.setAttribute("addSite", site);
 
 		}
 
 	}
 
-	public void editEntity(ActionRequest request, ActionResponse response)
+	public void editSite(ActionRequest request, ActionResponse response)
 			throws Exception {
-		long entityKey = ParamUtil.getLong(request, "resourcePrimKey");
+		long siteKey = ParamUtil.getLong(request, "resourcePrimKey");
 
-		if (Validator.isNotNull(entityKey)) {
-			Entity entity = EntityLocalServiceUtil.getEntity(entityKey);
-			request.setAttribute("entity", entity);
-			response.setRenderParameter("jspPage", editEntityJSP);
+		if (Validator.isNotNull(siteKey)) {
+			Site site = SiteLocalServiceUtil.getSite(siteKey);
+			request.setAttribute("site", site);
+			response.setRenderParameter("jspPage", editSiteJSP);
 
 		}
 
 	}
 
-	public void deleteEntity(ActionRequest request, ActionResponse response)
+	public void deleteSite(ActionRequest request, ActionResponse response)
 			throws Exception {
-		long entityKey = ParamUtil.getLong(request, "resourcePrimKey");
+		long siteKey = ParamUtil.getLong(request, "resourcePrimKey");
 		// ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(
 		// WebKeys.THEME_DISPLAY);
 
-		if (Validator.isNotNull(entityKey)) {
-			EntityLocalServiceUtil.deleteEntity(entityKey);
-			SessionMessages.add(request, "entityDeleted");
+		if (Validator.isNotNull(siteKey)) {
+			SiteLocalServiceUtil.deleteSite(siteKey);
+			SessionMessages.add(request, "siteDeleted");
 
 		} else {
 			SessionErrors.add(request, "error-deleting");
@@ -115,36 +122,40 @@ public class MyCoursesAdminPortlet extends MVCPortlet {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void updateEntity(ActionRequest request, ActionResponse response)
+	public void updateSite(ActionRequest request, ActionResponse response)
 			throws Exception {
-		long entityKey = ParamUtil.getLong(request, "resourcePrimKey");
-		Entity entity = EntityLocalServiceUtil.getEntity(entityKey);
+		long siteKey = ParamUtil.getLong(request, "resourcePrimKey");
+		Site site = SiteLocalServiceUtil.getSite(siteKey);
+		
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		Company c = themeDisplay.getCompany();
 
-		entity.setEntityName(ParamUtil.getString(request, "entityName"));
-		entity.setUrl(ParamUtil.getString(request, "entityUrl"));
-		entity.setEmailDomains(ParamUtil
-				.getString(request, "entityEmailDomain"));
-		entity.setDbServer(ParamUtil.getString(request, "entityDbServer"));
-		entity.setDbName(ParamUtil.getString(request, "entityDbName"));
-		entity.setDbUser(ParamUtil.getString(request, "entityDbUser"));
-		entity.setDbPass(ParamUtil.getString(request, "entityDbPass"));
+		site.setSiteName(ParamUtil.getString(request, "siteName"));
+		site.setUrl(ParamUtil.getString(request, "siteUrl"));
+		site.setEmailDomain(ParamUtil
+				.getString(request, "siteEmailDomain"));
+		site.setDbServer(ParamUtil.getString(request, "siteDbServer"));
+		site.setDbName(ParamUtil.getString(request, "siteDbName"));
+		site.setDbUser(ParamUtil.getString(request, "siteDbUser"));
+		site.setDbPass(ParamUtil.getString(request, "siteDbPass"));
+		site.setCompanyId(c.getCompanyId());
 
 		ArrayList<String> errors = new ArrayList();
 
-		String dbUrl = entity.getDbServer() + "/" + entity.getDbName();
+		String dbUrl = site.getDbServer() + "/" + site.getDbName();
 
-		if (Validator.isNotNull(entityKey)) {
-			if (validateEntity(entity, errors)) {
-				if (DBConn.connectToDB(dbUrl, entity.getDbUser(),
-						entity.getDbPass()) != null) {
-					EntityLocalServiceUtil.updateEntity(entity);
-					SessionMessages.add(request, "entitySaved");
+		if (Validator.isNotNull(siteKey)) {
+			if (validateSite(site, errors)) {
+				if (DBConn.connectToDB(dbUrl, site.getDbUser(),
+						site.getDbPass()) != null) {
+					SiteLocalServiceUtil.updateSite(site);
+					SessionMessages.add(request, "siteSaved");
 
 				} else {
 					SessionErrors.add(request, "error-db-connect");
 
-					request.setAttribute("entity", entity);
-					response.setRenderParameter("jspPage", editEntityJSP);
+					request.setAttribute("site", site);
+					response.setRenderParameter("jspPage", editSiteJSP);
 
 				}
 
@@ -153,25 +164,25 @@ public class MyCoursesAdminPortlet extends MVCPortlet {
 					SessionErrors.add(request, error);
 
 				}
-				request.setAttribute("entity", entity);
-				response.setRenderParameter("jspPage", editEntityJSP);
+				request.setAttribute("site", site);
+				response.setRenderParameter("jspPage", editSiteJSP);
 
 			}
 
 		} else {
 			SessionErrors.add(request, "error-updating");
 
-			request.setAttribute("entity", entity);
-			response.setRenderParameter("jspPage", editEntityJSP);
+			request.setAttribute("site", site);
+			response.setRenderParameter("jspPage", editSiteJSP);
 
 		}
 	}
 
-	public static List<Entity> getEntities(RenderRequest request) {
-		List<Entity> tempResults;
+	public static List<Site> getSites(RenderRequest request) {
+		List<Site> tempResults;
 
 		try {
-			tempResults = EntityLocalServiceUtil.getEntities(QueryUtil.ALL_POS,
+			tempResults = SiteLocalServiceUtil.getSites(QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS);
 		}
 
@@ -185,37 +196,37 @@ public class MyCoursesAdminPortlet extends MVCPortlet {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static boolean validateEntity(Entity entity, List errors) {
+	public static boolean validateSite(Site site, List errors) {
 		boolean valid = true;
 
-		if (Validator.isNull(entity.getEntityName())) {
-			errors.add("entity-name-required");
+		if (Validator.isNull(site.getSiteName())) {
+			errors.add("site-name-required");
 			valid = false;
 
 		}
 
-		if (Validator.isNull(entity.getUrl())) {
-			errors.add("entity-url-required");
+		if (Validator.isNull(site.getUrl())) {
+			errors.add("site-url-required");
 			valid = false;
 
-		} else if (Validator.isDomain(entity.getUrl())) {
-			errors.add("entity-invalid-url");
-			valid = false;
-
-		}
-
-		if (Validator.isNull(entity.getEmailDomains())) {
-			errors.add("entity-email-domain-required");
-			valid = false;
-
-		} else if (Validator.isChar(entity.getEmailDomains())) {
-			errors.add("entity-invalid-email-domain");
+		} else if (Validator.isDomain(site.getUrl())) {
+			errors.add("site-invalid-url");
 			valid = false;
 
 		}
 
-		if (Validator.isNull(entity.getDbServer())) {
-			errors.add("entity-db-server-required");
+		if (Validator.isNull(site.getEmailDomain())) {
+			errors.add("site-email-domain-required");
+			valid = false;
+
+		} else if (Validator.isChar(site.getEmailDomain())) {
+			errors.add("site-invalid-email-domain");
+			valid = false;
+
+		}
+
+		if (Validator.isNull(site.getDbServer())) {
+			errors.add("site-db-server-required");
 			valid = false;
 
 		} else {
@@ -223,20 +234,20 @@ public class MyCoursesAdminPortlet extends MVCPortlet {
 
 		}
 
-		if (Validator.isNull(entity.getDbName())) {
-			errors.add("entity-db-name-required");
+		if (Validator.isNull(site.getDbName())) {
+			errors.add("site-db-name-required");
 			valid = false;
 
 		}
 
-		if (Validator.isNull(entity.getDbUser())) {
-			errors.add("entity-db-user-required");
+		if (Validator.isNull(site.getDbUser())) {
+			errors.add("site-db-user-required");
 			valid = false;
 
 		}
 
-		if (Validator.isNull(entity.getDbPass())) {
-			errors.add("entity-db-pass-required");
+		if (Validator.isNull(site.getDbPass())) {
+			errors.add("site-db-pass-required");
 			valid = false;
 
 		}
@@ -244,6 +255,6 @@ public class MyCoursesAdminPortlet extends MVCPortlet {
 
 	}
 
-	protected String editEntityJSP = "/admin/edit_entity.jsp";
+	protected String editSiteJSP = "/admin/edit_site.jsp";
 
 }

@@ -2277,8 +2277,8 @@ public class UserEnrollmentPersistenceImpl extends BasePersistenceImpl<UserEnrol
 
 	@BeanReference(type = CoursePersistence.class)
 	protected CoursePersistence coursePersistence;
-	@BeanReference(type = EntityPersistence.class)
-	protected EntityPersistence entityPersistence;
+	@BeanReference(type = SitePersistence.class)
+	protected SitePersistence sitePersistence;
 	@BeanReference(type = UserEnrollmentPersistence.class)
 	protected UserEnrollmentPersistence userEnrollmentPersistence;
 	@BeanReference(type = HostPersistence.class)

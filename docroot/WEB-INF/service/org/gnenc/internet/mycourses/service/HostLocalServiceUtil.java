@@ -224,10 +224,10 @@ public class HostLocalServiceUtil {
 		return getService().updateHost(host, merge);
 	}
 
-	public static java.util.List<org.gnenc.internet.mycourses.model.Host> findByLR(
-		long localEntityId, long remoteEntityId)
+	public static java.util.List<org.gnenc.internet.mycourses.model.Host> findByLRsite(
+		long localSiteId, long remoteSiteId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().findByLR(localEntityId, remoteEntityId);
+		return getService().findByLRsite(localSiteId, remoteSiteId);
 	}
 
 	public static void clearService() {

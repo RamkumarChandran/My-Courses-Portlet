@@ -385,13 +385,13 @@ public class HostLocalServiceClp implements HostLocalService {
 		return (org.gnenc.internet.mycourses.model.Host)ClpSerializer.translateOutput(returnObj);
 	}
 
-	public java.util.List<org.gnenc.internet.mycourses.model.Host> findByLR(
-		long localEntityId, long remoteEntityId)
+	public java.util.List<org.gnenc.internet.mycourses.model.Host> findByLRsite(
+		long localSiteId, long remoteSiteId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
-		MethodHandler methodHandler = new MethodHandler(_findByLRMethodKey13,
-				localEntityId, remoteEntityId);
+		MethodHandler methodHandler = new MethodHandler(_findByLRsiteMethodKey13,
+				localSiteId, remoteSiteId);
 
 		try {
 			returnObj = _classLoaderProxy.invoke(methodHandler);
@@ -450,6 +450,6 @@ public class HostLocalServiceClp implements HostLocalService {
 	private MethodKey _updateHostMethodKey12 = new MethodKey(_classLoaderProxy.getClassName(),
 			"updateHost", org.gnenc.internet.mycourses.model.Host.class,
 			boolean.class);
-	private MethodKey _findByLRMethodKey13 = new MethodKey(_classLoaderProxy.getClassName(),
-			"findByLR", long.class, long.class);
+	private MethodKey _findByLRsiteMethodKey13 = new MethodKey(_classLoaderProxy.getClassName(),
+			"findByLRsite", long.class, long.class);
 }

@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.BaseModel;
 
 import org.gnenc.internet.mycourses.model.CourseClp;
-import org.gnenc.internet.mycourses.model.EntityClp;
 import org.gnenc.internet.mycourses.model.HostClp;
+import org.gnenc.internet.mycourses.model.SiteClp;
 import org.gnenc.internet.mycourses.model.UserEnrollmentClp;
 
 import java.lang.reflect.Method;
@@ -80,10 +80,10 @@ public class ClpSerializer {
 
 					method2.invoke(newModel, value2);
 
-					Method method3 = newModelClass.getMethod("setEntityId",
+					Method method3 = newModelClass.getMethod("setSiteId",
 							new Class[] { Long.TYPE });
 
-					Long value3 = new Long(oldCplModel.getEntityId());
+					Long value3 = new Long(oldCplModel.getSiteId());
 
 					method3.invoke(newModel, value3);
 
@@ -98,8 +98,8 @@ public class ClpSerializer {
 			}
 		}
 
-		if (oldModelClassName.equals(EntityClp.class.getName())) {
-			EntityClp oldCplModel = (EntityClp)oldModel;
+		if (oldModelClassName.equals(SiteClp.class.getName())) {
+			SiteClp oldCplModel = (SiteClp)oldModel;
 
 			ClassLoader contextClassLoader = Thread.currentThread()
 												   .getContextClassLoader();
@@ -108,22 +108,22 @@ public class ClpSerializer {
 				Thread.currentThread().setContextClassLoader(_classLoader);
 
 				try {
-					Class<?> newModelClass = Class.forName("org.gnenc.internet.mycourses.model.impl.EntityImpl",
+					Class<?> newModelClass = Class.forName("org.gnenc.internet.mycourses.model.impl.SiteImpl",
 							true, _classLoader);
 
 					Object newModel = newModelClass.newInstance();
 
-					Method method0 = newModelClass.getMethod("setEntityId",
+					Method method0 = newModelClass.getMethod("setSiteId",
 							new Class[] { Long.TYPE });
 
-					Long value0 = new Long(oldCplModel.getEntityId());
+					Long value0 = new Long(oldCplModel.getSiteId());
 
 					method0.invoke(newModel, value0);
 
-					Method method1 = newModelClass.getMethod("setEntityName",
+					Method method1 = newModelClass.getMethod("setSiteName",
 							new Class[] { String.class });
 
-					String value1 = oldCplModel.getEntityName();
+					String value1 = oldCplModel.getSiteName();
 
 					method1.invoke(newModel, value1);
 
@@ -134,10 +134,10 @@ public class ClpSerializer {
 
 					method2.invoke(newModel, value2);
 
-					Method method3 = newModelClass.getMethod("setEmailDomains",
+					Method method3 = newModelClass.getMethod("setEmailDomain",
 							new Class[] { String.class });
 
-					String value3 = oldCplModel.getEmailDomains();
+					String value3 = oldCplModel.getEmailDomain();
 
 					method3.invoke(newModel, value3);
 
@@ -168,6 +168,13 @@ public class ClpSerializer {
 					String value7 = oldCplModel.getDbPass();
 
 					method7.invoke(newModel, value7);
+
+					Method method8 = newModelClass.getMethod("setCompanyId",
+							new Class[] { Long.TYPE });
+
+					Long value8 = new Long(oldCplModel.getCompanyId());
+
+					method8.invoke(newModel, value8);
 
 					return newModel;
 				}
@@ -256,17 +263,17 @@ public class ClpSerializer {
 
 					method0.invoke(newModel, value0);
 
-					Method method1 = newModelClass.getMethod("setEntityId",
+					Method method1 = newModelClass.getMethod("setSiteId",
 							new Class[] { Long.TYPE });
 
-					Long value1 = new Long(oldCplModel.getEntityId());
+					Long value1 = new Long(oldCplModel.getSiteId());
 
 					method1.invoke(newModel, value1);
 
-					Method method2 = newModelClass.getMethod("setRemoteEntityId",
+					Method method2 = newModelClass.getMethod("setRemoteSiteId",
 							new Class[] { Long.TYPE });
 
-					Long value2 = new Long(oldCplModel.getRemoteEntityId());
+					Long value2 = new Long(oldCplModel.getRemoteSiteId());
 
 					method2.invoke(newModel, value2);
 
@@ -350,11 +357,11 @@ public class ClpSerializer {
 
 					newModel.setName(value2);
 
-					Method method3 = oldModelClass.getMethod("getEntityId");
+					Method method3 = oldModelClass.getMethod("getSiteId");
 
 					Long value3 = (Long)method3.invoke(oldModel, (Object[])null);
 
-					newModel.setEntityId(value3);
+					newModel.setSiteId(value3);
 
 					return newModel;
 				}
@@ -368,7 +375,7 @@ public class ClpSerializer {
 		}
 
 		if (oldModelClassName.equals(
-					"org.gnenc.internet.mycourses.model.impl.EntityImpl")) {
+					"org.gnenc.internet.mycourses.model.impl.SiteImpl")) {
 			ClassLoader contextClassLoader = Thread.currentThread()
 												   .getContextClassLoader();
 
@@ -376,20 +383,20 @@ public class ClpSerializer {
 				Thread.currentThread().setContextClassLoader(_classLoader);
 
 				try {
-					EntityClp newModel = new EntityClp();
+					SiteClp newModel = new SiteClp();
 
-					Method method0 = oldModelClass.getMethod("getEntityId");
+					Method method0 = oldModelClass.getMethod("getSiteId");
 
 					Long value0 = (Long)method0.invoke(oldModel, (Object[])null);
 
-					newModel.setEntityId(value0);
+					newModel.setSiteId(value0);
 
-					Method method1 = oldModelClass.getMethod("getEntityName");
+					Method method1 = oldModelClass.getMethod("getSiteName");
 
 					String value1 = (String)method1.invoke(oldModel,
 							(Object[])null);
 
-					newModel.setEntityName(value1);
+					newModel.setSiteName(value1);
 
 					Method method2 = oldModelClass.getMethod("getUrl");
 
@@ -398,12 +405,12 @@ public class ClpSerializer {
 
 					newModel.setUrl(value2);
 
-					Method method3 = oldModelClass.getMethod("getEmailDomains");
+					Method method3 = oldModelClass.getMethod("getEmailDomain");
 
 					String value3 = (String)method3.invoke(oldModel,
 							(Object[])null);
 
-					newModel.setEmailDomains(value3);
+					newModel.setEmailDomain(value3);
 
 					Method method4 = oldModelClass.getMethod("getDbServer");
 
@@ -432,6 +439,12 @@ public class ClpSerializer {
 							(Object[])null);
 
 					newModel.setDbPass(value7);
+
+					Method method8 = oldModelClass.getMethod("getCompanyId");
+
+					Long value8 = (Long)method8.invoke(oldModel, (Object[])null);
+
+					newModel.setCompanyId(value8);
 
 					return newModel;
 				}
@@ -507,18 +520,17 @@ public class ClpSerializer {
 
 					newModel.setHostId(value0);
 
-					Method method1 = oldModelClass.getMethod("getEntityId");
+					Method method1 = oldModelClass.getMethod("getSiteId");
 
 					Long value1 = (Long)method1.invoke(oldModel, (Object[])null);
 
-					newModel.setEntityId(value1);
+					newModel.setSiteId(value1);
 
-					Method method2 = oldModelClass.getMethod(
-							"getRemoteEntityId");
+					Method method2 = oldModelClass.getMethod("getRemoteSiteId");
 
 					Long value2 = (Long)method2.invoke(oldModel, (Object[])null);
 
-					newModel.setRemoteEntityId(value2);
+					newModel.setRemoteSiteId(value2);
 
 					Method method3 = oldModelClass.getMethod("getPeerId");
 

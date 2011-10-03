@@ -14,20 +14,21 @@
 			</id>
 			<basic name="courseId" />
 			<basic name="name" />
-			<basic name="entityId" />
+			<basic name="siteId" />
 			<transient name="primaryKey" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="org.gnenc.internet.mycourses.model.impl.EntityModelImpl">
+	<mapped-superclass class="org.gnenc.internet.mycourses.model.impl.SiteModelImpl">
 		<attributes>
-			<id name="entityId" />
-			<basic name="entityName" />
+			<id name="siteId" />
+			<basic name="siteName" />
 			<basic name="url" />
-			<basic name="emailDomains" />
+			<basic name="emailDomain" />
 			<basic name="dbServer" />
 			<basic name="dbName" />
 			<basic name="dbUser" />
 			<basic name="dbPass" />
+			<basic name="companyId" />
 			<transient name="primaryKey" />
 		</attributes>
 	</mapped-superclass>
@@ -48,8 +49,8 @@
 	<mapped-superclass class="org.gnenc.internet.mycourses.model.impl.HostModelImpl">
 		<attributes>
 			<id name="hostId" />
-			<basic name="entityId" />
-			<basic name="remoteEntityId" />
+			<basic name="siteId" />
+			<basic name="remoteSiteId" />
 			<basic name="peerId" />
 			<transient name="primaryKey" />
 		</attributes>
@@ -58,8 +59,8 @@
 		<table name="MC_Course" />
 		<attributes />
 	</entity>
-	<entity class="org.gnenc.internet.mycourses.model.impl.EntityImpl" name="Entity">
-		<table name="MC_Entity" />
+	<entity class="org.gnenc.internet.mycourses.model.impl.SiteImpl" name="Site">
+		<table name="MC_Site" />
 		<attributes />
 	</entity>
 	<entity class="org.gnenc.internet.mycourses.model.impl.UserEnrollmentImpl" name="UserEnrollment">

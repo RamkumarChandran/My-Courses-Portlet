@@ -32,12 +32,12 @@ import com.liferay.portal.service.persistence.UserPersistence;
 
 import org.gnenc.internet.mycourses.model.Course;
 import org.gnenc.internet.mycourses.service.CourseLocalService;
-import org.gnenc.internet.mycourses.service.EntityLocalService;
 import org.gnenc.internet.mycourses.service.HostLocalService;
+import org.gnenc.internet.mycourses.service.SiteLocalService;
 import org.gnenc.internet.mycourses.service.UserEnrollmentLocalService;
 import org.gnenc.internet.mycourses.service.persistence.CoursePersistence;
-import org.gnenc.internet.mycourses.service.persistence.EntityPersistence;
 import org.gnenc.internet.mycourses.service.persistence.HostPersistence;
+import org.gnenc.internet.mycourses.service.persistence.SitePersistence;
 import org.gnenc.internet.mycourses.service.persistence.UserEnrollmentPersistence;
 
 import java.util.List;
@@ -274,39 +274,39 @@ public abstract class CourseLocalServiceBaseImpl implements CourseLocalService {
 	}
 
 	/**
-	 * Gets the entity local service.
+	 * Gets the site local service.
 	 *
-	 * @return the entity local service
+	 * @return the site local service
 	 */
-	public EntityLocalService getEntityLocalService() {
-		return entityLocalService;
+	public SiteLocalService getSiteLocalService() {
+		return siteLocalService;
 	}
 
 	/**
-	 * Sets the entity local service.
+	 * Sets the site local service.
 	 *
-	 * @param entityLocalService the entity local service
+	 * @param siteLocalService the site local service
 	 */
-	public void setEntityLocalService(EntityLocalService entityLocalService) {
-		this.entityLocalService = entityLocalService;
+	public void setSiteLocalService(SiteLocalService siteLocalService) {
+		this.siteLocalService = siteLocalService;
 	}
 
 	/**
-	 * Gets the entity persistence.
+	 * Gets the site persistence.
 	 *
-	 * @return the entity persistence
+	 * @return the site persistence
 	 */
-	public EntityPersistence getEntityPersistence() {
-		return entityPersistence;
+	public SitePersistence getSitePersistence() {
+		return sitePersistence;
 	}
 
 	/**
-	 * Sets the entity persistence.
+	 * Sets the site persistence.
 	 *
-	 * @param entityPersistence the entity persistence
+	 * @param sitePersistence the site persistence
 	 */
-	public void setEntityPersistence(EntityPersistence entityPersistence) {
-		this.entityPersistence = entityPersistence;
+	public void setSitePersistence(SitePersistence sitePersistence) {
+		this.sitePersistence = sitePersistence;
 	}
 
 	/**
@@ -533,10 +533,10 @@ public abstract class CourseLocalServiceBaseImpl implements CourseLocalService {
 	protected CourseLocalService courseLocalService;
 	@BeanReference(type = CoursePersistence.class)
 	protected CoursePersistence coursePersistence;
-	@BeanReference(type = EntityLocalService.class)
-	protected EntityLocalService entityLocalService;
-	@BeanReference(type = EntityPersistence.class)
-	protected EntityPersistence entityPersistence;
+	@BeanReference(type = SiteLocalService.class)
+	protected SiteLocalService siteLocalService;
+	@BeanReference(type = SitePersistence.class)
+	protected SitePersistence sitePersistence;
 	@BeanReference(type = UserEnrollmentLocalService.class)
 	protected UserEnrollmentLocalService userEnrollmentLocalService;
 	@BeanReference(type = UserEnrollmentPersistence.class)

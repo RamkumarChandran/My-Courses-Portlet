@@ -5,17 +5,18 @@
 		<field name="id" type="long" />
 		<field name="courseId" type="long" />
 		<field name="name" type="String" />
-		<field name="entityId" type="long" />
+		<field name="siteId" type="long" />
 	</model>
-	<model name="org.gnenc.internet.mycourses.model.Entity">
-		<field name="entityId" type="long" />
-		<field name="entityName" type="String" />
+	<model name="org.gnenc.internet.mycourses.model.Site">
+		<field name="siteId" type="long" />
+		<field name="siteName" type="String" />
 		<field name="url" type="String" />
-		<field name="emailDomains" type="String" />
+		<field name="emailDomain" type="String" />
 		<field name="dbServer" type="String" />
 		<field name="dbName" type="String" />
 		<field name="dbUser" type="String" />
 		<field name="dbPass" type="String" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="org.gnenc.internet.mycourses.model.UserEnrollment">
 		<field name="id" type="long" />
@@ -25,8 +26,8 @@
 	</model>
 	<model name="org.gnenc.internet.mycourses.model.Host">
 		<field name="hostId" type="long" />
-		<field name="entityId" type="long" />
-		<field name="remoteEntityId" type="long" />
+		<field name="siteId" type="long" />
+		<field name="remoteSiteId" type="long" />
 		<field name="peerId" type="long" />
 	</model>
 </model-hints>

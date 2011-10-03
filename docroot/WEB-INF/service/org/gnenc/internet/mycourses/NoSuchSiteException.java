@@ -19,21 +19,21 @@ import com.liferay.portal.NoSuchModelException;
 /**
  * @author Drew Blessing/Stephen Hunter
  */
-public class NoSuchEntityException extends NoSuchModelException {
+public class NoSuchSiteException extends NoSuchModelException {
 
-	public NoSuchEntityException() {
+	public NoSuchSiteException() {
 		super();
 	}
 
-	public NoSuchEntityException(String msg) {
+	public NoSuchSiteException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchEntityException(String msg, Throwable cause) {
+	public NoSuchSiteException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchEntityException(Throwable cause) {
+	public NoSuchSiteException(Throwable cause) {
 		super(cause);
 	}
 

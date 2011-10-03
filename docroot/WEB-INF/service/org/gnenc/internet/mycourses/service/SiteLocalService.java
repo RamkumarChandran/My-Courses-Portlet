@@ -21,10 +21,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
 /**
- * The interface for the entity local service.
+ * The interface for the site local service.
  *
  * <p>
- * Never modify or reference this interface directly. Always use {@link EntityLocalServiceUtil} to access the entity local service. Add custom service methods to {@link org.gnenc.internet.mycourses.service.impl.EntityLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+ * Never modify or reference this interface directly. Always use {@link SiteLocalServiceUtil} to access the site local service. Add custom service methods to {@link org.gnenc.internet.mycourses.service.impl.SiteLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
  * </p>
  *
  * <p>
@@ -32,51 +32,51 @@ import com.liferay.portal.kernel.exception.SystemException;
  * </p>
  *
  * @author Drew Blessing/Stephen Hunter
- * @see EntityLocalServiceUtil
- * @see org.gnenc.internet.mycourses.service.base.EntityLocalServiceBaseImpl
- * @see org.gnenc.internet.mycourses.service.impl.EntityLocalServiceImpl
+ * @see SiteLocalServiceUtil
+ * @see org.gnenc.internet.mycourses.service.base.SiteLocalServiceBaseImpl
+ * @see org.gnenc.internet.mycourses.service.impl.SiteLocalServiceImpl
  * @generated
  */
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface EntityLocalService {
+public interface SiteLocalService {
 	/**
-	* Adds the entity to the database. Also notifies the appropriate model listeners.
+	* Adds the site to the database. Also notifies the appropriate model listeners.
 	*
-	* @param entity the entity to add
-	* @return the entity that was added
+	* @param site the site to add
+	* @return the site that was added
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gnenc.internet.mycourses.model.Entity addEntity(
-		org.gnenc.internet.mycourses.model.Entity entity)
+	public org.gnenc.internet.mycourses.model.Site addSite(
+		org.gnenc.internet.mycourses.model.Site site)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Creates a new entity with the primary key. Does not add the entity to the database.
+	* Creates a new site with the primary key. Does not add the site to the database.
 	*
-	* @param entityId the primary key for the new entity
-	* @return the new entity
+	* @param siteId the primary key for the new site
+	* @return the new site
 	*/
-	public org.gnenc.internet.mycourses.model.Entity createEntity(long entityId);
+	public org.gnenc.internet.mycourses.model.Site createSite(long siteId);
 
 	/**
-	* Deletes the entity with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the site with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param entityId the primary key of the entity to delete
-	* @throws PortalException if a entity with the primary key could not be found
+	* @param siteId the primary key of the site to delete
+	* @throws PortalException if a site with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteEntity(long entityId)
+	public void deleteSite(long siteId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Deletes the entity from the database. Also notifies the appropriate model listeners.
+	* Deletes the site from the database. Also notifies the appropriate model listeners.
 	*
-	* @param entity the entity to delete
+	* @param site the site to delete
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteEntity(org.gnenc.internet.mycourses.model.Entity entity)
+	public void deleteSite(org.gnenc.internet.mycourses.model.Site site)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -142,87 +142,90 @@ public interface EntityLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Gets the entity with the primary key.
+	* Gets the site with the primary key.
 	*
-	* @param entityId the primary key of the entity to get
-	* @return the entity
-	* @throws PortalException if a entity with the primary key could not be found
+	* @param siteId the primary key of the site to get
+	* @return the site
+	* @throws PortalException if a site with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.gnenc.internet.mycourses.model.Entity getEntity(long entityId)
+	public org.gnenc.internet.mycourses.model.Site getSite(long siteId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Gets a range of all the entities.
+	* Gets a range of all the sites.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param start the lower bound of the range of entities to return
-	* @param end the upper bound of the range of entities to return (not inclusive)
-	* @return the range of entities
+	* @param start the lower bound of the range of sites to return
+	* @param end the upper bound of the range of sites to return (not inclusive)
+	* @return the range of sites
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gnenc.internet.mycourses.model.Entity> getEntities(
+	public java.util.List<org.gnenc.internet.mycourses.model.Site> getSites(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Gets the number of entities.
+	* Gets the number of sites.
 	*
-	* @return the number of entities
+	* @return the number of sites
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getEntitiesCount()
+	public int getSitesCount()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the entity in the database. Also notifies the appropriate model listeners.
+	* Updates the site in the database. Also notifies the appropriate model listeners.
 	*
-	* @param entity the entity to update
-	* @return the entity that was updated
+	* @param site the site to update
+	* @return the site that was updated
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gnenc.internet.mycourses.model.Entity updateEntity(
-		org.gnenc.internet.mycourses.model.Entity entity)
+	public org.gnenc.internet.mycourses.model.Site updateSite(
+		org.gnenc.internet.mycourses.model.Site site)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the entity in the database. Also notifies the appropriate model listeners.
+	* Updates the site in the database. Also notifies the appropriate model listeners.
 	*
-	* @param entity the entity to update
-	* @param merge whether to merge the entity with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the entity that was updated
+	* @param site the site to update
+	* @param merge whether to merge the site with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
+	* @return the site that was updated
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gnenc.internet.mycourses.model.Entity updateEntity(
-		org.gnenc.internet.mycourses.model.Entity entity, boolean merge)
+	public org.gnenc.internet.mycourses.model.Site updateSite(
+		org.gnenc.internet.mycourses.model.Site site, boolean merge)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns entity from the database. Also notifies the appropriate model listeners.
+	* Returns entity from the database. Also notifies the appropriate model
+	* listeners.
 	*
-	* @param emailDomain the email domain to find by
+	* @param emailDomain
+	the email domain to find by
 	* @return the entity that was found
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
+	if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gnenc.internet.mycourses.model.Entity> getEntityByDomain(
+	public java.util.List<org.gnenc.internet.mycourses.model.Site> getSiteByDomain(
 		java.lang.String emailDomain)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getEntityUrl(long entityId)
+	public java.lang.String getSiteUrl(long siteId)
 		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gnenc.internet.mycourses.NoSuchEntityException;
+			org.gnenc.internet.mycourses.NoSuchSiteException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getEntityName(long entityId)
+	public java.lang.String getSiteName(long siteId)
 		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gnenc.internet.mycourses.NoSuchEntityException;
+			org.gnenc.internet.mycourses.NoSuchSiteException;
 }

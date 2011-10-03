@@ -3,7 +3,7 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="org.gnenc.internet.mycourses.model.Course" />
-	<import class="org.gnenc.internet.mycourses.model.Entity" />
+	<import class="org.gnenc.internet.mycourses.model.Site" />
 	<import class="org.gnenc.internet.mycourses.model.UserEnrollment" />
 	<import class="org.gnenc.internet.mycourses.model.Host" />
 	<class name="org.gnenc.internet.mycourses.model.impl.CourseImpl" table="MC_Course">
@@ -13,20 +13,21 @@
 		</id>
 		<property name="courseId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="entityId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="siteId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
-	<class name="org.gnenc.internet.mycourses.model.impl.EntityImpl" table="MC_Entity">
+	<class name="org.gnenc.internet.mycourses.model.impl.SiteImpl" table="MC_Site">
 		<cache usage="read-write" />
-		<id name="entityId" type="long">
+		<id name="siteId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property name="entityName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="siteName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="url" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="emailDomains" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="emailDomain" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="dbServer" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="dbName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="dbUser" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="dbPass" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="org.gnenc.internet.mycourses.model.impl.UserEnrollmentImpl" table="MC_UserEnrollment">
 		<cache usage="read-write" />
@@ -42,8 +43,8 @@
 		<id name="hostId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property name="entityId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="remoteEntityId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="siteId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="remoteSiteId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="peerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 </hibernate-mapping>

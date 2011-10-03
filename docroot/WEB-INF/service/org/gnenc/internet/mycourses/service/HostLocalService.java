@@ -204,7 +204,7 @@ public interface HostLocalService {
 		org.gnenc.internet.mycourses.model.Host host, boolean merge)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<org.gnenc.internet.mycourses.model.Host> findByLR(
-		long localEntityId, long remoteEntityId)
+	public java.util.List<org.gnenc.internet.mycourses.model.Host> findByLRsite(
+		long localSiteId, long remoteSiteId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

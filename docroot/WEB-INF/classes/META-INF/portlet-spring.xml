@@ -6,11 +6,11 @@
 		<property name="service" ref="org.gnenc.internet.mycourses.service.CourseLocalService" />
 	</bean>
 	<bean id="org.gnenc.internet.mycourses.service.persistence.CoursePersistence" class="org.gnenc.internet.mycourses.service.persistence.CoursePersistenceImpl" parent="basePersistence" />
-	<bean id="org.gnenc.internet.mycourses.service.EntityLocalService" class="org.gnenc.internet.mycourses.service.impl.EntityLocalServiceImpl" />
-	<bean id="org.gnenc.internet.mycourses.service.EntityLocalServiceUtil" class="org.gnenc.internet.mycourses.service.EntityLocalServiceUtil">
-		<property name="service" ref="org.gnenc.internet.mycourses.service.EntityLocalService" />
+	<bean id="org.gnenc.internet.mycourses.service.SiteLocalService" class="org.gnenc.internet.mycourses.service.impl.SiteLocalServiceImpl" />
+	<bean id="org.gnenc.internet.mycourses.service.SiteLocalServiceUtil" class="org.gnenc.internet.mycourses.service.SiteLocalServiceUtil">
+		<property name="service" ref="org.gnenc.internet.mycourses.service.SiteLocalService" />
 	</bean>
-	<bean id="org.gnenc.internet.mycourses.service.persistence.EntityPersistence" class="org.gnenc.internet.mycourses.service.persistence.EntityPersistenceImpl" parent="basePersistence" />
+	<bean id="org.gnenc.internet.mycourses.service.persistence.SitePersistence" class="org.gnenc.internet.mycourses.service.persistence.SitePersistenceImpl" parent="basePersistence" />
 	<bean id="org.gnenc.internet.mycourses.service.UserEnrollmentLocalService" class="org.gnenc.internet.mycourses.service.impl.UserEnrollmentLocalServiceImpl" />
 	<bean id="org.gnenc.internet.mycourses.service.UserEnrollmentLocalServiceUtil" class="org.gnenc.internet.mycourses.service.UserEnrollmentLocalServiceUtil">
 		<property name="service" ref="org.gnenc.internet.mycourses.service.UserEnrollmentLocalService" />

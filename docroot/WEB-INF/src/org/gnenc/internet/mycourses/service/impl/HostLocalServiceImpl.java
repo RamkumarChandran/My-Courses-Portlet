@@ -48,10 +48,10 @@ import org.gnenc.internet.mycourses.service.base.HostLocalServiceBaseImpl;
  */
 public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 
-	public List<Host> findByLR(long localEntityId, long remoteEntityId)
+	public List<Host> findByLRsite(long localSiteId, long remoteSiteId)
 			throws SystemException {
-		List<Host> host = hostPersistence.findByLRentity(localEntityId,
-				remoteEntityId);
+		List<Host> host = hostPersistence.findByLRsite(localSiteId,
+				remoteSiteId);
 
 		return host;
 	}

@@ -225,11 +225,11 @@ public class CourseLocalServiceUtil {
 		return getService().updateCourse(course, merge);
 	}
 
-	public static org.gnenc.internet.mycourses.model.Course getCourseByEntity(
-		long courseId, long entityId)
+	public static org.gnenc.internet.mycourses.model.Course getCourseBySite(
+		long courseId, long siteId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gnenc.internet.mycourses.NoSuchCourseException {
-		return getService().getCourseByEntity(courseId, entityId);
+		return getService().getCourseBySite(courseId, siteId);
 	}
 
 	public static void clearService() {

@@ -20,19 +20,19 @@
 %>
 
 <%@include file="/init.jsp" %>
-<%--<jsp:useBean id="addEntity" type="org.gnenc.internet.mycourses.model.Entity" scope="request" /> --%>
+<%--<jsp:useBean id="addSite" type="org.gnenc.internet.mycourses.model.Site" scope="request" /> --%>
 
 <%
-Entity addEntity = (Entity)request.getAttribute("addEntity");
-if (addEntity == null) {
-	addEntity = new EntityImpl();
+Site addSite = (Site)request.getAttribute("addSite");
+if (addSite == null) {
+	addSite = new SiteImpl();
 
 }
 %>
 
-<liferay-ui:success key="entitySaved" message="entity-saved-successfully" />
-<liferay-ui:success key="entityDeleted" message="entityDeleted" />
-<liferay-ui:success key="entityUpdated" message="entityUpdated" />
+<liferay-ui:success key="siteSaved" message="site-saved-successfully" />
+<liferay-ui:success key="siteDeleted" message="siteDeleted" />
+<liferay-ui:success key="siteUpdated" message="siteUpdated" />
 <liferay-ui:error key="error-deleting" message="error-deleting" />
 <liferay-ui:error key="error-updating" message="error-updating" />
 <liferay-ui:error key="error-db-connect" message="error-db-connect" />
@@ -41,81 +41,81 @@ if (addEntity == null) {
 <div id="mycoursesadmin">
 	<div>
 		<img id='schoolhouse' src='<%=renderRequest.getContextPath() %>/images/schoolhouse-med.png' alt='schoolhouse' />
-		<p id="headline_main">Manage School Entity Connections</p>
+		<p id="headline_main">Manage School Site Connections</p>
 		<span id="tip">
 			<aui:a href="javascript:void();" cssClass="help aui-icon aui-icon-help" />
 		</span>
 	</div>
 
-	<div id="addEntityForm">
+	<div id="addSiteForm">
 
-		<portlet:actionURL name="addEntity" var="addEntityURL" />
+		<portlet:actionURL name="addSite" var="addSiteURL" />
 
-		<aui:form name="form" action="<%=addEntityURL.toString() %>" method="post">
+		<aui:form name="form" action="<%=addSiteURL.toString() %>" method="post">
 			<aui:fieldset>
 				<table class="form">
 					<tr><td>
-						<aui:input name="entityName" size="60"
-							value="<%=addEntity.getEntityName() %>" />
+						<aui:input name="siteName" size="60"
+							value="<%=addSite.getSiteName() %>" />
 					</td>
 					<td>
 						<liferay-ui:error
-        				key="entity-name-required"
-        				message="entity-name-required" />
+        				key="site-name-required"
+        				message="site-name-required" />
         			</td></tr>
         			<tr><td>
-						<aui:input name="entityUrl" size="60"
-							value="<%=addEntity.getUrl() %>" />
+						<aui:input name="siteUrl" size="60"
+							value="<%=addSite.getUrl() %>" />
 					</td><td>
 						<liferay-ui:error
-        				key="entity-url-required"
-        				message="entity-url-required" />
+        				key="site-url-required"
+        				message="site-url-required" />
         				<liferay-ui:error
-        				key="entity-invalid-url"
-        				message="entity-invalid-url" />
+        				key="site-invalid-url"
+        				message="site-invalid-url" />
         			</td></tr>
         			<tr><td>
-						<aui:input name="entityEmailDomain" size="60"
-							value="<%=addEntity.getEmailDomains() %>" />
+						<aui:input name="siteEmailDomain" size="60"
+							value="<%=addSite.getEmailDomain() %>" />
 					</td><td>
 						<liferay-ui:error
-        				key="entity-email-domain-required"
-        				message="entity-email-domain-required" />
+        				key="site-email-domain-required"
+        				message="site-email-domain-required" />
         				<liferay-ui:error
-        				key="entity-invalid-email-domain"
-        				message="entity-invalid-email-domain" />
+        				key="site-invalid-email-domain"
+        				message="site-invalid-email-domain" />
         			</td></tr>
         			<tr><td>
-						<aui:input name="entityDbServer" size="60"
-							value="<%=addEntity.getDbServer() %>" />
+						<aui:input name="siteDbServer" size="60"
+							value="<%=addSite.getDbServer() %>" />
 					</td><td>
 						<liferay-ui:error
-        				key="entity-db-server-required"
-        				message="entity-db-server-required" />
+        				key="site-db-server-required"
+        				message="site-db-server-required" />
 					</td></tr>
         			<tr><td>
-						<aui:input name="entityDbName" size="60"
-							value="<%=addEntity.getDbName() %>" />
+						<aui:input name="siteDbName" size="60"
+							value="<%=addSite.getDbName() %>" />
 					</td><td>
 						<liferay-ui:error
-        				key="entity-db-name-required"
-        				message="entity-db-name-required"  />
+        				key="site-db-name-required"
+        				message="site-db-name-required"  />
 					</td></tr>
         			<tr><td>
-						<aui:input name="entityDbUser" size="60"
-							value="<%=addEntity.getDbUser() %>" />
+						<aui:input name="siteDbUser" size="60"
+							value="<%=addSite.getDbUser() %>" />
 					</td><td>
 						<liferay-ui:error
-        				key="entity-db-user-required"
-        				message="entity-db-user-required" />
+        				key="site-db-user-required"
+        				message="site-db-user-required" />
 					</td></tr>
         			<tr><td>
-						<aui:input name="entityDbPass" size="60" type="password"
-							value="<%=addEntity.getDbPass() %>" />
+						<aui:input name="siteDbPass" size="60" type="password"
+							value="<%=addSite.getDbPass() %>" />
 					</td><td>
 						<liferay-ui:error
-        				key="entity-db-pass-required"
-        				message="entity-db-pass-required" />
+        				key="site-db-pass-required"
+        				message="site-db-pass-required" />
 					</td></tr>
         			<tr><td>
 				</table>
@@ -129,7 +129,7 @@ if (addEntity == null) {
 	<liferay-ui:search-container emptyResultsMessage="there-are-no-entities" delta="5">
     	<liferay-ui:search-container-results>
     	<%
-		    List<Entity> tempResults = MyCoursesAdminPortlet.getEntities(renderRequest);
+		    List<Site> tempResults = MyCoursesAdminPortlet.getSites(renderRequest);
 
 		    results = ListUtil.subList(tempResults, searchContainer.getStart(), searchContainer.getEnd());
 		    total = tempResults.size();
@@ -140,27 +140,27 @@ if (addEntity == null) {
     	</liferay-ui:search-container-results>
 
     	<liferay-ui:search-container-row
-    		className="org.gnenc.internet.mycourses.model.Entity"
-    		keyProperty="entityId"
-    		modelVar="entity">
+    		className="org.gnenc.internet.mycourses.model.Site"
+    		keyProperty="siteId"
+    		modelVar="site">
 
 		    <liferay-ui:search-container-column-text
-		        name="entity-name"
-		        property="entityName"
+		        name="site-name"
+		        property="siteName"
 		        />
 
 		    <liferay-ui:search-container-column-text
-		        name="entity-url"
+		        name="site-url"
 		        property="url"
 		        />
 
 		    <liferay-ui:search-container-column-text
-		        name="entity-db-server"
+		        name="site-db-server"
 		        property="dbServer"
 		        />
 
 		    <liferay-ui:search-container-column-text
-		        name="entity-db-name"
+		        name="site-db-name"
 		        property="dbName"
 		        />
 

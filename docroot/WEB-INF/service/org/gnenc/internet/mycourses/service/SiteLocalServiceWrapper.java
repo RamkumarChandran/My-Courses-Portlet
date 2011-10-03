@@ -16,63 +16,63 @@ package org.gnenc.internet.mycourses.service;
 
 /**
  * <p>
- * This class is a wrapper for {@link EntityLocalService}.
+ * This class is a wrapper for {@link SiteLocalService}.
  * </p>
  *
  * @author    Drew Blessing/Stephen Hunter
- * @see       EntityLocalService
+ * @see       SiteLocalService
  * @generated
  */
-public class EntityLocalServiceWrapper implements EntityLocalService {
-	public EntityLocalServiceWrapper(EntityLocalService entityLocalService) {
-		_entityLocalService = entityLocalService;
+public class SiteLocalServiceWrapper implements SiteLocalService {
+	public SiteLocalServiceWrapper(SiteLocalService siteLocalService) {
+		_siteLocalService = siteLocalService;
 	}
 
 	/**
-	* Adds the entity to the database. Also notifies the appropriate model listeners.
+	* Adds the site to the database. Also notifies the appropriate model listeners.
 	*
-	* @param entity the entity to add
-	* @return the entity that was added
+	* @param site the site to add
+	* @return the site that was added
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gnenc.internet.mycourses.model.Entity addEntity(
-		org.gnenc.internet.mycourses.model.Entity entity)
+	public org.gnenc.internet.mycourses.model.Site addSite(
+		org.gnenc.internet.mycourses.model.Site site)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _entityLocalService.addEntity(entity);
+		return _siteLocalService.addSite(site);
 	}
 
 	/**
-	* Creates a new entity with the primary key. Does not add the entity to the database.
+	* Creates a new site with the primary key. Does not add the site to the database.
 	*
-	* @param entityId the primary key for the new entity
-	* @return the new entity
+	* @param siteId the primary key for the new site
+	* @return the new site
 	*/
-	public org.gnenc.internet.mycourses.model.Entity createEntity(long entityId) {
-		return _entityLocalService.createEntity(entityId);
+	public org.gnenc.internet.mycourses.model.Site createSite(long siteId) {
+		return _siteLocalService.createSite(siteId);
 	}
 
 	/**
-	* Deletes the entity with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the site with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param entityId the primary key of the entity to delete
-	* @throws PortalException if a entity with the primary key could not be found
+	* @param siteId the primary key of the site to delete
+	* @throws PortalException if a site with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteEntity(long entityId)
+	public void deleteSite(long siteId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_entityLocalService.deleteEntity(entityId);
+		_siteLocalService.deleteSite(siteId);
 	}
 
 	/**
-	* Deletes the entity from the database. Also notifies the appropriate model listeners.
+	* Deletes the site from the database. Also notifies the appropriate model listeners.
 	*
-	* @param entity the entity to delete
+	* @param site the site to delete
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteEntity(org.gnenc.internet.mycourses.model.Entity entity)
+	public void deleteSite(org.gnenc.internet.mycourses.model.Site site)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_entityLocalService.deleteEntity(entity);
+		_siteLocalService.deleteSite(site);
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class EntityLocalServiceWrapper implements EntityLocalService {
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _entityLocalService.dynamicQuery(dynamicQuery);
+		return _siteLocalService.dynamicQuery(dynamicQuery);
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class EntityLocalServiceWrapper implements EntityLocalService {
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException {
-		return _entityLocalService.dynamicQuery(dynamicQuery, start, end);
+		return _siteLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class EntityLocalServiceWrapper implements EntityLocalService {
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _entityLocalService.dynamicQuery(dynamicQuery, start, end,
+		return _siteLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
 
@@ -143,107 +143,110 @@ public class EntityLocalServiceWrapper implements EntityLocalService {
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _entityLocalService.dynamicQueryCount(dynamicQuery);
+		return _siteLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Gets the entity with the primary key.
+	* Gets the site with the primary key.
 	*
-	* @param entityId the primary key of the entity to get
-	* @return the entity
-	* @throws PortalException if a entity with the primary key could not be found
+	* @param siteId the primary key of the site to get
+	* @return the site
+	* @throws PortalException if a site with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gnenc.internet.mycourses.model.Entity getEntity(long entityId)
+	public org.gnenc.internet.mycourses.model.Site getSite(long siteId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _entityLocalService.getEntity(entityId);
+		return _siteLocalService.getSite(siteId);
 	}
 
 	/**
-	* Gets a range of all the entities.
+	* Gets a range of all the sites.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param start the lower bound of the range of entities to return
-	* @param end the upper bound of the range of entities to return (not inclusive)
-	* @return the range of entities
+	* @param start the lower bound of the range of sites to return
+	* @param end the upper bound of the range of sites to return (not inclusive)
+	* @return the range of sites
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<org.gnenc.internet.mycourses.model.Entity> getEntities(
+	public java.util.List<org.gnenc.internet.mycourses.model.Site> getSites(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _entityLocalService.getEntities(start, end);
+		return _siteLocalService.getSites(start, end);
 	}
 
 	/**
-	* Gets the number of entities.
+	* Gets the number of sites.
 	*
-	* @return the number of entities
+	* @return the number of sites
 	* @throws SystemException if a system exception occurred
 	*/
-	public int getEntitiesCount()
+	public int getSitesCount()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _entityLocalService.getEntitiesCount();
+		return _siteLocalService.getSitesCount();
 	}
 
 	/**
-	* Updates the entity in the database. Also notifies the appropriate model listeners.
+	* Updates the site in the database. Also notifies the appropriate model listeners.
 	*
-	* @param entity the entity to update
-	* @return the entity that was updated
+	* @param site the site to update
+	* @return the site that was updated
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gnenc.internet.mycourses.model.Entity updateEntity(
-		org.gnenc.internet.mycourses.model.Entity entity)
+	public org.gnenc.internet.mycourses.model.Site updateSite(
+		org.gnenc.internet.mycourses.model.Site site)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _entityLocalService.updateEntity(entity);
+		return _siteLocalService.updateSite(site);
 	}
 
 	/**
-	* Updates the entity in the database. Also notifies the appropriate model listeners.
+	* Updates the site in the database. Also notifies the appropriate model listeners.
 	*
-	* @param entity the entity to update
-	* @param merge whether to merge the entity with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the entity that was updated
+	* @param site the site to update
+	* @param merge whether to merge the site with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
+	* @return the site that was updated
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gnenc.internet.mycourses.model.Entity updateEntity(
-		org.gnenc.internet.mycourses.model.Entity entity, boolean merge)
+	public org.gnenc.internet.mycourses.model.Site updateSite(
+		org.gnenc.internet.mycourses.model.Site site, boolean merge)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _entityLocalService.updateEntity(entity, merge);
+		return _siteLocalService.updateSite(site, merge);
 	}
 
 	/**
-	* Returns entity from the database. Also notifies the appropriate model listeners.
+	* Returns entity from the database. Also notifies the appropriate model
+	* listeners.
 	*
-	* @param emailDomain the email domain to find by
+	* @param emailDomain
+	the email domain to find by
 	* @return the entity that was found
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
+	if a system exception occurred
 	*/
-	public java.util.List<org.gnenc.internet.mycourses.model.Entity> getEntityByDomain(
+	public java.util.List<org.gnenc.internet.mycourses.model.Site> getSiteByDomain(
 		java.lang.String emailDomain)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _entityLocalService.getEntityByDomain(emailDomain);
+		return _siteLocalService.getSiteByDomain(emailDomain);
 	}
 
-	public java.lang.String getEntityUrl(long entityId)
+	public java.lang.String getSiteUrl(long siteId)
 		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gnenc.internet.mycourses.NoSuchEntityException {
-		return _entityLocalService.getEntityUrl(entityId);
+			org.gnenc.internet.mycourses.NoSuchSiteException {
+		return _siteLocalService.getSiteUrl(siteId);
 	}
 
-	public java.lang.String getEntityName(long entityId)
+	public java.lang.String getSiteName(long siteId)
 		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gnenc.internet.mycourses.NoSuchEntityException {
-		return _entityLocalService.getEntityName(entityId);
+			org.gnenc.internet.mycourses.NoSuchSiteException {
+		return _siteLocalService.getSiteName(siteId);
 	}
 
-	public EntityLocalService getWrappedEntityLocalService() {
-		return _entityLocalService;
+	public SiteLocalService getWrappedSiteLocalService() {
+		return _siteLocalService;
 	}
 
-	private EntityLocalService _entityLocalService;
+	private SiteLocalService _siteLocalService;
 }

@@ -47,11 +47,11 @@
 <%@ page import="org.gnenc.internet.mycourses.portlet.MyCoursesPortlet" %>
 <%@ page import="org.gnenc.internet.mycourses.portlet.MyCoursesAdminPortlet" %>
 <%@ page import="org.gnenc.internet.mycourses.model.Course" %>
-<%@ page import="org.gnenc.internet.mycourses.model.Entity" %>
+<%@ page import="org.gnenc.internet.mycourses.model.Site" %>
 <%@ page import="org.gnenc.internet.mycourses.model.Host" %>
 
-<%@ page import="org.gnenc.internet.mycourses.model.impl.EntityImpl" %>
-<%@ page import="org.gnenc.internet.mycourses.service.EntityLocalServiceUtil" %>
+<%@ page import="org.gnenc.internet.mycourses.model.impl.SiteImpl" %>
+<%@ page import="org.gnenc.internet.mycourses.service.SiteLocalServiceUtil" %>
 <%@ page import="org.gnenc.internet.mycourses.service.HostLocalServiceUtil" %>
 
 

@@ -205,8 +205,8 @@ public interface CourseLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.gnenc.internet.mycourses.model.Course getCourseByEntity(
-		long courseId, long entityId)
+	public org.gnenc.internet.mycourses.model.Course getCourseBySite(
+		long courseId, long siteId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gnenc.internet.mycourses.NoSuchCourseException;
 }

@@ -14,25 +14,20 @@
 
 package org.gnenc.internet.mycourses.model.impl;
 
-import org.gnenc.internet.mycourses.model.Entity;
+import org.gnenc.internet.mycourses.model.Site;
 
 /**
- * The model implementation for the Entity service. Represents a row in the
- * &quot;MC_Entity&quot; database table, with each column mapped to a property
- * of this class.
+ * The model implementation for the Site service. Represents a row in the &quot;MC_Site&quot; database table, with each column mapped to a property of this class.
  *
  * <p>
- * Helper methods and all application logic should be put in this class.
- * Whenever methods are added, rerun ServiceBuilder to copy their definitions
- * into the {@link org.gnenc.internet.mycourses.model.Entity} interface.
+ * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link org.gnenc.internet.mycourses.model.Site} interface.
  * </p>
  *
  * <p>
- * Never reference this class directly. All methods that expect a entity model
- * instance should use the {@link Entity} interface instead.
+ * Never reference this class directly. All methods that expect a site model instance should use the {@link Site} interface instead.
  * </p>
  */
-public class EntityImpl extends EntityModelImpl implements Entity {
-	public EntityImpl() {
+public class SiteImpl extends SiteModelImpl implements Site {
+	public SiteImpl() {
 	}
 }

@@ -60,15 +60,15 @@ public class CourseWrapper implements Course {
 		_course.setName(name);
 	}
 
-	public long getEntityId() {
-		return _course.getEntityId();
+	public long getSiteId() {
+		return _course.getSiteId();
 	}
 
-	public void setEntityId(long entityId) {
-		_course.setEntityId(entityId);
+	public void setSiteId(long siteId) {
+		_course.setSiteId(siteId);
 	}
 
-	public org.gnenc.internet.mycourses.model.Course toEscapedModel() {
+	public Course toEscapedModel() {
 		return _course.toEscapedModel();
 	}
 
@@ -113,7 +113,7 @@ public class CourseWrapper implements Course {
 		return _course.clone();
 	}
 
-	public int compareTo(org.gnenc.internet.mycourses.model.Course course) {
+	public int compareTo(Course course) {
 		return _course.compareTo(course);
 	}
 

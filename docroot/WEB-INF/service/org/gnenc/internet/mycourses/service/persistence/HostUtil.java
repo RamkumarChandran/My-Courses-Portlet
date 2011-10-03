@@ -190,135 +190,132 @@ public class HostUtil {
 	}
 
 	/**
-	* Finds all the hosts where entityId = &#63; and remoteEntityId = &#63;.
+	* Finds all the hosts where siteId = &#63; and remoteSiteId = &#63;.
 	*
-	* @param entityId the entity id to search with
-	* @param remoteEntityId the remote entity id to search with
+	* @param siteId the site id to search with
+	* @param remoteSiteId the remote site id to search with
 	* @return the matching hosts
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<org.gnenc.internet.mycourses.model.Host> findByLRentity(
-		long entityId, long remoteEntityId)
+	public static java.util.List<org.gnenc.internet.mycourses.model.Host> findByLRsite(
+		long siteId, long remoteSiteId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByLRentity(entityId, remoteEntityId);
+		return getPersistence().findByLRsite(siteId, remoteSiteId);
 	}
 
 	/**
-	* Finds a range of all the hosts where entityId = &#63; and remoteEntityId = &#63;.
+	* Finds a range of all the hosts where siteId = &#63; and remoteSiteId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param entityId the entity id to search with
-	* @param remoteEntityId the remote entity id to search with
+	* @param siteId the site id to search with
+	* @param remoteSiteId the remote site id to search with
 	* @param start the lower bound of the range of hosts to return
 	* @param end the upper bound of the range of hosts to return (not inclusive)
 	* @return the range of matching hosts
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<org.gnenc.internet.mycourses.model.Host> findByLRentity(
-		long entityId, long remoteEntityId, int start, int end)
+	public static java.util.List<org.gnenc.internet.mycourses.model.Host> findByLRsite(
+		long siteId, long remoteSiteId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByLRentity(entityId, remoteEntityId, start, end);
+		return getPersistence().findByLRsite(siteId, remoteSiteId, start, end);
 	}
 
 	/**
-	* Finds an ordered range of all the hosts where entityId = &#63; and remoteEntityId = &#63;.
+	* Finds an ordered range of all the hosts where siteId = &#63; and remoteSiteId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param entityId the entity id to search with
-	* @param remoteEntityId the remote entity id to search with
+	* @param siteId the site id to search with
+	* @param remoteSiteId the remote site id to search with
 	* @param start the lower bound of the range of hosts to return
 	* @param end the upper bound of the range of hosts to return (not inclusive)
 	* @param orderByComparator the comparator to order the results by
 	* @return the ordered range of matching hosts
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<org.gnenc.internet.mycourses.model.Host> findByLRentity(
-		long entityId, long remoteEntityId, int start, int end,
+	public static java.util.List<org.gnenc.internet.mycourses.model.Host> findByLRsite(
+		long siteId, long remoteSiteId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByLRentity(entityId, remoteEntityId, start, end,
+				   .findByLRsite(siteId, remoteSiteId, start, end,
 			orderByComparator);
 	}
 
 	/**
-	* Finds the first host in the ordered set where entityId = &#63; and remoteEntityId = &#63;.
+	* Finds the first host in the ordered set where siteId = &#63; and remoteSiteId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param entityId the entity id to search with
-	* @param remoteEntityId the remote entity id to search with
+	* @param siteId the site id to search with
+	* @param remoteSiteId the remote site id to search with
 	* @param orderByComparator the comparator to order the set by
 	* @return the first matching host
 	* @throws org.gnenc.internet.mycourses.NoSuchHostException if a matching host could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static org.gnenc.internet.mycourses.model.Host findByLRentity_First(
-		long entityId, long remoteEntityId,
+	public static org.gnenc.internet.mycourses.model.Host findByLRsite_First(
+		long siteId, long remoteSiteId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gnenc.internet.mycourses.NoSuchHostException {
 		return getPersistence()
-				   .findByLRentity_First(entityId, remoteEntityId,
-			orderByComparator);
+				   .findByLRsite_First(siteId, remoteSiteId, orderByComparator);
 	}
 
 	/**
-	* Finds the last host in the ordered set where entityId = &#63; and remoteEntityId = &#63;.
+	* Finds the last host in the ordered set where siteId = &#63; and remoteSiteId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param entityId the entity id to search with
-	* @param remoteEntityId the remote entity id to search with
+	* @param siteId the site id to search with
+	* @param remoteSiteId the remote site id to search with
 	* @param orderByComparator the comparator to order the set by
 	* @return the last matching host
 	* @throws org.gnenc.internet.mycourses.NoSuchHostException if a matching host could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static org.gnenc.internet.mycourses.model.Host findByLRentity_Last(
-		long entityId, long remoteEntityId,
+	public static org.gnenc.internet.mycourses.model.Host findByLRsite_Last(
+		long siteId, long remoteSiteId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gnenc.internet.mycourses.NoSuchHostException {
 		return getPersistence()
-				   .findByLRentity_Last(entityId, remoteEntityId,
-			orderByComparator);
+				   .findByLRsite_Last(siteId, remoteSiteId, orderByComparator);
 	}
 
 	/**
-	* Finds the hosts before and after the current host in the ordered set where entityId = &#63; and remoteEntityId = &#63;.
+	* Finds the hosts before and after the current host in the ordered set where siteId = &#63; and remoteSiteId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param hostId the primary key of the current host
-	* @param entityId the entity id to search with
-	* @param remoteEntityId the remote entity id to search with
+	* @param siteId the site id to search with
+	* @param remoteSiteId the remote site id to search with
 	* @param orderByComparator the comparator to order the set by
 	* @return the previous, current, and next host
 	* @throws org.gnenc.internet.mycourses.NoSuchHostException if a host with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static org.gnenc.internet.mycourses.model.Host[] findByLRentity_PrevAndNext(
-		long hostId, long entityId, long remoteEntityId,
+	public static org.gnenc.internet.mycourses.model.Host[] findByLRsite_PrevAndNext(
+		long hostId, long siteId, long remoteSiteId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gnenc.internet.mycourses.NoSuchHostException {
 		return getPersistence()
-				   .findByLRentity_PrevAndNext(hostId, entityId,
-			remoteEntityId, orderByComparator);
+				   .findByLRsite_PrevAndNext(hostId, siteId, remoteSiteId,
+			orderByComparator);
 	}
 
 	/**
@@ -371,15 +368,15 @@ public class HostUtil {
 	}
 
 	/**
-	* Removes all the hosts where entityId = &#63; and remoteEntityId = &#63; from the database.
+	* Removes all the hosts where siteId = &#63; and remoteSiteId = &#63; from the database.
 	*
-	* @param entityId the entity id to search with
-	* @param remoteEntityId the remote entity id to search with
+	* @param siteId the site id to search with
+	* @param remoteSiteId the remote site id to search with
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByLRentity(long entityId, long remoteEntityId)
+	public static void removeByLRsite(long siteId, long remoteSiteId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByLRentity(entityId, remoteEntityId);
+		getPersistence().removeByLRsite(siteId, remoteSiteId);
 	}
 
 	/**
@@ -393,16 +390,16 @@ public class HostUtil {
 	}
 
 	/**
-	* Counts all the hosts where entityId = &#63; and remoteEntityId = &#63;.
+	* Counts all the hosts where siteId = &#63; and remoteSiteId = &#63;.
 	*
-	* @param entityId the entity id to search with
-	* @param remoteEntityId the remote entity id to search with
+	* @param siteId the site id to search with
+	* @param remoteSiteId the remote site id to search with
 	* @return the number of matching hosts
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByLRentity(long entityId, long remoteEntityId)
+	public static int countByLRsite(long siteId, long remoteSiteId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByLRentity(entityId, remoteEntityId);
+		return getPersistence().countByLRsite(siteId, remoteSiteId);
 	}
 
 	/**

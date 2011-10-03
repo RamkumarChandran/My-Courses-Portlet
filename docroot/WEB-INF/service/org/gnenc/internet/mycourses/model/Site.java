@@ -15,21 +15,21 @@
 package org.gnenc.internet.mycourses.model;
 
 /**
- * The model interface for the Entity service. Represents a row in the &quot;MC_Entity&quot; database table, with each column mapped to a property of this class.
+ * The model interface for the Site service. Represents a row in the &quot;MC_Site&quot; database table, with each column mapped to a property of this class.
  *
  * <p>
- * Never modify this interface directly. Add methods to {@link org.gnenc.internet.mycourses.model.impl.EntityImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+ * Never modify this interface directly. Add methods to {@link org.gnenc.internet.mycourses.model.impl.SiteImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
  * </p>
  *
  * <p>
- * Never reference this interface directly. All methods that expect a entity model instance should use the {@link Entity} interface instead.
+ * Never reference this interface directly. All methods that expect a site model instance should use the {@link Site} interface instead.
  * </p>
  *
  * @author Drew Blessing/Stephen Hunter
- * @see EntityModel
- * @see org.gnenc.internet.mycourses.model.impl.EntityImpl
- * @see org.gnenc.internet.mycourses.model.impl.EntityModelImpl
+ * @see SiteModel
+ * @see org.gnenc.internet.mycourses.model.impl.SiteImpl
+ * @see org.gnenc.internet.mycourses.model.impl.SiteModelImpl
  * @generated
  */
-public interface Entity extends EntityModel {
+public interface Site extends SiteModel {
 }

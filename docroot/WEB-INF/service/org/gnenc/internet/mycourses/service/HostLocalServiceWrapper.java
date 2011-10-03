@@ -216,10 +216,10 @@ public class HostLocalServiceWrapper implements HostLocalService {
 		return _hostLocalService.updateHost(host, merge);
 	}
 
-	public java.util.List<org.gnenc.internet.mycourses.model.Host> findByLR(
-		long localEntityId, long remoteEntityId)
+	public java.util.List<org.gnenc.internet.mycourses.model.Host> findByLRsite(
+		long localSiteId, long remoteSiteId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _hostLocalService.findByLR(localEntityId, remoteEntityId);
+		return _hostLocalService.findByLRsite(localSiteId, remoteSiteId);
 	}
 
 	public HostLocalService getWrappedHostLocalService() {

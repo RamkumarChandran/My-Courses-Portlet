@@ -44,20 +44,20 @@ public class HostWrapper implements Host {
 		_host.setHostId(hostId);
 	}
 
-	public long getEntityId() {
-		return _host.getEntityId();
+	public long getSiteId() {
+		return _host.getSiteId();
 	}
 
-	public void setEntityId(long entityId) {
-		_host.setEntityId(entityId);
+	public void setSiteId(long siteId) {
+		_host.setSiteId(siteId);
 	}
 
-	public long getRemoteEntityId() {
-		return _host.getRemoteEntityId();
+	public long getRemoteSiteId() {
+		return _host.getRemoteSiteId();
 	}
 
-	public void setRemoteEntityId(long remoteEntityId) {
-		_host.setRemoteEntityId(remoteEntityId);
+	public void setRemoteSiteId(long remoteSiteId) {
+		_host.setRemoteSiteId(remoteSiteId);
 	}
 
 	public long getPeerId() {
@@ -68,7 +68,7 @@ public class HostWrapper implements Host {
 		_host.setPeerId(peerId);
 	}
 
-	public org.gnenc.internet.mycourses.model.Host toEscapedModel() {
+	public Host toEscapedModel() {
 		return _host.toEscapedModel();
 	}
 
@@ -113,7 +113,7 @@ public class HostWrapper implements Host {
 		return _host.clone();
 	}
 
-	public int compareTo(org.gnenc.internet.mycourses.model.Host host) {
+	public int compareTo(Host host) {
 		return _host.compareTo(host);
 	}
 

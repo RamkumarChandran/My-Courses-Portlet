@@ -22,12 +22,12 @@
 <%@include file="/init.jsp" %>
 
 <%
-	/** Retrieve all user enrollments, regardless of entity */
+	/** Retrieve all user enrollments, regardless of site */
 
 List<Course> courses = MyCoursesPortlet.getAllEnrollments(renderRequest);
 
 Boolean isDefaultUser = (Boolean)request.getAttribute("isDefaultUser");
-Entity entity = (Entity)request.getAttribute("entity");
+Site site = (Site)request.getAttribute("site");
 
 %>
 
@@ -48,7 +48,7 @@ Entity entity = (Entity)request.getAttribute("entity");
 		<table>
 			<tr>
 				<td>
-					<span class="entity_name">Sorry!</span>
+					<span class="site_name">Sorry!</span>
 				</td>
 				<td>
 					Please login to view course enrollments
@@ -63,7 +63,7 @@ Entity entity = (Entity)request.getAttribute("entity");
 		<table>
 			<tr>
 			<td>
-				<span class="entity_name">Sorry!</span>
+				<span class="site_name">Sorry!</span>
 			</td>
 			<td>
 				Could not determine your school affiliation
@@ -74,15 +74,15 @@ Entity entity = (Entity)request.getAttribute("entity");
 
 	} else {
 	%>
-		<!-- Logged in and affiliation determined OR preferred entity chosen-->
+		<!-- Logged in and affiliation determined OR preferred site chosen-->
 	 	<table>
 			<tr>
 			<td>
-				<span class="entity_name"><%=entity.getEntityName().toString() %></span>
+				<span class="site_name"><%=site.getSiteName().toString() %></span>
 			</td>
 			<td>
-				<span id="entity_link_tooltip" title="Go to <b><%=entity.getEntityName().toString() %></b> online learning <br />home page in a new window">
-					<aui:a class="entity_link" href="<%=entity.getUrl().toString() %>" target="_blank" cssClass="aui-icon aui-icon-home" />
+				<span id="site_link_tooltip" title="Go to <b><%=site.getSiteName().toString() %></b> online learning <br />home page in a new window">
+					<aui:a class="site_link" href="<%=site.getUrl().toString() %>" target="_blank" cssClass="aui-icon aui-icon-home" />
 				</span>
 			</td>
 			</tr>
@@ -94,9 +94,9 @@ Entity entity = (Entity)request.getAttribute("entity");
 
 			for (Course course : courses)
 			{
-				if (course.getEntityId() == entity.getEntityId()) {
+				if (course.getSiteId() == site.getSiteId()) {
 			%>
-					<a href='<%=entity.getUrl().toString() %>/course/view.php?id=<%=course.getCourseId() %>' target='_blank' class='courseName'><%=course.getName().toString() %></a>
+					<a href='<%=site.getUrl().toString() %>/course/view.php?id=<%=course.getCourseId() %>' target='_blank' class='courseName'><%=course.getName().toString() %></a>
 			<%
 				i++;
 
@@ -106,14 +106,14 @@ Entity entity = (Entity)request.getAttribute("entity");
 
 			if (i == 0) {
 				%>
-				<span>You are not enrolled in any classes at <%=entity.getEntityName() %></span>
+				<span>You are not enrolled in any classes at <%=site.getSiteName() %></span>
 				<%
 
 			}
 
 		} else {
 			%>
-			<span>You are not enrolled in any classes at <%=entity.getEntityName() %></span>
+			<span>You are not enrolled in any classes at <%=site.getSiteName() %></span>
 			<%
 
 		}
@@ -122,21 +122,21 @@ Entity entity = (Entity)request.getAttribute("entity");
 
 	if (!isDefaultUser) {
 	%>
-		<!-- Logged in;  Display Change School option -->
-		<div id="changeEntityForm">
-			<portlet:renderURL var="changeEntityURL"><portlet:param name="jspPage" value="/change_entity.jsp" /></portlet:renderURL>
+		<!-- Logged in;  Display Change Site option -->
+		<div id="changeSiteForm">
+			<portlet:renderURL var="changeSiteURL"><portlet:param name="jspPage" value="/change_site.jsp" /></portlet:renderURL>
 			<table>
 			<tr><td>
 				<aui:button-row>
 					<aui:button
 						type="button"
-						value="Change School"
-						onClick="<%=changeEntityURL %>"
+						value="Change Site"
+						onClick="<%=changeSiteURL %>"
 					/>
 
 				</aui:button-row>
 			</td><td>
-				<aui:a href="javascript:void();" cssClass="change-entity-help aui-icon aui-icon-help" />
+				<aui:a href="javascript:void();" cssClass="change-site-help aui-icon aui-icon-help" />
 			</td></tr>
 			</table>
 		</div>

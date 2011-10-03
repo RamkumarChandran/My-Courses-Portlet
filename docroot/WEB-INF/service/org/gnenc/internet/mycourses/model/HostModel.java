@@ -68,32 +68,32 @@ public interface HostModel extends BaseModel<Host> {
 	public void setHostId(long hostId);
 
 	/**
-	 * Gets the entity id of this host.
+	 * Gets the site id of this host.
 	 *
-	 * @return the entity id of this host
+	 * @return the site id of this host
 	 */
-	public long getEntityId();
+	public long getSiteId();
 
 	/**
-	 * Sets the entity id of this host.
+	 * Sets the site id of this host.
 	 *
-	 * @param entityId the entity id of this host
+	 * @param siteId the site id of this host
 	 */
-	public void setEntityId(long entityId);
+	public void setSiteId(long siteId);
 
 	/**
-	 * Gets the remote entity id of this host.
+	 * Gets the remote site id of this host.
 	 *
-	 * @return the remote entity id of this host
+	 * @return the remote site id of this host
 	 */
-	public long getRemoteEntityId();
+	public long getRemoteSiteId();
 
 	/**
-	 * Sets the remote entity id of this host.
+	 * Sets the remote site id of this host.
 	 *
-	 * @param remoteEntityId the remote entity id of this host
+	 * @param remoteSiteId the remote site id of this host
 	 */
-	public void setRemoteEntityId(long remoteEntityId);
+	public void setRemoteSiteId(long remoteSiteId);
 
 	/**
 	 * Gets the peer id of this host.
