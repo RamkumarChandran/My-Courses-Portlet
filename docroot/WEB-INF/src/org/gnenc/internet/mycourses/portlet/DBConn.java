@@ -36,12 +36,13 @@ public class DBConn {
 					"FROM course AS c, role_assignments AS i, " +
 					"context AS x,user AS u WHERE i.userid = u.id " +
 					"AND i.contextid =x.id AND x.instanceid = c.id	" +
-					"AND u.username = '" + userEmail + "'";
+					"AND u.username = ?";
 
 			Connection dbConn = connectToDB(dbUrl, dbUser, dbPass);
 
-			Statement stmt = dbConn.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = dbConn.prepareStatement(sql);
+			stmt.setString(1, userEmail);
+			ResultSet rs = stmt.executeQuery();
 
 			courseInfo.add(new ArrayList<String>());
 			courseInfo.add(new ArrayList<String>());
