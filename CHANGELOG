@@ -1,2 +1,7 @@
+Version 1.0 BETA 2: October 3, 2011 - Fixed issues 4 and 5
+	NOTE: Issue 5 dealt with significant refactoring of the code.  There is no direct upgrade path
+	available between BETA 1 and BETA 2 because of the changes in services and database schemas.
+	You will need to manually remove all MC_* tables from the database prior to deploying this updated 
+	portlet. 
 
 Version 1.0 BETA 1: September 2011 - Released for initial public review and testing
