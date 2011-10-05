@@ -66,13 +66,13 @@ public class DBConn {
 			String dbUser, String dbPass) {
 		List<String> peers = new ArrayList<String>();
 		try {
-			String sql = "SELECT id FROM mnet_host WHERE wwwroot = '" + peerUrl
-					+ "'";
+			String sql = "SELECT id FROM mnet_host WHERE wwwroot = ?";
 
 			Connection dbConn = connectToDB(dbUrl, dbUser, dbPass);
 
-			Statement stmt = dbConn.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = dbConn.prepareStatement(sql);
+			stmt.setString(1, peerUrl);
+			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				peers.add(rs.getString(0));
