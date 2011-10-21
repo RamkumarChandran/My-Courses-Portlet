@@ -22,7 +22,10 @@ package org.gnenc.internet.mycourses.portlet;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
@@ -122,18 +125,22 @@ public class MyCoursesPortlet extends MVCPortlet {
 
 	public void changeSite(ActionRequest request, ActionResponse response)
 			throws Exception {
-		PortletPreferences prefs = request.getPreferences();
-		prefs.setValue("site", ParamUtil.getString(request, "siteId"));
-		prefs.store();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay) request
-				.getAttribute(WebKeys.THEME_DISPLAY);
+			.getAttribute(WebKeys.THEME_DISPLAY);
 		long userId = themeDisplay.getUser().getUserId();
 		String userEmail = themeDisplay.getUser().getEmailAddress();
-		long siteId = Long.valueOf(ParamUtil.getString(request, "siteId"));
+		PortletPreferences prefs = request.getPreferences();
+		String str = ParamUtil.getString(request, "siteId");
+		
+		if (Validator.isNotNull(str)) {
+			long siteId = Long.valueOf(ParamUtil.getString(request, "siteId"));
+			prefs.setValue("site", ParamUtil.getString(request, "siteId"));
+			prefs.store();
 
-		updateCourses(userEmail, siteId, userId);
-
+			updateCourses(userEmail, siteId, userId);
+			
+		} 
+		
 	}
 
 	private static void checkCourses(String userEmail, long siteId,
