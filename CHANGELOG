@@ -1,3 +1,5 @@
+Version 1.0 BETA 3: December 9, 2011 - Fixed issue 6
+
 Version 1.0 BETA 2: October 3, 2011 - Fixed issues 4 and 5
 	NOTE: Issue 5 dealt with significant refactoring of the code.  There is no direct upgrade path
 	available between BETA 1 and BETA 2 because of the changes in services and database schemas.
